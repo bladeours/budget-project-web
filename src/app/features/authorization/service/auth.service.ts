@@ -10,7 +10,7 @@ import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
   providedIn: 'root',
 })
 export class AuthService {
- 
+
 
   public static readonly accessTokenKey = "accessToken";
 
@@ -25,7 +25,7 @@ export class AuthService {
     return this.httpClient.post<AuthResponse>(`${baseUrl}/auth/register`, data, {withCredentials: true});
   }
 
-  
+
   login(data: LoginForm) {
     AuthInterceptor.ignoreJwt = true;
     return this.httpClient.post<AuthResponse>(`${baseUrl}/auth/authenticate`, data, {withCredentials: true});
@@ -42,7 +42,7 @@ export class AuthService {
 
   logout() {
     return this.httpClient.post(`${baseUrl}/auth/logout`, undefined, {withCredentials: true});
-    
+
   }
 
 }

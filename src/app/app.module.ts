@@ -15,13 +15,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './core/components/navigation/nav.component';
+import { NavbarComponent } from './core/components/navigation/sidenav/nav.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { LoginComponent } from './features/authorization/pages/auth/login/login.component';
 import { RegisterComponent } from './features/authorization/pages/auth/register/register.component';
 import { LogoutComponent } from './features/authorization/pages/logout/logout.component';
 import { HomeComponent } from './features/home/pages/home/home.component';
 import { AuthComponent } from './features/authorization/pages/auth/auth/auth.component';
+import { HeaderComponent } from './core/components/navigation/header/header.component';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -33,6 +34,7 @@ import { AuthComponent } from './features/authorization/pages/auth/auth/auth.com
     LogoutComponent,
     RegisterComponent,
     AuthComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
