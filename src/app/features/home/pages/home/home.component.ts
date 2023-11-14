@@ -9,7 +9,7 @@ import { ServerExceptionResponse } from 'src/app/shared/models/ServerExceptionRe
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  message = 'essa';
+  // message = 'essa';
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {

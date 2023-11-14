@@ -23,6 +23,7 @@ import { LogoutComponent } from './features/authorization/pages/logout/logout.co
 import { HomeComponent } from './features/home/pages/home/home.component';
 import { AuthComponent } from './features/authorization/pages/auth/auth/auth.component';
 import { HeaderComponent } from './core/components/navigation/header/header.component';
+import { NavParentComponent } from './core/components/navigation/nav-parent/nav-parent.component';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -35,6 +36,7 @@ import { HeaderComponent } from './core/components/navigation/header/header.comp
     RegisterComponent,
     AuthComponent,
     HeaderComponent,
+    NavParentComponent,
   ],
   imports: [
     BrowserModule,
