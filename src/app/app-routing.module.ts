@@ -10,6 +10,13 @@ const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     component: HomeComponent,
+    children: [
+      {
+          path: 'lol',
+          component: HomeComponent,
+          
+      }
+    ]
   },
   {path: 'logout', component: LogoutComponent, canActivate: [authGuard]},
   {path: 'register', component: AuthComponent},

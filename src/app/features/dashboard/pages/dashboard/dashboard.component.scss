@@ -1,0 +1,25 @@
+.example-card {
+  width: 90%;
+  height: 90%;
+  border-radius: 10px;
+}
+
+.mat-card-content {
+  border: 1px solid red;
+  height: 50px;
+  max-height: 50px;
+  overflow-y: auto;
+}
+
+table{
+  max-height: 100px;
+}
+
+.mat-grid-list {
+  height: 100%;
+}
+
+.gridWrapper {
+  width: 100%;
+  height: 100%;
+}

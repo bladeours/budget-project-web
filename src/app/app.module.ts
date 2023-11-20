@@ -24,6 +24,12 @@ import { HomeComponent } from './features/home/pages/home/home.component';
 import { AuthComponent } from './features/authorization/pages/auth/auth/auth.component';
 import { HeaderComponent } from './core/components/navigation/header/header.component';
 import { NavParentComponent } from './core/components/navigation/nav-parent/nav-parent.component';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DashboardComponent } from './features/dashboard/pages/dashboard/dashboard.component';
+import { PortalModule } from '@angular/cdk/portal';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -37,8 +43,11 @@ import { NavParentComponent } from './core/components/navigation/nav-parent/nav-
     AuthComponent,
     HeaderComponent,
     NavParentComponent,
+    DashboardComponent,
   ],
   imports: [
+    MatTableModule,
+    MatGridListModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -54,6 +63,9 @@ import { NavParentComponent } from './core/components/navigation/nav-parent/nav-
     ReactiveFormsModule,
     HttpClientModule,
     MatTabsModule,
+    MatMenuModule,
+    MatSnackBarModule,
+    PortalModule
   ],
   providers: [
     {
