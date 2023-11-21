@@ -30,6 +30,8 @@ import { DashboardComponent } from './features/dashboard/pages/dashboard/dashboa
 import { PortalModule } from '@angular/cdk/portal';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
+import { TransactionsCardComponent } from './features/dashboard/pages/dashboard/cards/transactions-card/transactions-card.component';
+import { TransactionCardComponent } from './features/dashboard/pages/dashboard/cards/transactions-card/transaction-card/transaction-card.component';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -44,6 +46,8 @@ import {MatTableModule} from '@angular/material/table';
     HeaderComponent,
     NavParentComponent,
     DashboardComponent,
+    TransactionsCardComponent,
+    TransactionCardComponent,
   ],
   imports: [
     MatTableModule,

@@ -1,0 +1,11 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Latest Transactions</mat-card-title>
+  </mat-card-header>
+    <mat-card-content class="transactions-content" >
+      <div *ngFor="let transactionCard of transactionCards">
+        <app-transaction-card [transactionCard]="transactionCard" ></app-transaction-card>
+      </div>
+
+    </mat-card-content>
+</mat-card>

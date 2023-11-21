@@ -1,43 +1,11 @@
 <div class="gridWrapper">
   <mat-grid-list [cols]="gridCols" rowHeight="fit">
-    <mat-grid-tile>
-      <mat-card class="example-card">
-        <mat-card-header>
-            <mat-card-title>Latest Transactions</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <table mat-table [dataSource]="dataSource">
+    <mat-grid-tile class="transactions">
+      <app-transactions-card class="cards"></app-transactions-card>
+    </mat-grid-tile>
 
-            <!--- Note that these columns can be defined in any order.
-                  The actual rendered columns are set as a property on the row definition" -->
-          
-            <!-- Position Column -->
-            <ng-container matColumnDef="accountFrom">
-              <th mat-header-cell *matHeaderCellDef> accountFrom </th>
-              <td mat-cell *matCellDef="let element"> {{element.accountFrom}} </td>
-            </ng-container>
-          
-            <!-- Name Column -->
-            <ng-container matColumnDef="accountTo">
-              <th mat-header-cell *matHeaderCellDef> accountTo </th>
-              <td mat-cell *matCellDef="let element"> {{element.accountTo}} </td>
-            </ng-container>
-          
-            <!-- Weight Column -->
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> amount </th>
-              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-            </ng-container>
-        
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
     <mat-grid-tile>
-      <mat-card class="example-card">
+      <mat-card class="cards">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Shiba Inu</mat-card-title>
@@ -51,7 +19,7 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-card class="example-card">
+      <mat-card class="cards">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Shiba Inu</mat-card-title>
@@ -65,7 +33,7 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-card class="example-card">
+      <mat-card class="cards">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Shiba Inu</mat-card-title>
@@ -79,7 +47,7 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-card class="example-card">
+      <mat-card class="cards">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Shiba Inu</mat-card-title>
@@ -93,7 +61,7 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <mat-card class="example-card">
+      <mat-card class="cards">
         <mat-card-header>
           <mat-card-title-group>
             <mat-card-title>Shiba Inu</mat-card-title>

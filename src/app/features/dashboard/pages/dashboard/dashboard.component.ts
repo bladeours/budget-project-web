@@ -22,20 +22,17 @@ const ELEMENT_DATA: TransactionElement[] = [
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  gridCols = 3; // Domyślna liczba kolumn
-  dataSource = ELEMENT_DATA;
-  displayedColumns: string[] = ['accountFrom', 'accountTo', 'amount'];
-
+  gridCols = 3;
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
     this.breakpointObserver.observe([
-      Breakpoints.Handset, 
+      Breakpoints.Handset,
       Breakpoints.Tablet,
       Breakpoints.WebPortrait
     ]).subscribe(result => {
       if (result.matches) {
-        this.gridCols = 2;
+        this.gridCols = 1;
       } else {
         this.gridCols = 3;
       }
