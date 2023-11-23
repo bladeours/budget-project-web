@@ -1,6 +1,12 @@
-query GetAccount($hash: String!) {
+query getAccount($hash: String!) {
     getAccount(hash: $hash) {
       hash
       color
     }
+}
+
+mutation authenticate($authInput: AuthInput!){
+  authenticate(authInput: $authInput){
+    jwt
+  }
 }

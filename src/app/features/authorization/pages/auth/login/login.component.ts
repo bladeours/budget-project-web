@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {Router} from '@angular/router';
-import {LoginForm} from '../../../models/LoginForm';
-import {AuthService} from '../../../service/auth.service';
+import { Router } from '@angular/router';
+import { AuthInput } from '../../../models/LoginForm';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,8 +24,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.formGroup.valid) {
-      this.authService.login(this.formGroup.value as LoginForm).subscribe({
+      this.authService.login(this.formGroup.value as AuthInput).subscribe({
         next: (response) => {
           this.authService.setAuth(response);
           this.router.navigate(['']);

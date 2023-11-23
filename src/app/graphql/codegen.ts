@@ -1,12 +1,18 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
+import { baseUrl } from '../environments/environment';
 
 const config: CodegenConfig = {
-  schema: 'http://localhost:8080/graphql',
+  schema: `${baseUrl}/graphql`,
   documents: './src/**/*.graphql',
   generates: {
     'src/app/graphql/__generated__.ts': {
-      plugins: ['typescript', 'typescript-operations', 'typescript-apollo-angular']
+      plugins: ['typescript', 'typescript-operations', 'typescript-apollo-angular'],
+      config: {
+        addExplicitOverride: true
+      }
     }
+    
+    
   }
 }
-export default config
+export default config;

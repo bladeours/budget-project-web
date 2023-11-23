@@ -56,6 +56,11 @@ export type AccountsPage = {
   totalPages?: Maybe<Scalars['Int']['output']>;
 };
 
+export type AuthInput = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
 export type CategoriesPage = {
   __typename?: 'CategoriesPage';
   content?: Maybe<Array<Maybe<Category>>>;
@@ -117,6 +122,11 @@ export type Filter = {
   subFilters?: InputMaybe<Array<InputMaybe<Filter>>>;
 };
 
+export type JwtResponse = {
+  __typename?: 'JwtResponse';
+  jwt: Scalars['String']['output'];
+};
+
 export enum LogicOperator {
   And = 'AND',
   Or = 'OR'
@@ -127,9 +137,13 @@ export type Mutation = {
   addAccount?: Maybe<Account>;
   addCategory?: Maybe<Category>;
   addTransaction?: Maybe<Transaction>;
+  authenticate?: Maybe<JwtResponse>;
   deleteAccount?: Maybe<Scalars['Boolean']['output']>;
   deleteCategory?: Maybe<Scalars['Boolean']['output']>;
   deleteTransaction?: Maybe<Scalars['Boolean']['output']>;
+  logout?: Maybe<Scalars['Boolean']['output']>;
+  refreshToken?: Maybe<JwtResponse>;
+  register?: Maybe<JwtResponse>;
   updateAccount?: Maybe<Account>;
   updateCategory?: Maybe<Category>;
   updateTransaction?: Maybe<Transaction>;
@@ -151,6 +165,11 @@ export type MutationAddTransactionArgs = {
 };
 
 
+export type MutationAuthenticateArgs = {
+  authInput: AuthInput;
+};
+
+
 export type MutationDeleteAccountArgs = {
   hash: Scalars['String']['input'];
   removeSub: Scalars['Boolean']['input'];
@@ -164,6 +183,11 @@ export type MutationDeleteCategoryArgs = {
 
 export type MutationDeleteTransactionArgs = {
   hash: Scalars['String']['input'];
+};
+
+
+export type MutationRegisterArgs = {
+  authInput: AuthInput;
 };
 
 
@@ -312,8 +336,15 @@ export type GetAccountQueryVariables = Exact<{
 
 export type GetAccountQuery = { __typename?: 'Query', getAccount?: { __typename?: 'Account', hash: string, color: string } | null };
 
+export type AuthenticateMutationVariables = Exact<{
+  authInput: AuthInput;
+}>;
+
+
+export type AuthenticateMutation = { __typename?: 'Mutation', authenticate?: { __typename?: 'JwtResponse', jwt: string } | null };
+
 export const GetAccountDocument = gql`
-    query GetAccount($hash: String!) {
+    query getAccount($hash: String!) {
   getAccount(hash: $hash) {
     hash
     color
@@ -326,7 +357,25 @@ export const GetAccountDocument = gql`
   })
   export class GetAccountGQL extends Apollo.Query<GetAccountQuery, GetAccountQueryVariables> {
     override document = GetAccountDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AuthenticateDocument = gql`
+    mutation authenticate($authInput: AuthInput!) {
+  authenticate(authInput: $authInput) {
+    jwt
+  }
+}
+    `;
 
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AuthenticateGQL extends Apollo.Mutation<AuthenticateMutation, AuthenticateMutationVariables> {
+    override document = AuthenticateDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
