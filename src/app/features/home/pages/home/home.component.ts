@@ -9,12 +9,8 @@ import { ServerExceptionResponse } from 'src/app/shared/models/ServerExceptionRe
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  // message = 'essa';
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
-    // this.httpClient.get<ServerExceptionResponse>(`${baseUrl}/demo`).subscribe(res => {
-    //   this.message = res.message
-    // })
   }
 }

@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
     } else {
       return next.handle(this.getClonedRequest(request, accessToken));
     }
-    
+
   }
 
   refreshToken(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

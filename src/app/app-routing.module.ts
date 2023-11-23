@@ -12,9 +12,9 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-          path: 'lol',
+          path: 'transactions',
           component: HomeComponent,
-          
+
       }
     ]
   },

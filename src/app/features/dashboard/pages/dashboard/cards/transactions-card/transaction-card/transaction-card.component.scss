@@ -1,13 +1,29 @@
 .transaction {
   border-radius: 10px;
   margin-top: 10px;
-  background-color: #004a9f;
+  background-color: transparent;
+}
+
+.date {
+  margin: 3px auto -9px;
+}
+
+mat-card-header{
+  padding-top: 0;
 }
 
 .amount {
+  font-size: x-large;
   color: #b63333;
   font-weight: bold;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: auto;
+}
+
+@import '/src/styles';
+@media (max-width: $layout-small-width) {
+  .amount {
+    font-size: large;
+  }
 }

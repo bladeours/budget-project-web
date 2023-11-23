@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {TransactionCard} from "../../../TransactionCard";
+import {Transaction} from "../../../../../../../shared/models/Transaction";
 
 @Component({
   selector: 'app-transaction-card',
@@ -8,5 +8,5 @@ import {TransactionCard} from "../../../TransactionCard";
 })
 export class TransactionCardComponent {
   @Input()
-  transactionCard: TransactionCard;
+  transactionCard: Transaction;
 }

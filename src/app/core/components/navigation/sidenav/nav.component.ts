@@ -3,7 +3,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NavbarService } from 'src/app/core/service/navbar.service';
 import { Router } from '@angular/router';
-import { Portal } from '@angular/cdk/portal';
+import {ComponentPortal, Portal} from '@angular/cdk/portal';
+import {TransactionsComponent} from "../../../../features/transactions/pages/transactions/transactions.component";
+import {DashboardComponent} from "../../../../features/dashboard/pages/dashboard/dashboard.component";
 
 
 @Component({
@@ -26,7 +28,7 @@ export class NavbarComponent {
   ngAfterViewInit() {
     this.path = this.router.url;
     this.navbarService.setSidenav(this.sidenav);
-    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+    this.observer.observe(['(max-width: 900px)']).subscribe((res) => {
       if (res.matches) {
         this.sidenav.mode = 'over';
         this.sidenav.close();
@@ -36,5 +38,15 @@ export class NavbarComponent {
         this.sidenav.open();
       }
     });
+  }
+
+  goToTransactions() {
+    this.selectedPortal = new ComponentPortal(TransactionsComponent);
+    this.router.navigate(["transactions"]);
+  }
+
+  goToDashboard() {
+    this.selectedPortal = new ComponentPortal(DashboardComponent);
+    this.router.navigate([""]);
   }
 }

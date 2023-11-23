@@ -32,6 +32,15 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import { TransactionsCardComponent } from './features/dashboard/pages/dashboard/cards/transactions-card/transactions-card.component';
 import { TransactionCardComponent } from './features/dashboard/pages/dashboard/cards/transactions-card/transaction-card/transaction-card.component';
+import { TransactionsComponent } from './features/transactions/pages/transactions/transactions.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { TransactionComponent } from './features/transactions/pages/transactions/transaction/transaction.component';
+import {MatChipsModule} from "@angular/material/chips";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -48,6 +57,8 @@ import { TransactionCardComponent } from './features/dashboard/pages/dashboard/c
     DashboardComponent,
     TransactionsCardComponent,
     TransactionCardComponent,
+    TransactionsComponent,
+    TransactionComponent,
   ],
   imports: [
     MatTableModule,
@@ -69,7 +80,14 @@ import { TransactionCardComponent } from './features/dashboard/pages/dashboard/c
     MatTabsModule,
     MatMenuModule,
     MatSnackBarModule,
-    PortalModule
+    PortalModule,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    GraphQLModule
   ],
   providers: [
     {

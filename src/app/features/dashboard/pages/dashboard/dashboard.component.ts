@@ -26,6 +26,7 @@ export class DashboardComponent {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
+    console.log("dashboard essa");
     this.breakpointObserver.observe([
       Breakpoints.Handset,
       Breakpoints.Tablet,

@@ -1,0 +1,6 @@
+query GetAccount($hash: String!) {
+    getAccount(hash: $hash) {
+      hash
+      color
+    }
+}
