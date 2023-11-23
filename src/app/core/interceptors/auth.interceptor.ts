@@ -35,10 +35,10 @@ export class AuthInterceptor implements HttpInterceptor {
         localStorage.removeItem(AuthService.accessTokenKey)
         throw error
       }),
-      switchMap((authResponse) => {
-        const accessToken = authResponse.jwt;
+      switchMap((response) => {
+        const accessToken = response.data.authenticate.jwt;
         const req = this.getClonedRequest(request, accessToken);
-        this.authService.setAuth(authResponse);
+        this.authService.setAuth(response);
         return next.handle(req);
       })
     );

@@ -1,12 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { Observable } from 'rxjs';
-import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
-import { baseUrl } from 'src/app/environments/environment';
-import { AuthenticateGQL } from 'src/app/graphql/__generated__';
-import { JwtResponse } from '../models/JwtResponse';
-import { AuthInput } from '../models/LoginForm';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {AuthInterceptor} from 'src/app/core/interceptors/auth.interceptor';
+import {AuthenticateGQL, LogoutGQL, RefreshTokenGQL, RegisterGQL} from 'src/app/graphql/__generated__';
+import {JwtResponse} from '../models/JwtResponse';
+import {AuthInput} from '../models/AuthInput';
 
 @Injectable({
   providedIn: 'root',
@@ -14,48 +11,36 @@ import { AuthInput } from '../models/LoginForm';
 export class AuthService {
   public static readonly accessTokenKey = 'accessToken';
 
-  constructor(private httpClient: HttpClient, private authenticateGQL: AuthenticateGQL) {}
+  constructor(private logoutGQL: LogoutGQL,
+              private authenticateGQL: AuthenticateGQL,
+              private registerGQL: RegisterGQL,
+              private refreshTokenGQL: RefreshTokenGQL) {}
 
   public isAuthenticated(): boolean {
-    return localStorage.getItem(AuthService.accessTokenKey) !== null;
+    const accessToken = localStorage.getItem(AuthService.accessTokenKey);
+    return accessToken !== null && accessToken !== undefined;
   }
 
-  register(data: AuthInput) {
+  register(authInput: AuthInput): Observable<any> {
     AuthInterceptor.ignoreJwt = true;
-    return this.httpClient.post<JwtResponse>(`${baseUrl}/auth/register`, data, {
-      withCredentials: true,
-    });
+    return this.registerGQL.mutate({authInput});
   }
 
   login(authInput: AuthInput): Observable<any> {
     AuthInterceptor.ignoreJwt = true;
-
-    
     return this.authenticateGQL.mutate({authInput});
-
-    // return this.httpClient.post<JwtResponse>(
-    //   `${baseUrl}/auth/authenticate`,
-    //   data,
-    //   { withCredentials: true }
-    // );
   }
 
-  setAuth(response: JwtResponse) {
-    localStorage.setItem(AuthService.accessTokenKey, response.jwt);
+  setAuth(jwt: string) {
+    localStorage.setItem(AuthService.accessTokenKey, jwt);
   }
 
-  refreshToken() {
+  refreshToken(): Observable<any> {
     AuthInterceptor.ignoreJwt = true;
-    return this.httpClient.post<JwtResponse>(
-      `${baseUrl}/auth/refreshtoken`,
-      undefined,
-      { withCredentials: true }
-    );
+    return this.refreshTokenGQL.mutate();
   }
 
   logout() {
-    return this.httpClient.post(`${baseUrl}/auth/logout`, undefined, {
-      withCredentials: true,
-    });
+    return this.logoutGQL.mutate();
   }
 }

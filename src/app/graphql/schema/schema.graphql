@@ -10,3 +10,68 @@ mutation authenticate($authInput: AuthInput!){
     jwt
   }
 }
+
+mutation register($authInput: AuthInput!){
+  register(authInput: $authInput) {
+    jwt
+  }
+}
+
+mutation refreshToken {
+  refreshToken {
+    jwt
+  }
+}
+
+mutation logout {
+  logout
+}
+
+query getAccountsPage($page: Page!, $filter: Filter) {
+  getAccountsPage(page: $page, filter: $filter) {
+    size
+    number
+    totalElements
+    totalPages
+    content {
+      hash
+      color
+      name
+      archived
+      balance
+      accountType
+    }
+  }
+}
+
+query getTransactionsPage($page: Page!, $filter: Filter) {
+  getTransactionsPage(page: $page, filter: $filter) {
+    size
+    number
+    totalElements
+    totalPages
+    content {
+      transactionType
+      hash
+      name
+      amount
+      accountFrom {
+        hash
+        name
+      }
+      accountTo {
+        hash
+        name
+      }
+      category {
+        name
+        color
+        hash
+        income
+      }
+      date
+      need
+      note
+    }
+  }
+}

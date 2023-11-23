@@ -343,6 +343,39 @@ export type AuthenticateMutationVariables = Exact<{
 
 export type AuthenticateMutation = { __typename?: 'Mutation', authenticate?: { __typename?: 'JwtResponse', jwt: string } | null };
 
+export type RegisterMutationVariables = Exact<{
+  authInput: AuthInput;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'JwtResponse', jwt: string } | null };
+
+export type RefreshTokenMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RefreshTokenMutation = { __typename?: 'Mutation', refreshToken?: { __typename?: 'JwtResponse', jwt: string } | null };
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout?: boolean | null };
+
+export type GetAccountsPageQueryVariables = Exact<{
+  page: Page;
+  filter?: InputMaybe<Filter>;
+}>;
+
+
+export type GetAccountsPageQuery = { __typename?: 'Query', getAccountsPage?: { __typename?: 'AccountsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Account', hash: string, color: string, name: string, archived: boolean, balance: number, accountType: AccountType } | null> | null } | null };
+
+export type GetTransactionsPageQueryVariables = Exact<{
+  page: Page;
+  filter?: InputMaybe<Filter>;
+}>;
+
+
+export type GetTransactionsPageQuery = { __typename?: 'Query', getTransactionsPage?: { __typename?: 'TransactionsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Transaction', transactionType?: TransactionType | null, hash?: string | null, name?: string | null, amount?: number | null, date?: string | null, need?: boolean | null, note?: string | null, accountFrom?: { __typename?: 'Account', hash: string, name: string } | null, accountTo?: { __typename?: 'Account', hash: string, name: string } | null, category?: { __typename?: 'Category', name?: string | null, color?: string | null, hash?: string | null, income?: boolean | null } | null } | null> | null } | null };
+
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
   getAccount(hash: $hash) {
@@ -375,6 +408,131 @@ export const AuthenticateDocument = gql`
   })
   export class AuthenticateGQL extends Apollo.Mutation<AuthenticateMutation, AuthenticateMutationVariables> {
     override document = AuthenticateDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RegisterDocument = gql`
+    mutation register($authInput: AuthInput!) {
+  register(authInput: $authInput) {
+    jwt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RegisterGQL extends Apollo.Mutation<RegisterMutation, RegisterMutationVariables> {
+    override document = RegisterDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const RefreshTokenDocument = gql`
+    mutation refreshToken {
+  refreshToken {
+    jwt
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RefreshTokenGQL extends Apollo.Mutation<RefreshTokenMutation, RefreshTokenMutationVariables> {
+    override document = RefreshTokenDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const LogoutDocument = gql`
+    mutation logout {
+  logout
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class LogoutGQL extends Apollo.Mutation<LogoutMutation, LogoutMutationVariables> {
+    override document = LogoutDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetAccountsPageDocument = gql`
+    query getAccountsPage($page: Page!, $filter: Filter) {
+  getAccountsPage(page: $page, filter: $filter) {
+    size
+    number
+    totalElements
+    totalPages
+    content {
+      hash
+      color
+      name
+      archived
+      balance
+      accountType
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAccountsPageGQL extends Apollo.Query<GetAccountsPageQuery, GetAccountsPageQueryVariables> {
+    override document = GetAccountsPageDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetTransactionsPageDocument = gql`
+    query getTransactionsPage($page: Page!, $filter: Filter) {
+  getTransactionsPage(page: $page, filter: $filter) {
+    size
+    number
+    totalElements
+    totalPages
+    content {
+      transactionType
+      hash
+      name
+      amount
+      accountFrom {
+        hash
+        name
+      }
+      accountTo {
+        hash
+        name
+      }
+      category {
+        name
+        color
+        hash
+        income
+      }
+      date
+      need
+      note
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetTransactionsPageGQL extends Apollo.Query<GetTransactionsPageQuery, GetTransactionsPageQueryVariables> {
+    override document = GetTransactionsPageDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

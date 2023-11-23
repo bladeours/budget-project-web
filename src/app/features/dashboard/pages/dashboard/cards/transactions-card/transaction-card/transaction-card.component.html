@@ -4,7 +4,7 @@
       </div>
   <mat-card-header>
     <mat-card-title>
-      <mat-icon> {{transactionCard.icon}} </mat-icon>
+<!--      <mat-icon> {{transactionCard.icon}} </mat-icon>-->
       {{transactionCard.category}}
     </mat-card-title>
     <mat-card-subtitle>
@@ -17,8 +17,8 @@
 <!--      {{transactionCard.date}}-->
 <!--    </div>-->
 
-    <div class="amount">
-      {{transactionCard.amount}}
+    <div class="amount" [style.color]=transactionCard.amount.color>
+      {{transactionCard.amount.amount.toFixed(2)}}
     </div>
   </mat-card-header>
 </mat-card>

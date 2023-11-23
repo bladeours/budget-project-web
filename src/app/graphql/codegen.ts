@@ -11,8 +11,8 @@ const config: CodegenConfig = {
         addExplicitOverride: true
       }
     }
-    
-    
+
+
   }
 }
 export default config;

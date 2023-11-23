@@ -1,13 +1,8 @@
-import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
-import { RegisterForm } from '../../../models/RegisterForm';
-import { AuthService } from '../../../service/auth.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../service/auth.service';
+import {AuthInput} from "../../../models/AuthInput";
 
 @Component({
   selector: 'app-register',
@@ -29,13 +24,13 @@ export class RegisterComponent {
   register() {
     if (this.formGroup.valid) {
       this.authService
-        .register(this.formGroup.value as RegisterForm)
+        .register(this.formGroup.value as AuthInput)
         .subscribe({
           next: (response) => {
-            this.authService.setAuth(response);
+            this.authService.setAuth(response.data.register.jwt);
             this.router.navigate(['']);
           },
-          error: (error) => alert(error.error.message),
+          error: (error) => alert(error),
         });
     }
   }

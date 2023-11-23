@@ -16,17 +16,16 @@
   max-height: 80%;
 }
 
-
 .categoriesForm {
   margin-left: 10px;
 }
 
 mat-paginator {
+  //margin-top: 100px;
   position: absolute;
   display:block;
   border-radius: 10px;
   width: 100%;
-  margin-top: auto;
   bottom: 0;
 }
 
@@ -68,4 +67,13 @@ mat-paginator {
     min-width: 70px;
     width: 30%;
   }
+
+  .transactions-wrapper {
+    margin-bottom: 20px;
+  }
+  mat-paginator {
+    //margin-top: 100px;
+    position: relative;
+  }
+
 }
