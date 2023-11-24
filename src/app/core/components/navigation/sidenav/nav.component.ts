@@ -42,11 +42,13 @@ export class NavbarComponent {
 
   goToTransactions() {
     this.selectedPortal = new ComponentPortal(TransactionsComponent);
+    this.sidenav.close();
     this.router.navigate(["transactions"]);
   }
 
   goToDashboard() {
     this.selectedPortal = new ComponentPortal(DashboardComponent);
+    this.sidenav.close();
     this.router.navigate([""]);
   }
 }

@@ -1,5 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {TransactionCard} from "../../../../../../shared/models/TransactionCard";
+import {TransactionsPage} from "../../../../../../graphql/__generated__";
+import {GraphqlService} from "../../../../../../graphql/service/graphql.service";
+import {TransactionService} from "../../../../../transactions/service/transaction.service";
 @Component({
   selector: 'app-transactions-card',
   templateUrl: './transactions-card.component.html',
@@ -8,18 +11,25 @@ import {TransactionCard} from "../../../../../../shared/models/TransactionCard";
 export class TransactionsCardComponent {
   transactionCards: TransactionCard[] = [];
 
-  ngAfterViewInit() {
-    this.transactionCards = this.getLatestTransactions();
+
+  constructor(private graphqlService: GraphqlService, private transactionService: TransactionService) {
   }
 
-  getLatestTransactions() {
-    let transactionCard: TransactionCard = new TransactionCard();
-    transactionCard.icon = "money_off";
-    transactionCard.category = "Public Transport";
-    transactionCard.account = "Santander";
-    transactionCard.amount.amount = 21.53;
-    transactionCard.amount.color = "#ffffff";
-    transactionCard.date = "2023-01-20"
-    return [transactionCard, transactionCard, transactionCard]
+  ngAfterViewInit() {
+    this.setTransactions();
+  }
+
+  setTransactions() {
+    this.graphqlService.getTransactionsPage({number: 0, size: 10}, {}).subscribe(
+      value => {
+        let transactionPage: TransactionsPage = value.data.getTransactionsPage as TransactionsPage;
+        this.transactionCards = this.transactionService.getTransactionCards(transactionPage);
+        console.log(this.transactionCards);
+      }
+    )
+  }
+
+  handleTransactionClick(hash: string) {
+    alert(hash);
   }
 }

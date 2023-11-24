@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {GraphqlService} from "../../../graphql/service/graphql.service";
 import {Transaction, TransactionsPage, TransactionType} from "../../../graphql/__generated__";
 import {TransactionCard} from "../../../shared/models/TransactionCard";
 import {DatePipe} from "@angular/common";
@@ -9,7 +8,7 @@ import {DatePipe} from "@angular/common";
 })
 export class TransactionService {
 
-    constructor(private graphqlService: GraphqlService, private datePipe: DatePipe) {
+    constructor(private datePipe: DatePipe) {
     }
 
     getTransactionCards(transactionsPage: TransactionsPage): TransactionCard[] {
@@ -68,4 +67,5 @@ export class TransactionService {
                 return "#BFBFBF";
         }
     }
+
 }
