@@ -30,6 +30,8 @@ import {DashboardComponent} from './features/dashboard/pages/dashboard/dashboard
 import {PortalModule} from '@angular/cdk/portal';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
+import {MatDialog} from '@angular/material/dialog';
+import {MatDialogContent} from '@angular/material/dialog';
 import {
   TransactionsCardComponent
 } from './features/dashboard/pages/dashboard/cards/transactions-card/transactions-card.component';
@@ -45,6 +47,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {GraphQLModule} from './graphql.module';
 import {DatePipe} from "@angular/common";
+import { AddTransactionDialogComponent } from './shared/add-transaction-dialog/add-transaction-dialog.component';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -61,7 +64,7 @@ import {DatePipe} from "@angular/common";
     DashboardComponent,
     TransactionsCardComponent,
     TransactionCardComponent,
-    TransactionsComponent,
+    TransactionsComponent
   ],
   imports: [
     MatTableModule,
@@ -90,7 +93,8 @@ import {DatePipe} from "@angular/common";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    GraphQLModule
+    GraphQLModule,
+    MatDialogContent
   ],
   providers: [
     {

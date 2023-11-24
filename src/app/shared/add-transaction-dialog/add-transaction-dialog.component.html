@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Add Transaction</h1>
+<form>
+  <mat-form-field>
+  <mat-label>Input</mat-label>
+  <input matInput currencyMask placeholder="Ex. 120.00" value="">
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Select</mat-label>
+  <mat-select>
+    <mat-option value="EXPENSE">Expense</mat-option>
+    <mat-option value="INCOME">Income</mat-option>
+    <mat-option value="TRANSFER">Transfer</mat-option>
+  </mat-select>
+</mat-form-field>
+</form>
+<div mat-dialog-actions class="actions">
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button (click)="saveTransaction()">Save</button>
+</div>

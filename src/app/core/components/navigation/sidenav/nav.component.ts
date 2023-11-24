@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import {ComponentPortal, Portal} from '@angular/cdk/portal';
 import {TransactionsComponent} from "../../../../features/transactions/pages/transactions/transactions.component";
 import {DashboardComponent} from "../../../../features/dashboard/pages/dashboard/dashboard.component";
+import {MatDialog} from "@angular/material/dialog";
+import { AddTransactionDialogComponent } from 'src/app/shared/add-transaction-dialog/add-transaction-dialog.component';
 
 
 @Component({
@@ -18,11 +20,13 @@ export class NavbarComponent {
   path: string;
   @Input()
   selectedPortal: Portal<any>;
+  isSmall: boolean = false;
 
   constructor(
     private observer: BreakpointObserver,
     private navbarService: NavbarService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngAfterViewInit() {
@@ -30,10 +34,12 @@ export class NavbarComponent {
     this.navbarService.setSidenav(this.sidenav);
     this.observer.observe(['(max-width: 900px)']).subscribe((res) => {
       if (res.matches) {
+        this.isSmall = true;
         this.sidenav.mode = 'over';
         this.sidenav.close();
         // this.sidenav.
       } else {
+        this.isSmall = false;
         this.sidenav.mode = 'side';
         this.sidenav.open();
       }
@@ -41,14 +47,22 @@ export class NavbarComponent {
   }
 
   goToTransactions() {
+    if(this.isSmall) {
+      this.sidenav.close();
+    }
     this.selectedPortal = new ComponentPortal(TransactionsComponent);
-    this.sidenav.close();
     this.router.navigate(["transactions"]);
   }
 
   goToDashboard() {
+    if(this.isSmall) {
+      this.sidenav.close();
+    }
     this.selectedPortal = new ComponentPortal(DashboardComponent);
-    this.sidenav.close();
     this.router.navigate([""]);
   }
+
+  addTransaction() {
+    this.dialog.open(AddTransactionDialogComponent);
+    }
 }

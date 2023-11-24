@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 import { AuthInput } from '../../../models/AuthInput';
 import { AuthService } from '../../../service/auth.service';
-import {DASH} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-login',
@@ -40,14 +39,7 @@ export class LoginComponent implements OnInit {
         this.authService.setAuth(response.data.authenticate.jwt);
         this.router.navigate(['']);
       })
-      // this.authService.login(this.formGroup.value as AuthInput).subscribe({
-      //   next: (response) => {
-      //     console.log(response);
-      //     this.authService.setAuth(response.data.authenticate.jwt);
-      //     this.router.navigate(['']);
-      //   },
-      //   error: (error) => alert(error.error.message),
-      // });
+
     }
   }
 }

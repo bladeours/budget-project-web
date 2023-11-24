@@ -1,12 +1,12 @@
-import {Component, inject} from '@angular/core';
-import {TransactionCard} from "../../../../shared/models/TransactionCard";
-import {FormControl, FormGroup} from "@angular/forms";
-import {LiveAnnouncer} from "@angular/cdk/a11y";
-import {debounceTime} from "rxjs";
-import {GraphqlService} from "../../../../graphql/service/graphql.service";
-import {TransactionsPage} from "../../../../graphql/__generated__";
-import {TransactionService} from "../../service/transaction.service";
-import {PageEvent} from "@angular/material/paginator";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { Component, ElementRef, HostListener, Renderer2, ViewChild, inject } from '@angular/core';
+import { FormControl, FormGroup } from "@angular/forms";
+import { PageEvent } from "@angular/material/paginator";
+import { debounceTime } from "rxjs";
+import { TransactionsPage } from "../../../../graphql/__generated__";
+import { GraphqlService } from "../../../../graphql/service/graphql.service";
+import { TransactionCard } from "../../../../shared/models/TransactionCard";
+import { TransactionService } from "../../service/transaction.service";
 
 @Component({
   selector: 'app-transactions',
@@ -14,7 +14,11 @@ import {PageEvent} from "@angular/material/paginator";
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent {
-
+  @ViewChild('paginator',  { read: ElementRef }) paginator: ElementRef;
+  @ViewChild('wrapper') wrapper: ElementRef;
+  @ViewChild('filters') filters: ElementRef;
+  @ViewChild('transactionWrapper') transactionWrapper: ElementRef;
+  // paginatorHeight: number;
   transactionCards: TransactionCard[] = [];
   categories = new FormControl('');
   from = new FormControl();
@@ -33,7 +37,7 @@ export class TransactionsComponent {
   categoryList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
 
-  constructor(private graphqlService: GraphqlService, private transactionService: TransactionService) {
+  constructor(private graphqlService: GraphqlService, private transactionService: TransactionService, private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -44,6 +48,22 @@ export class TransactionsComponent {
   }
   ngAfterViewInit() {
     this.setRealTransactions();
+    this.resizeTransactionWrapper();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.resizeTransactionWrapper();
+  }
+
+  private resizeTransactionWrapper() {
+    if(window.innerWidth > 800){
+      let paginatorHeight = this.paginator.nativeElement.offsetHeight;
+      let wrapperHeight = this.wrapper.nativeElement.offsetHeight;
+      let filtersHeight = this.filters.nativeElement.offsetHeight;
+      this.renderer.setStyle(this.transactionWrapper.nativeElement, "max-height", wrapperHeight - paginatorHeight - filtersHeight - 30 + "px");
+    }
+    
   }
 
   handleRange(v :any) {
