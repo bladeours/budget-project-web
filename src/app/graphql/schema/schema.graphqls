@@ -1,42 +1,44 @@
 type Query {
-    getAccountsPage(page: Page!, filter: Filter): AccountsPage
-    getAccount(hash: String!): Account
+  getAccountsPage(page: Page!, filter: Filter): AccountsPage
+  getAccounts(filter: Filter): [Account]
+  getAccount(hash: String!): Account
 
-    getTransactionsPage(page: Page!, filter: Filter): TransactionsPage
-    getTransaction(hash: String!): Transaction
+  getTransactionsPage(page: Page!, filter: Filter): TransactionsPage
+  getTransaction(hash: String!): Transaction
 
-    getCategoriesPage(page: Page!, filter: Filter): CategoriesPage
-    getCategory(hash: String!): Category
+  getCategoriesPage(page: Page!, filter: Filter): CategoriesPage
+  getCategories(filter: Filter): [Category]
+  getCategory(hash: String!): Category
 }
 
 
 type Mutation {
-    register(authInput: AuthInput!): JwtResponse
-    authenticate(authInput: AuthInput!): JwtResponse
-    refreshToken: JwtResponse
-    logout: Boolean
+  register(authInput: AuthInput!): JwtResponse
+  authenticate(authInput: AuthInput!): JwtResponse
+  refreshToken: JwtResponse
+  logout: Boolean
 
-    addAccount(accountInput: AccountInput!): Account
-    deleteAccount(hash: String!, removeSub: Boolean!): Boolean
-    updateAccount(hash: String!, accountInput: AccountInput!): Account
+  addAccount(accountInput: AccountInput!): Account
+  deleteAccount(hash: String!, removeSub: Boolean!): Boolean
+  updateAccount(hash: String!, accountInput: AccountInput!): Account
 
-    addTransaction(transactionInput: TransactionInput!): Transaction
-    deleteTransaction(hash: String!): Boolean
-    updateTransaction(hash: String!, transactionUpdateInput: TransactionUpdateInput!): Transaction
+  addTransaction(transactionInput: TransactionInput!): Transaction
+  deleteTransaction(hash: String!): Boolean
+  updateTransaction(hash: String!, transactionInput: TransactionInput!): Transaction
 
-    addCategory(categoryInput: CategoryInput!): Category
-    deleteCategory(hash: String!): Boolean
-    updateCategory(hash: String!, categoryUpdateInput: CategoryUpdateInput!): Category
+  addCategory(categoryInput: CategoryInput!): Category
+  deleteCategory(hash: String!): Boolean
+  updateCategory(hash: String!, categoryUpdateInput: CategoryUpdateInput!): Category
 }
 
 
 input Page {
-    number: Int!
-    size: Int!
+  number: Int!
+  size: Int!
 }
 
 enum Currency {
-    PLN
-    EUR
+  PLN
+  EUR
 }
 

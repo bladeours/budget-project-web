@@ -16,8 +16,8 @@
     <mat-form-field class="categoriesForm">
       <mat-label>Categories</mat-label>
       <mat-select [formControl]="categories" multiple>
-        <mat-option *ngFor="let category of categoryList" [value]="category">{{
-          category
+        <mat-option *ngFor="let category of categoryList" [value]="category" [style.color]="category.income == true ? myGreen : myRed">{{
+          category.name
         }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -37,7 +37,7 @@
       <mat-label>To</mat-label>
       <input
         matInput
-        [formControl]="to"
+        [formControl]="to"components
         type="text"
         inputmode="numeric"
         pattern="[0-9]*[.,]?[0-9]+"
@@ -50,7 +50,6 @@
     <div *ngFor="let transactionCard of transactionCards">
       <app-transaction-card
         [transactionCard]="transactionCard"
-        (click)="handleTransactionClick(transactionCard.hash)"
       ></app-transaction-card>
     </div>
   </div>

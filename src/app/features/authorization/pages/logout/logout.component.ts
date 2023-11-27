@@ -17,7 +17,6 @@ export class LogoutComponent implements OnInit {
     this.authService.logout()
       .subscribe({
         next: (response) => {
-          console.log("essa");
           localStorage.removeItem(AuthService.accessTokenKey);
           this.matSnackBar.open("Logout properly", "close", {
             duration: 3000

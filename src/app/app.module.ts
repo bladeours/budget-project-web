@@ -30,24 +30,21 @@ import {DashboardComponent} from './features/dashboard/pages/dashboard/dashboard
 import {PortalModule} from '@angular/cdk/portal';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
-import {MatDialog} from '@angular/material/dialog';
-import {MatDialogContent} from '@angular/material/dialog';
+import {MatDialogContent, MatDialogModule} from '@angular/material/dialog';
 import {
   TransactionsCardComponent
 } from './features/dashboard/pages/dashboard/cards/transactions-card/transactions-card.component';
-import {
-  TransactionCardComponent
-} from './features/dashboard/pages/dashboard/cards/transactions-card/transaction-card/transaction-card.component';
+import {TransactionCardComponent} from './shared/components/transaction-card/transaction-card.component';
 import {TransactionsComponent} from './features/transactions/pages/transactions/transactions.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {GraphQLModule} from './graphql.module';
 import {DatePipe} from "@angular/common";
-import { AddTransactionDialogComponent } from './shared/add-transaction-dialog/add-transaction-dialog.component';
+import {AppDateAdapter, MY_DATE_FORMATS} from "./shared/utils/AppDateAdapter";
 
 @NgModule({
   exports: [NavbarComponent],
@@ -94,7 +91,8 @@ import { AddTransactionDialogComponent } from './shared/add-transaction-dialog/a
     MatNativeDateModule,
     MatSelectModule,
     GraphQLModule,
-    MatDialogContent
+    MatDialogContent,
+    MatDialogModule
   ],
   providers: [
     {
@@ -102,7 +100,9 @@ import { AddTransactionDialogComponent } from './shared/add-transaction-dialog/a
       useClass: AuthInterceptor,
       multi: true,
     },
-    DatePipe
+    DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
   ],
   bootstrap: [AppComponent],
 })

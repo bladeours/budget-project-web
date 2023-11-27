@@ -7,12 +7,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit{
-  
-  activeTab: number; 
+
+  activeTab: number;
   constructor(private router: Router){}
 
   ngOnInit(): void {
-    console.log(this.router.url)
     if(this.router.url === "/register") {
       this.activeTab = 1;
     } else {

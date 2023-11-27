@@ -7,7 +7,7 @@ import {ComponentPortal, Portal} from '@angular/cdk/portal';
 import {TransactionsComponent} from "../../../../features/transactions/pages/transactions/transactions.component";
 import {DashboardComponent} from "../../../../features/dashboard/pages/dashboard/dashboard.component";
 import {MatDialog} from "@angular/material/dialog";
-import { AddTransactionDialogComponent } from 'src/app/shared/add-transaction-dialog/add-transaction-dialog.component';
+import { TransactionDialogComponent } from 'src/app/shared/components/transaction-dialog/transaction-dialog.component';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class NavbarComponent {
   ngAfterViewInit() {
     this.path = this.router.url;
     this.navbarService.setSidenav(this.sidenav);
-    this.observer.observe(['(max-width: 900px)']).subscribe((res) => {
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches) {
         this.isSmall = true;
         this.sidenav.mode = 'over';
@@ -63,6 +63,9 @@ export class NavbarComponent {
   }
 
   addTransaction() {
-    this.dialog.open(AddTransactionDialogComponent);
+    if(this.isSmall) {
+      this.sidenav.close();
+    }
+    this.dialog.open(TransactionDialogComponent);
     }
 }

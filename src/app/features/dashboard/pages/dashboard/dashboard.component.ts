@@ -1,21 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 
-export interface TransactionElement {
-  accountFrom: string;
-  accountTo: String;
-  amount: number;
-}
-
-const ELEMENT_DATA: TransactionElement[] = [
-  {accountFrom: "esa", accountTo: "essaTo", amount: 12.2},
-  {accountFrom: "esa", accountTo: "essaTo", amount: 12.2},
-  {accountFrom: "esa", accountTo: "essaTo", amount: 12.2},
-  {accountFrom: "es2a", accountTo: "essa2To", amount: 1.2}
-
-];
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -38,4 +23,6 @@ export class DashboardComponent {
       }
     });
   }
+
+
 }

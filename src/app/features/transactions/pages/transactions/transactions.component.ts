@@ -1,12 +1,20 @@
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { Component, ElementRef, HostListener, Renderer2, ViewChild, inject } from '@angular/core';
-import { FormControl, FormGroup } from "@angular/forms";
-import { PageEvent } from "@angular/material/paginator";
-import { debounceTime } from "rxjs";
-import { TransactionsPage } from "../../../../graphql/__generated__";
-import { GraphqlService } from "../../../../graphql/service/graphql.service";
-import { TransactionCard } from "../../../../shared/models/TransactionCard";
-import { TransactionService } from "../../service/transaction.service";
+import {Component, ElementRef, HostListener, Renderer2, ViewChild} from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {PageEvent} from "@angular/material/paginator";
+import {debounceTime} from "rxjs";
+import {
+  Category,
+  Filter,
+  LogicOperator,
+  StringExpression,
+  StringOperator,
+  TransactionsPage
+} from "../../../../graphql/__generated__";
+import {GraphqlService} from "../../../../graphql/service/graphql.service";
+import {TransactionCard} from "../../../../shared/models/TransactionCard";
+import {TransactionCardService} from "../../service/transaction-card.service";
+import {MatDialog} from "@angular/material/dialog";
+import {myGreen, myRed} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-transactions',
@@ -20,7 +28,7 @@ export class TransactionsComponent {
   @ViewChild('transactionWrapper') transactionWrapper: ElementRef;
   // paginatorHeight: number;
   transactionCards: TransactionCard[] = [];
-  categories = new FormControl('');
+  categories:FormControl<any> = new FormControl();
   from = new FormControl();
   to = new FormControl();
   range = new FormGroup({
@@ -32,23 +40,26 @@ export class TransactionsComponent {
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [10, 25, 50];
+  protected readonly myGreen = myGreen;
+  protected readonly myRed = myRed;
+  categoryList: Category[] = [];
+  categoryFilter: Filter = {
+  };
+  filter: Filter = {logicOperator: LogicOperator.And, subFilters: []};
 
-  announcer = inject(LiveAnnouncer);
-  categoryList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
-
-  constructor(private graphqlService: GraphqlService, private transactionService: TransactionService, private renderer: Renderer2) {
+  constructor(private graphqlService: GraphqlService, private transactionService: TransactionCardService,
+              private renderer: Renderer2, private dialog: MatDialog) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.setTransactions();
+    this.resizeTransactionWrapper();
+    this.setCategories();
     this.categories.valueChanges.pipe(debounceTime(1000)).subscribe(v => this.handleChangeCategories(v));
     this.from.valueChanges.pipe(debounceTime(1000)).subscribe(v => this.handleFrom(v));
     this.to.valueChanges.pipe(debounceTime(1000)).subscribe(v => this.handleTo(v));
     this.range.valueChanges.pipe(debounceTime(1000)).subscribe(v => this.handleRange(v));
-  }
-  ngAfterViewInit() {
-    this.setRealTransactions();
-    this.resizeTransactionWrapper();
   }
 
   @HostListener('window:resize')
@@ -63,7 +74,7 @@ export class TransactionsComponent {
       let filtersHeight = this.filters.nativeElement.offsetHeight;
       this.renderer.setStyle(this.transactionWrapper.nativeElement, "max-height", wrapperHeight - paginatorHeight - filtersHeight - 30 + "px");
     }
-    
+
   }
 
   handleRange(v :any) {
@@ -71,14 +82,35 @@ export class TransactionsComponent {
     console.log(v.start);
   }
 
-  handleChangeCategories(value: string | null) {
-    if(value === null) {
+  handleChangeCategories(value: Category[]) {
+    if(value.length == 0){
+      this.categoryFilter = {};
+      this.setSubFiltersAndRefresh();
       return;
     }
+    let stringExpressions: StringExpression[] = value.map(c => {
+      let e: StringExpression;
+      e = {
+        value: c.hash,
+        operator: StringOperator.Equals,
+        field: "category.hash"
+      }
+      return e;
+    })
+    this.categoryFilter = {
+      logicOperator: LogicOperator.Or,
+      stringFilters: stringExpressions
+    };
+    this.setSubFiltersAndRefresh();
   }
 
-  setRealTransactions() {
-    this.graphqlService.getTransactionsPage({number: this.pageIndex, size: this.pageSize}, {}).subscribe(
+  setSubFiltersAndRefresh(){
+   this.filter.subFilters = [this.categoryFilter];
+   this.setTransactions();
+  }
+
+  setTransactions() {
+    this.graphqlService.getTransactionsPage({number: this.pageIndex, size: this.pageSize}, this.filter).subscribe(
         value => {
           let transactionPage: TransactionsPage = value.data.getTransactionsPage as TransactionsPage;
           this.transactionCards = this.transactionService.getTransactionCards(transactionPage);
@@ -99,10 +131,18 @@ export class TransactionsComponent {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this.setRealTransactions();
+    this.setTransactions();
   }
 
-  handleTransactionClick(hash: string) {
-    alert(hash);
+  private setCategories() {
+    this.graphqlService.getCategories().subscribe({
+      next: v => {
+        this.categoryList = (v.data.getCategories as Category[])
+          .filter(c => c.parent === null)
+          .sort((c1, c2) => c1.income ? 1 : -1);
+      }
+    });
   }
+
+
 }

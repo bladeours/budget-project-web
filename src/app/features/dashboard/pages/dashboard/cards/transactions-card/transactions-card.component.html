@@ -4,8 +4,7 @@
   </mat-card-header>
     <mat-card-content class="transactions-content" >
       <div *ngFor="let transactionCard of transactionCards">
-        <app-transaction-card [transactionCard]="transactionCard" (click)="handleTransactionClick(transactionCard.hash)"></app-transaction-card>
+        <app-transaction-card [transactionCard]="transactionCard"></app-transaction-card>
       </div>
-
     </mat-card-content>
 </mat-card>

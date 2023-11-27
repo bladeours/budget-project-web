@@ -1,48 +1,55 @@
 input Filter {
-    stringFilters: [StringExpression]
-    doubleFilters: [DoubleExpression]
-    dateFilters: [DateExpression]
-    logicOperator: LogicOperator
-    subFilters: [Filter]
+  stringFilters: [StringExpression]
+  doubleFilters: [DoubleExpression]
+  booleanFilters: [BooleanExpression]
+  dateFilters: [DateExpression]
+  logicOperator: LogicOperator
+  subFilters: [Filter]
+
+}
+
+input BooleanExpression {
+  field: String!
+  value: Boolean!
 }
 
 enum LogicOperator {
-    AND,
-    OR
+  AND,
+  OR
 }
 
 input DoubleExpression {
-    field: String!
-    operator: NumberOperator!
-    value: Float!
+  field: String!
+  operator: NumberOperator!
+  value: Float!
 }
 
 enum NumberOperator {
-    EQ,
-    GT,
-    GTE,
-    LT,
-    LTE
+  EQ,
+  GT,
+  GTE,
+  LT,
+  LTE
 }
 
 input StringExpression {
-    field: String!
-    operator: StringOperator!
-    value: String!
+  field: String!
+  operator: StringOperator!
+  value: String!
 }
 
 enum StringOperator {
-    EQUALS
-    CONTAINS
+  EQUALS
+  CONTAINS
 }
 
 input DateExpression {
-    field: String!
-    operator: DateOperator!
-    values: [String]!
+  field: String!
+  operator: DateOperator!
+  values: [String]!
 }
 
 enum DateOperator {
-    BETWEEN
+  BETWEEN
 }
 

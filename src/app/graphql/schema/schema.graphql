@@ -1,8 +1,8 @@
 query getAccount($hash: String!) {
-    getAccount(hash: $hash) {
-      hash
-      color
-    }
+  getAccount(hash: $hash) {
+    hash
+    color
+  }
 }
 
 mutation authenticate($authInput: AuthInput!){
@@ -68,10 +68,116 @@ query getTransactionsPage($page: Page!, $filter: Filter) {
         color
         hash
         income
+        parent {
+          name
+          hash
+          subCategories {
+            name
+            hash
+          }
+        }
+        subCategories {
+          name
+          hash
+        }
+      }
+      subCategory {
+        name
+        hash
       }
       date
       need
       note
     }
   }
+}
+
+query getAccountsHashName($filter: Filter){
+  getAccounts(filter: $filter){
+    hash
+    name
+    archived
+  }
+}
+
+query getCategoriesIncomeHashName{
+  getCategories(filter: {booleanFilters:[{field: "income", value: true}], logicOperator: AND }){
+    hash
+    name
+    archived
+    subCategories {
+      name
+      hash
+    }
+    parent {
+      name
+      hash
+      subCategories {
+        name
+        hash
+      }
+    }
+  }
+}
+
+query getCategoriesExpenseHashName{
+  getCategories(filter: {booleanFilters:[{field: "income", value: false}], logicOperator: AND }){
+    hash
+    name
+    archived
+    subCategories {
+      name
+      hash
+    }
+    parent {
+      name
+      hash
+      subCategories {
+        name
+        hash
+      }
+    }
+  }
+}
+
+query getCategoriesHashName{
+  getCategories{
+    hash
+    name
+    archived
+    income
+    subCategories {
+      name
+      hash
+      income
+    }
+    parent {
+      name
+      hash
+      income
+      subCategories {
+        name
+        hash
+        income
+      }
+    }
+  }
+}
+
+mutation addTransaction($transactionInput: TransactionInput!){
+  addTransaction(transactionInput: $transactionInput){
+    hash
+    name
+  }
+}
+
+mutation updateTransaction($transactionInput: TransactionInput!, $hash: String!) {
+  updateTransaction(transactionInput: $transactionInput, hash: $hash) {
+    hash
+    name
+  }
+}
+
+mutation deleteTransaction($hash: String!){
+  deleteTransaction(hash: $hash)
 }

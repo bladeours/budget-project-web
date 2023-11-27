@@ -61,6 +61,11 @@ export type AuthInput = {
   password: Scalars['String']['input'];
 };
 
+export type BooleanExpression = {
+  field: Scalars['String']['input'];
+  value: Scalars['Boolean']['input'];
+};
+
 export type CategoriesPage = {
   __typename?: 'CategoriesPage';
   content?: Maybe<Array<Maybe<Category>>>;
@@ -72,11 +77,13 @@ export type CategoriesPage = {
 
 export type Category = {
   __typename?: 'Category';
-  color?: Maybe<Scalars['String']['output']>;
-  hash?: Maybe<Scalars['String']['output']>;
-  income?: Maybe<Scalars['Boolean']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  parentId?: Maybe<Scalars['Int']['output']>;
+  archived: Scalars['Boolean']['output'];
+  color: Scalars['String']['output'];
+  hash: Scalars['String']['output'];
+  income: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+  parent?: Maybe<Category>;
+  subCategories?: Maybe<Array<Maybe<Category>>>;
 };
 
 export type CategoryInput = {
@@ -115,6 +122,7 @@ export type DoubleExpression = {
 };
 
 export type Filter = {
+  booleanFilters?: InputMaybe<Array<InputMaybe<BooleanExpression>>>;
   dateFilters?: InputMaybe<Array<InputMaybe<DateExpression>>>;
   doubleFilters?: InputMaybe<Array<InputMaybe<DoubleExpression>>>;
   logicOperator?: InputMaybe<LogicOperator>;
@@ -205,7 +213,7 @@ export type MutationUpdateCategoryArgs = {
 
 export type MutationUpdateTransactionArgs = {
   hash: Scalars['String']['input'];
-  transactionUpdateInput: TransactionUpdateInput;
+  transactionInput: TransactionInput;
 };
 
 export enum NumberOperator {
@@ -224,7 +232,9 @@ export type Page = {
 export type Query = {
   __typename?: 'Query';
   getAccount?: Maybe<Account>;
+  getAccounts?: Maybe<Array<Maybe<Account>>>;
   getAccountsPage?: Maybe<AccountsPage>;
+  getCategories?: Maybe<Array<Maybe<Category>>>;
   getCategoriesPage?: Maybe<CategoriesPage>;
   getCategory?: Maybe<Category>;
   getTransaction?: Maybe<Transaction>;
@@ -237,9 +247,19 @@ export type QueryGetAccountArgs = {
 };
 
 
+export type QueryGetAccountsArgs = {
+  filter?: InputMaybe<Filter>;
+};
+
+
 export type QueryGetAccountsPageArgs = {
   filter?: InputMaybe<Filter>;
   page: Page;
+};
+
+
+export type QueryGetCategoriesArgs = {
+  filter?: InputMaybe<Filter>;
 };
 
 
@@ -286,6 +306,7 @@ export type Transaction = {
   name?: Maybe<Scalars['String']['output']>;
   need?: Maybe<Scalars['Boolean']['output']>;
   note?: Maybe<Scalars['String']['output']>;
+  subCategory?: Maybe<Category>;
   transactionType?: Maybe<TransactionType>;
 };
 
@@ -299,6 +320,7 @@ export type TransactionInput = {
   name: Scalars['String']['input'];
   need: Scalars['Boolean']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
+  subCategoryHash?: InputMaybe<Scalars['String']['input']>;
   transactionType: TransactionType;
 };
 
@@ -307,18 +329,6 @@ export enum TransactionType {
   Income = 'INCOME',
   Transfer = 'TRANSFER'
 }
-
-export type TransactionUpdateInput = {
-  accountFromHash?: InputMaybe<Scalars['String']['input']>;
-  accountToHash?: InputMaybe<Scalars['String']['input']>;
-  amount: Scalars['Float']['input'];
-  categoryHash?: InputMaybe<Scalars['String']['input']>;
-  currency: Currency;
-  date: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  need: Scalars['Boolean']['input'];
-  note?: InputMaybe<Scalars['String']['input']>;
-};
 
 export type TransactionsPage = {
   __typename?: 'TransactionsPage';
@@ -374,7 +384,51 @@ export type GetTransactionsPageQueryVariables = Exact<{
 }>;
 
 
-export type GetTransactionsPageQuery = { __typename?: 'Query', getTransactionsPage?: { __typename?: 'TransactionsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Transaction', transactionType?: TransactionType | null, hash?: string | null, name?: string | null, amount?: number | null, date?: string | null, need?: boolean | null, note?: string | null, accountFrom?: { __typename?: 'Account', hash: string, name: string } | null, accountTo?: { __typename?: 'Account', hash: string, name: string } | null, category?: { __typename?: 'Category', name?: string | null, color?: string | null, hash?: string | null, income?: boolean | null } | null } | null> | null } | null };
+export type GetTransactionsPageQuery = { __typename?: 'Query', getTransactionsPage?: { __typename?: 'TransactionsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Transaction', transactionType?: TransactionType | null, hash?: string | null, name?: string | null, amount?: number | null, date?: string | null, need?: boolean | null, note?: string | null, accountFrom?: { __typename?: 'Account', hash: string, name: string } | null, accountTo?: { __typename?: 'Account', hash: string, name: string } | null, category?: { __typename?: 'Category', name: string, color: string, hash: string, income: boolean, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null, subCategory?: { __typename?: 'Category', name: string, hash: string } | null } | null> | null } | null };
+
+export type GetAccountsHashNameQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+}>;
+
+
+export type GetAccountsHashNameQuery = { __typename?: 'Query', getAccounts?: Array<{ __typename?: 'Account', hash: string, name: string, archived: boolean } | null> | null };
+
+export type GetCategoriesIncomeHashNameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesIncomeHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null } | null> | null };
+
+export type GetCategoriesExpenseHashNameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesExpenseHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null } | null> | null };
+
+export type GetCategoriesHashNameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, income: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string, income: boolean } | null> | null, parent?: { __typename?: 'Category', name: string, hash: string, income: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string, income: boolean } | null> | null } | null } | null> | null };
+
+export type AddTransactionMutationVariables = Exact<{
+  transactionInput: TransactionInput;
+}>;
+
+
+export type AddTransactionMutation = { __typename?: 'Mutation', addTransaction?: { __typename?: 'Transaction', hash?: string | null, name?: string | null } | null };
+
+export type UpdateTransactionMutationVariables = Exact<{
+  transactionInput: TransactionInput;
+  hash: Scalars['String']['input'];
+}>;
+
+
+export type UpdateTransactionMutation = { __typename?: 'Mutation', updateTransaction?: { __typename?: 'Transaction', hash?: string | null, name?: string | null } | null };
+
+export type DeleteTransactionMutationVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+
+export type DeleteTransactionMutation = { __typename?: 'Mutation', deleteTransaction?: boolean | null };
 
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
@@ -519,6 +573,22 @@ export const GetTransactionsPageDocument = gql`
         color
         hash
         income
+        parent {
+          name
+          hash
+          subCategories {
+            name
+            hash
+          }
+        }
+        subCategories {
+          name
+          hash
+        }
+      }
+      subCategory {
+        name
+        hash
       }
       date
       need
@@ -533,6 +603,184 @@ export const GetTransactionsPageDocument = gql`
   })
   export class GetTransactionsPageGQL extends Apollo.Query<GetTransactionsPageQuery, GetTransactionsPageQueryVariables> {
     override document = GetTransactionsPageDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetAccountsHashNameDocument = gql`
+    query getAccountsHashName($filter: Filter) {
+  getAccounts(filter: $filter) {
+    hash
+    name
+    archived
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAccountsHashNameGQL extends Apollo.Query<GetAccountsHashNameQuery, GetAccountsHashNameQueryVariables> {
+    override document = GetAccountsHashNameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetCategoriesIncomeHashNameDocument = gql`
+    query getCategoriesIncomeHashName {
+  getCategories(
+    filter: {booleanFilters: [{field: "income", value: true}], logicOperator: AND}
+  ) {
+    hash
+    name
+    archived
+    subCategories {
+      name
+      hash
+    }
+    parent {
+      name
+      hash
+      subCategories {
+        name
+        hash
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCategoriesIncomeHashNameGQL extends Apollo.Query<GetCategoriesIncomeHashNameQuery, GetCategoriesIncomeHashNameQueryVariables> {
+    override document = GetCategoriesIncomeHashNameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetCategoriesExpenseHashNameDocument = gql`
+    query getCategoriesExpenseHashName {
+  getCategories(
+    filter: {booleanFilters: [{field: "income", value: false}], logicOperator: AND}
+  ) {
+    hash
+    name
+    archived
+    subCategories {
+      name
+      hash
+    }
+    parent {
+      name
+      hash
+      subCategories {
+        name
+        hash
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCategoriesExpenseHashNameGQL extends Apollo.Query<GetCategoriesExpenseHashNameQuery, GetCategoriesExpenseHashNameQueryVariables> {
+    override document = GetCategoriesExpenseHashNameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetCategoriesHashNameDocument = gql`
+    query getCategoriesHashName {
+  getCategories {
+    hash
+    name
+    archived
+    income
+    subCategories {
+      name
+      hash
+      income
+    }
+    parent {
+      name
+      hash
+      income
+      subCategories {
+        name
+        hash
+        income
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCategoriesHashNameGQL extends Apollo.Query<GetCategoriesHashNameQuery, GetCategoriesHashNameQueryVariables> {
+    override document = GetCategoriesHashNameDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddTransactionDocument = gql`
+    mutation addTransaction($transactionInput: TransactionInput!) {
+  addTransaction(transactionInput: $transactionInput) {
+    hash
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddTransactionGQL extends Apollo.Mutation<AddTransactionMutation, AddTransactionMutationVariables> {
+    override document = AddTransactionDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateTransactionDocument = gql`
+    mutation updateTransaction($transactionInput: TransactionInput!, $hash: String!) {
+  updateTransaction(transactionInput: $transactionInput, hash: $hash) {
+    hash
+    name
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateTransactionGQL extends Apollo.Mutation<UpdateTransactionMutation, UpdateTransactionMutationVariables> {
+    override document = UpdateTransactionDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteTransactionDocument = gql`
+    mutation deleteTransaction($hash: String!) {
+  deleteTransaction(hash: $hash)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteTransactionGQL extends Apollo.Mutation<DeleteTransactionMutation, DeleteTransactionMutationVariables> {
+    override document = DeleteTransactionDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
