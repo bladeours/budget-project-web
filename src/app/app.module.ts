@@ -45,6 +45,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {GraphQLModule} from './graphql.module';
 import {DatePipe} from "@angular/common";
 import {AppDateAdapter, MY_DATE_FORMATS} from "./shared/utils/AppDateAdapter";
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -92,7 +93,8 @@ import {AppDateAdapter, MY_DATE_FORMATS} from "./shared/utils/AppDateAdapter";
     MatSelectModule,
     GraphQLModule,
     MatDialogContent,
-    MatDialogModule
+    MatDialogModule,
+    CurrencyMaskModule
   ],
   providers: [
     {

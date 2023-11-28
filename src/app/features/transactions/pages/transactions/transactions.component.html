@@ -23,26 +23,11 @@
     </mat-form-field>
     <mat-form-field class="from">
       <mat-label>From</mat-label>
-      <input
-        matInput
-        [formControl]="from"
-        type="text"
-        inputmode="numeric"
-        pattern="[0-9]*[.,]?[0-9]+"
-        [max]="to.value"
-      />
+      <input matInput currencyMask placeholder="0.00" value="" [max]="to.value == null? 9999999 : to.value" [options]="{ prefix: 'zł '}" [formControl]="from">
     </mat-form-field>
-
     <mat-form-field class="to">
       <mat-label>To</mat-label>
-      <input
-        matInput
-        [formControl]="to"components
-        type="text"
-        inputmode="numeric"
-        pattern="[0-9]*[.,]?[0-9]+"
-        [min]="from.value"
-      />
+      <input matInput currencyMask placeholder="0.00" value="" [min]="from.value == null ? 0: from.value" [options]="{ prefix: 'zł '}" [formControl]="to">
     </mat-form-field>
   </div>
 

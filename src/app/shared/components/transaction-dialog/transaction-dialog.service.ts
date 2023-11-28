@@ -1,3 +1,4 @@
+import { Utils } from './../../utils/Utils';
 import {Injectable} from '@angular/core';
 import {Account, Category, Currency, TransactionInput, TransactionType} from "../../../graphql/__generated__";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -41,7 +42,7 @@ export class TransactionDialogService {
       categoryHash: categoryHash,
       name: "",
       currency: Currency.Pln,
-      date: formGroup.get("date")?.value.toISOString(),
+      date: Utils.getFullDateString(formGroup.get("date")?.value),
       transactionType: formGroup.get("type")?.value,
       amount: formGroup.get("amount")?.value as number,
       note: formGroup.get("note")?.value,
