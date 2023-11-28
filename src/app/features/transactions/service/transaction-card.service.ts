@@ -62,13 +62,6 @@ export class TransactionCardService {
     return transaction.category as Category;
   }
 
-  // private chooseSubCategory(transaction: Transaction): Category | undefined {
-  //   if (transaction.transactionType === TransactionType.Transfer || transaction.category?.parent === null) {
-  //     return undefined;
-  //   }
-  //   return transaction.category as Category;
-  // }
-
   private chooseAmountColor(transactionType: TransactionType) {
     switch (transactionType as TransactionType) {
       case TransactionType.Expense:

@@ -35,18 +35,54 @@ mat-sidenav-container {
   height: calc(100vh - 65px);
 }
 
+mat-grid-list {
+  width: 100%;
+}
+
 .menu-button {
   width: 100%;
-  display: flex;
-  align-items: center;
   justify-content: flex-start;
   height: 2.5rem;
+
+  ::ng-deep .mdc-button__label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .icon-name{
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      overflow: hidden;
+      .name {
+        //display:inline-block;
+        //max-width: 70%; /* Set a maximum width for the name */
+        flex-shrink: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+        text-overflow: ellipsis;
+        //margin-left: 8px;
+      }
+      .mat-icon {
+        flex-shrink: 0;
+        margin-right: 8px;
+      }
+
+    }
+
+  }
+
+
+
 
   mat-icon {
     margin-right: 8px;
   }
 
 }
+
+
 
 .avatar {
   margin-top: 16px;
@@ -60,6 +96,7 @@ mat-divider {
   margin-bottom: 16px;
   background-color: gray;
 }
+
 @import '/src/styles';
 @media (max-width: $layout-small-width) {
   mat-sidenav {

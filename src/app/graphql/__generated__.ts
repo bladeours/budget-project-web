@@ -47,6 +47,11 @@ export enum AccountType {
   Savings = 'SAVINGS'
 }
 
+export type AccountTypeExpression = {
+  field: Scalars['String']['input'];
+  value: AccountType;
+};
+
 export type AccountsPage = {
   __typename?: 'AccountsPage';
   content?: Maybe<Array<Maybe<Account>>>;
@@ -122,6 +127,7 @@ export type DoubleExpression = {
 };
 
 export type Filter = {
+  accountTypeFilters?: InputMaybe<Array<InputMaybe<AccountTypeExpression>>>;
   booleanFilters?: InputMaybe<Array<InputMaybe<BooleanExpression>>>;
   dateFilters?: InputMaybe<Array<InputMaybe<DateExpression>>>;
   doubleFilters?: InputMaybe<Array<InputMaybe<DoubleExpression>>>;
@@ -386,12 +392,12 @@ export type GetTransactionsPageQueryVariables = Exact<{
 
 export type GetTransactionsPageQuery = { __typename?: 'Query', getTransactionsPage?: { __typename?: 'TransactionsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Transaction', transactionType?: TransactionType | null, hash?: string | null, name?: string | null, amount?: number | null, date?: string | null, need?: boolean | null, note?: string | null, accountFrom?: { __typename?: 'Account', hash: string, name: string } | null, accountTo?: { __typename?: 'Account', hash: string, name: string } | null, category?: { __typename?: 'Category', name: string, color: string, hash: string, income: boolean, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null, subCategory?: { __typename?: 'Category', name: string, hash: string } | null } | null> | null } | null };
 
-export type GetAccountsHashNameQueryVariables = Exact<{
+export type GetAccountsQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
 }>;
 
 
-export type GetAccountsHashNameQuery = { __typename?: 'Query', getAccounts?: Array<{ __typename?: 'Account', hash: string, name: string, archived: boolean } | null> | null };
+export type GetAccountsQuery = { __typename?: 'Query', getAccounts?: Array<{ __typename?: 'Account', hash: string, name: string, archived: boolean, balance: number } | null> | null };
 
 export type GetCategoriesIncomeHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -608,12 +614,13 @@ export const GetTransactionsPageDocument = gql`
       super(apollo);
     }
   }
-export const GetAccountsHashNameDocument = gql`
-    query getAccountsHashName($filter: Filter) {
+export const GetAccountsDocument = gql`
+    query getAccounts($filter: Filter) {
   getAccounts(filter: $filter) {
     hash
     name
     archived
+    balance
   }
 }
     `;
@@ -621,8 +628,8 @@ export const GetAccountsHashNameDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class GetAccountsHashNameGQL extends Apollo.Query<GetAccountsHashNameQuery, GetAccountsHashNameQueryVariables> {
-    override document = GetAccountsHashNameDocument;
+  export class GetAccountsGQL extends Apollo.Query<GetAccountsQuery, GetAccountsQueryVariables> {
+    override document = GetAccountsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

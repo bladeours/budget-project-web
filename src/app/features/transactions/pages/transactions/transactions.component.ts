@@ -77,7 +77,7 @@ export class TransactionsComponent {
       .subscribe((v) => this.handleChangeTo(v));
     this.range.valueChanges
       .pipe(debounceTime(1000))
-      .subscribe((v) => this.handleRange(v));
+      .subscribe((v) => this.handleRangeDate(v));
   }
 
   @HostListener('window:resize')
@@ -98,8 +98,13 @@ export class TransactionsComponent {
     }
   }
 
-  handleRange(v: any) {
+  handleRangeDate(v: any) {
     if (this.range.valid) {
+      if(v.end == null || v.start == null){
+        this.dateFilter = {};
+        this.setSubFiltersAndRefresh();
+        return;
+      }
       this.dateFilter = {
         logicOperator : LogicOperator.And,
         dateFilters: [

@@ -92,13 +92,16 @@ query getTransactionsPage($page: Page!, $filter: Filter) {
   }
 }
 
-query getAccountsHashName($filter: Filter){
+query getAccounts($filter: Filter){
   getAccounts(filter: $filter){
     hash
     name
     archived
+    balance
   }
 }
+
+
 
 query getCategoriesIncomeHashName{
   getCategories(filter: {booleanFilters:[{field: "income", value: true}], logicOperator: AND }){

@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {
-  AddTransactionGQL, DeleteTransactionGQL,
+  AddTransactionGQL,
+  DeleteTransactionGQL,
   Filter,
   GetAccountGQL,
-  GetAccountsHashNameGQL,
-  GetCategoriesExpenseHashNameGQL, GetCategoriesHashNameGQL,
+  GetAccountsGQL,
+  GetCategoriesExpenseHashNameGQL,
+  GetCategoriesHashNameGQL,
   GetCategoriesIncomeHashNameGQL,
   GetTransactionsPageGQL,
   Page,
@@ -19,7 +21,7 @@ import {Observable} from "rxjs";
 export class GraphqlService {
   constructor(private getAccountGQL: GetAccountGQL,
               private getTransactionsPageGQL: GetTransactionsPageGQL,
-              private getAccountHashNameGQL: GetAccountsHashNameGQL,
+              private getAccountsGQL: GetAccountsGQL,
               private getCategoriesIncomeHashNameGQL: GetCategoriesIncomeHashNameGQL,
               private getCategoriesExpenseHashNameGQL: GetCategoriesExpenseHashNameGQL,
               private addTransactionGQL: AddTransactionGQL,
@@ -27,17 +29,12 @@ export class GraphqlService {
               private deleteTransactionGQL: DeleteTransactionGQL,
               private getCategoriesGQL: GetCategoriesHashNameGQL) { }
 
-  handleTo(to: number){
-    let hash: string = "dw";
-    this.getAccountGQL.fetch({hash}).subscribe(v => console.log(v));
-  }
-
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
     return this.getTransactionsPageGQL.fetch({page, filter});
   }
 
-  getAccountsHashName(filter: Filter) {
-    return this.getAccountHashNameGQL.fetch({filter});
+  getAccounts(filter: Filter) {
+    return this.getAccountsGQL.fetch({filter});
   }
 
   getCategories(){

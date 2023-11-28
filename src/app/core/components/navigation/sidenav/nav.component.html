@@ -26,29 +26,35 @@
       <span>Add Transaction</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button">
+    <button mat-button class="menu-button" *ngFor="let account of accountsRegular">
       <mat-icon>account_balance</mat-icon>
-      <span>Account 1</span>
+        <span class="name">{{account.name}}</span>
+        <span class="balance">{{account.balance.toFixed(2)}}</span>
     </button>
-    <button mat-button class="menu-button">
-      <mat-icon>account_balance</mat-icon>
-      <span>Account 2</span>
-    </button>
-    <button mat-button class="menu-button">
-      <mat-icon>account_balance</mat-icon>
-      <span>Account 3</span>
-    </button>
-
-
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button">
-      <mat-icon>person</mat-icon>
-      <span>Profile</span>
+
+
+    <button mat-button class="menu-button" *ngFor="let account of accountsSavings">
+        <div class="icon-name">
+          <mat-icon>savings</mat-icon>
+          <span class="name">{{account.name}}</span>
+        </div>
+          <span class="balance">{{account.balance.toFixed(2)}}</span>
+
+
     </button>
-    <button mat-button class="menu-button">
-      <mat-icon>help</mat-icon>
-      <span>Help</span>
-    </button>
+
+
+
+
+<!--    <button mat-button class="menu-button">-->
+<!--      <mat-icon>account_balance</mat-icon>-->
+<!--      <span>Account 2</span>-->
+<!--    </button>-->
+<!--    <button mat-button class="menu-button">-->
+<!--      <mat-icon>account_balance</mat-icon>-->
+<!--      <span>Account 3</span>-->
+<!--    </button>-->
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z4">

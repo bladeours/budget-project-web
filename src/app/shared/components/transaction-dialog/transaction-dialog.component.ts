@@ -240,7 +240,7 @@ export class TransactionDialogComponent {
 
   private setData() {
     forkJoin({
-      accounts: this.graphqlService.getAccountsHashName({}),
+      accounts: this.graphqlService.getAccounts({}),
       incomeCategories: this.graphqlService.getCategoriesIncomeHashName(),
       expenseCategories: this.graphqlService.getCategoriesExpenseHashName()
     }).subscribe({

@@ -1,13 +1,15 @@
-import { Component, Input, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { NavbarService } from 'src/app/core/service/navbar.service';
-import { Router } from '@angular/router';
+import {Component, Input, ViewChild} from '@angular/core';
+import {MatSidenav} from '@angular/material/sidenav';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {NavbarService} from 'src/app/core/service/navbar.service';
+import {Router} from '@angular/router';
 import {ComponentPortal, Portal} from '@angular/cdk/portal';
 import {TransactionsComponent} from "../../../../features/transactions/pages/transactions/transactions.component";
 import {DashboardComponent} from "../../../../features/dashboard/pages/dashboard/dashboard.component";
 import {MatDialog} from "@angular/material/dialog";
-import { TransactionDialogComponent } from 'src/app/shared/components/transaction-dialog/transaction-dialog.component';
+import {TransactionDialogComponent} from 'src/app/shared/components/transaction-dialog/transaction-dialog.component';
+import {Account, AccountType, LogicOperator} from "../../../../graphql/__generated__";
+import {GraphqlService} from "../../../../graphql/service/graphql.service";
 
 
 @Component({
@@ -21,13 +23,19 @@ export class NavbarComponent {
   @Input()
   selectedPortal: Portal<any>;
   isSmall: boolean = false;
+  protected readonly AccountType = AccountType;
+  accountsSavings: Account[];
+  accountsRegular: Account[];
+
 
   constructor(
     private observer: BreakpointObserver,
     private navbarService: NavbarService,
     private router: Router,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private graphqlService: GraphqlService
+  ) {
+  }
 
   ngAfterViewInit() {
     this.path = this.router.url;
@@ -44,10 +52,11 @@ export class NavbarComponent {
         this.sidenav.open();
       }
     });
+    this.setAccounts();
   }
 
   goToTransactions() {
-    if(this.isSmall) {
+    if (this.isSmall) {
       this.sidenav.close();
     }
     this.selectedPortal = new ComponentPortal(TransactionsComponent);
@@ -55,7 +64,7 @@ export class NavbarComponent {
   }
 
   goToDashboard() {
-    if(this.isSmall) {
+    if (this.isSmall) {
       this.sidenav.close();
     }
     this.selectedPortal = new ComponentPortal(DashboardComponent);
@@ -63,9 +72,27 @@ export class NavbarComponent {
   }
 
   addTransaction() {
-    if(this.isSmall) {
+    if (this.isSmall) {
       this.sidenav.close();
     }
     this.dialog.open(TransactionDialogComponent);
-    }
+  }
+
+  setAccounts() {
+    this.graphqlService.getAccounts({
+      logicOperator: LogicOperator.And,
+      accountTypeFilters: [{field: "accountType", value: AccountType.Savings}]
+    }).subscribe({
+      next: v => this.accountsSavings = v.data.getAccounts as Account[],
+      error: error => console.log(error)
+    });
+    this.graphqlService.getAccounts({
+      logicOperator: LogicOperator.And,
+      accountTypeFilters: [{field: "accountType", value: AccountType.Regular}]
+    }).subscribe({
+      next: value => this.accountsRegular = value.data.getAccounts as Account[]
+    });
+  }
+
+
 }
