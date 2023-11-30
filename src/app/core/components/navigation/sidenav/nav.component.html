@@ -21,11 +21,15 @@
       <mat-icon>attach_money</mat-icon>
       <span>Transactions</span>
     </button>
-    <button mat-button class="menu-button" (click)="addTransaction()">
+    <button mat-button class="menu-button" (click)="goToAddTransaction()">
       <mat-icon>add</mat-icon>
       <span>Add Transaction</span>
     </button>
     <mat-divider></mat-divider>
+    <button mat-button class="menu-button" (click)="goToaddAccount()">
+      <mat-icon>add</mat-icon>
+      <span>Add Account</span>
+    </button>
     <button mat-button class="menu-button" *ngFor="let account of accountsRegular" (click)="goToAccount(account.hash)">
       <mat-icon>account_balance</mat-icon>
         <span class="name">{{account.name}}</span>

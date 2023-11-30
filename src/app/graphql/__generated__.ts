@@ -444,6 +444,20 @@ export type UpdateAccountMutationVariables = Exact<{
 
 export type UpdateAccountMutation = { __typename?: 'Mutation', updateAccount?: { __typename?: 'Account', hash: string } | null };
 
+export type AddAccountMutationVariables = Exact<{
+  accountInput: AccountInput;
+}>;
+
+
+export type AddAccountMutation = { __typename?: 'Mutation', addAccount?: { __typename?: 'Account', hash: string } | null };
+
+export type DeleteAccountMutationVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+
+export type DeleteAccountMutation = { __typename?: 'Mutation', deleteAccount?: boolean | null };
+
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
   getAccount(hash: $hash) {
@@ -819,6 +833,40 @@ export const UpdateAccountDocument = gql`
   })
   export class UpdateAccountGQL extends Apollo.Mutation<UpdateAccountMutation, UpdateAccountMutationVariables> {
     override document = UpdateAccountDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddAccountDocument = gql`
+    mutation addAccount($accountInput: AccountInput!) {
+  addAccount(accountInput: $accountInput) {
+    hash
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddAccountGQL extends Apollo.Mutation<AddAccountMutation, AddAccountMutationVariables> {
+    override document = AddAccountDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteAccountDocument = gql`
+    mutation deleteAccount($hash: String!) {
+  deleteAccount(hash: $hash, removeSub: false)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteAccountGQL extends Apollo.Mutation<DeleteAccountMutation, DeleteAccountMutationVariables> {
+    override document = DeleteAccountDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

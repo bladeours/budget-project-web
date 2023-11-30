@@ -1,6 +1,6 @@
-import { GraphqlService } from './../../../../graphql/service/graphql.service';
+import { GraphqlService } from '../../../../graphql/service/graphql.service';
 import { Component, Input, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Account, AccountType } from '../../../../graphql/__generated__';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { AccountService } from '../../service/account.service';
@@ -13,14 +13,15 @@ import { AccountService } from '../../service/account.service';
 export class AccountFormComponent {
   @Input()
   hash: string;
-
-  nameInput: FormControl<any> = new FormControl();
+  colors = ['#FFCE30', '#E389B9', '#746AB0'];
+  nameInput: FormControl<any> = new FormControl('', [Validators.required]);
   descriptionInput: FormControl<any> = new FormControl();
-  balanceInput: FormControl<any> = new FormControl();
+  balanceInput: FormControl<any> = new FormControl(0, [Validators.required, Validators.min(0)]);
   @ViewChild("archivedToggle")
   archivedToggle: MatSlideToggle;
-  accountTypeSelect: FormControl<any> = new FormControl();
-  colorSelect: FormControl<any> = new FormControl();
+  accountTypeSelect: FormControl<any> = new FormControl('', [Validators.required]);
+  colorSelect: FormControl<any> = new FormControl(this.colors[0], [Validators.required]);
+  isCreate: boolean = false;
 
   formGroup: FormGroup = this.fb.group({
     nameInput: this.nameInput,
@@ -30,7 +31,7 @@ export class AccountFormComponent {
     colorSelect: this.colorSelect,
   });
 
-  colors = ['#FFCE30', '#E389B9', '#746AB0'];
+
   accountTypes = [AccountType.Regular, AccountType.Savings];
 
   constructor(
@@ -40,23 +41,30 @@ export class AccountFormComponent {
   ) {}
 
   ngOnInit() {
-    this.graphqlService.getAccount(this.hash).subscribe({
-      next: (v) => this.setAccount(v.data.getAccount as Account),
-      error: (err) => console.log(err),
-    });
+    this.isCreate = (this.hash == null);
+    if(!this.isCreate){
+      this.graphqlService.getAccount(this.hash).subscribe({
+        next: (v) => this.setAccount(v.data.getAccount as Account),
+        error: (err) => console.log(err),
+      });
+    }
+
   }
 
   deleteAccount() {
-    throw new Error('Method not implemented.');
+    this.accountService.deleteAccount(this.hash);
   }
   saveAccount() {
     if(this.formGroup.valid){
-      this.accountService.createAccount(this.formGroup, this.archivedToggle, this.hash);
+      if(this.isCreate){
+        this.accountService.addAccount(this.formGroup, this.archivedToggle);
+      } else {
+        this.accountService.updateAccount(this.formGroup, this.archivedToggle, this.hash);
+      }
     }
   }
 
   setAccount(account: Account): void {
-    console.log(account)
     this.nameInput.setValue(account.name);
     this.descriptionInput.setValue(account.description);
     this.accountTypeSelect.setValue(account.accountType);

@@ -195,3 +195,13 @@ mutation updateAccount($hash: String!, $accountInput: AccountInput!){
     hash
   }
 }
+
+mutation addAccount($accountInput: AccountInput!){
+  addAccount(accountInput: $accountInput){
+    hash
+  }
+}
+
+mutation deleteAccount($hash: String!){
+  deleteAccount(hash: $hash, removeSub: false)
+}

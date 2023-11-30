@@ -1,4 +1,4 @@
-import { AccountInput, GetAccountGQL, UpdateAccountGQL } from './../__generated__';
+import {AccountInput, AddAccountGQL, DeleteAccountGQL, GetAccountGQL, UpdateAccountGQL} from './../__generated__';
 import {Injectable} from '@angular/core';
 import {
   AddTransactionGQL,
@@ -19,7 +19,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class GraphqlService {
-  
+
   constructor(private getAccountGQL: GetAccountGQL,
               private getTransactionsPageGQL: GetTransactionsPageGQL,
               private getAccountsGQL: GetAccountsGQL,
@@ -29,7 +29,10 @@ export class GraphqlService {
               private updateTransactionGQL: UpdateTransactionGQL,
               private deleteTransactionGQL: DeleteTransactionGQL,
               private getCategoriesGQL: GetCategoriesHashNameGQL,
-              private updateAccountGQL: UpdateAccountGQL) { }
+              private updateAccountGQL: UpdateAccountGQL,
+              private addAccountGQL: AddAccountGQL,
+              private deleteAccountGQL: DeleteAccountGQL) {
+  }
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
     return this.getTransactionsPageGQL.fetch({page, filter});
@@ -39,7 +42,7 @@ export class GraphqlService {
     return this.getAccountsGQL.fetch({filter});
   }
 
-  getCategories(){
+  getCategories() {
     return this.getCategoriesGQL.fetch();
   }
 
@@ -51,15 +54,15 @@ export class GraphqlService {
     return this.getCategoriesExpenseHashNameGQL.fetch();
   }
 
-  addTransaction(transactionInput: TransactionInput){
+  addTransaction(transactionInput: TransactionInput) {
     return this.addTransactionGQL.mutate({transactionInput});
   }
 
-  updateTransaction(transactionInput: TransactionInput,hash: string){
+  updateTransaction(transactionInput: TransactionInput, hash: string) {
     return this.updateTransactionGQL.mutate({transactionInput, hash});
   }
 
-  deleteTransaction(hash: string){
+  deleteTransaction(hash: string) {
     return this.deleteTransactionGQL.mutate({hash});
   }
 
@@ -68,6 +71,17 @@ export class GraphqlService {
   }
 
   updateAccount(accountInput: AccountInput, hash: string) {
-    return this.updateAccountGQL.mutate({hash, accountInput});
+    return this.updateAccountGQL.mutate({
+      hash: hash,
+      accountInput: accountInput
+    });
+  }
+
+  addAccount(accountInput: AccountInput){
+    return this.addAccountGQL.mutate({accountInput});
+  }
+
+  deleteAccount(hash: string){
+    return this.deleteAccountGQL.mutate({hash});
   }
 }

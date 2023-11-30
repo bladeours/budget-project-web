@@ -73,7 +73,7 @@ export class NavbarComponent {
     this.router.navigate([""]);
   }
 
-  addTransaction() {
+  goToAddTransaction() {
     if (this.isSmall) {
       this.sidenav.close();
     }
@@ -108,6 +108,13 @@ export class NavbarComponent {
     }
     this.selectedPortal = new ComponentPortal(AccountComponent);
     this.router.navigate(["account"], {queryParams: {id: hash}});
-  } 
+  }
 
+  goToaddAccount() {
+    if (this.isSmall) {
+      this.sidenav.close();
+    }
+    this.selectedPortal = new ComponentPortal(AccountComponent);
+    this.router.navigate(["account"]);
+  }
 }

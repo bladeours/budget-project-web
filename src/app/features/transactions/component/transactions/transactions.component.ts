@@ -1,13 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
-import { debounceTime } from 'rxjs';
+import {Component, ElementRef, HostListener, Renderer2, ViewChild,} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {PageEvent} from '@angular/material/paginator';
+import {debounceTime} from 'rxjs';
 import {
   Category,
   DateOperator,
@@ -18,12 +12,11 @@ import {
   StringOperator,
   TransactionsPage,
 } from '../../../../graphql/__generated__';
-import { GraphqlService } from '../../../../graphql/service/graphql.service';
-import { TransactionCard } from '../../../../shared/models/TransactionCard';
-import { TransactionCardService } from '../../service/transaction-card.service';
-import { MatDialog } from '@angular/material/dialog';
-import { myGreen, myRed } from '../../../../environments/environment';
-import { Utils } from 'src/app/shared/utils/Utils';
+import {GraphqlService} from '../../../../graphql/service/graphql.service';
+import {TransactionCard} from '../../../../shared/models/TransactionCard';
+import {TransactionCardService} from '../../service/transaction-card.service';
+import {myGreen, myRed} from '../../../../environments/environment';
+import {Utils} from 'src/app/shared/utils/Utils';
 
 @Component({
   selector: 'app-transactions',
