@@ -4,7 +4,7 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {NavbarService} from 'src/app/core/service/navbar.service';
 import {Router} from '@angular/router';
 import {ComponentPortal, Portal} from '@angular/cdk/portal';
-import {TransactionsComponent} from "../../../../features/transactions/pages/transactions/transactions.component";
+import {TransactionsComponent} from "../../../../features/transactions/component/transactions/transactions.component";
 import {DashboardComponent} from "../../../../features/dashboard/pages/dashboard/dashboard.component";
 import {MatDialog} from "@angular/material/dialog";
 import {TransactionDialogComponent} from 'src/app/shared/components/transaction-dialog/transaction-dialog.component';
@@ -26,6 +26,7 @@ export class NavbarComponent {
   protected readonly AccountType = AccountType;
   accountsSavings: Account[];
   accountsRegular: Account[];
+  balance: number = 0;
 
 
   constructor(
@@ -83,14 +84,20 @@ export class NavbarComponent {
       logicOperator: LogicOperator.And,
       accountTypeFilters: [{field: "accountType", value: AccountType.Savings}]
     }).subscribe({
-      next: v => this.accountsSavings = v.data.getAccounts as Account[],
+      next: v => {
+        this.accountsSavings = v.data.getAccounts as Account[];
+        this.accountsSavings.forEach(a => this.balance += a.balance);
+      },
       error: error => console.log(error)
     });
     this.graphqlService.getAccounts({
       logicOperator: LogicOperator.And,
       accountTypeFilters: [{field: "accountType", value: AccountType.Regular}]
     }).subscribe({
-      next: value => this.accountsRegular = value.data.getAccounts as Account[]
+      next: value => {
+        this.accountsRegular = value.data.getAccounts as Account[];
+        this.accountsRegular.forEach(a => this.balance += a.balance)
+      }
     });
   }
 

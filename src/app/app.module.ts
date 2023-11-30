@@ -35,7 +35,7 @@ import {
   TransactionsCardComponent
 } from './features/dashboard/pages/dashboard/cards/transactions-card/transactions-card.component';
 import {TransactionCardComponent} from './shared/components/transaction-card/transaction-card.component';
-import {TransactionsComponent} from './features/transactions/pages/transactions/transactions.component';
+import {TransactionsComponent} from './features/transactions/component/transactions/transactions.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
@@ -46,6 +46,10 @@ import {GraphQLModule} from './graphql.module';
 import {DatePipe} from "@angular/common";
 import {AppDateAdapter, MY_DATE_FORMATS} from "./shared/utils/AppDateAdapter";
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+import {AccountFormComponent} from "./features/account/components/account-from/account-form.component";
+import {AccountComponent} from "./features/account/components/account/account.component";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {ColorPickerComponent} from "./shared/components/color-picker/color-picker.component";
 
 @NgModule({
   exports: [NavbarComponent],
@@ -62,7 +66,9 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     DashboardComponent,
     TransactionsCardComponent,
     TransactionCardComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    AccountFormComponent,
+    AccountComponent
   ],
   imports: [
     MatTableModule,
@@ -94,7 +100,9 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     GraphQLModule,
     MatDialogContent,
     MatDialogModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MatSlideToggleModule,
+    ColorPickerComponent
   ],
   providers: [
     {

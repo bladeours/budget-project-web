@@ -4,6 +4,7 @@ import {LogoutComponent} from './features/authorization/pages/logout/logout.comp
 import {HomeComponent} from './features/home/pages/home/home.component';
 import {AuthComponent} from './features/authorization/pages/auth/auth/auth.component';
 import {authGuard} from "./core/guard/authGuard";
+import {AccountComponent} from "./features/account/components/account/account.component";
 
 const routes: Routes = [
   {
@@ -14,7 +15,10 @@ const routes: Routes = [
       {
           path: 'transactions',
           component: HomeComponent,
-
+      },
+      {
+          path: 'account',
+          component: HomeComponent
       }
     ]
   },

@@ -4,7 +4,8 @@ import {MatSidenav} from '@angular/material/sidenav';
 import {Router} from '@angular/router';
 import {NavbarService} from 'src/app/core/service/navbar.service';
 import {DashboardComponent} from 'src/app/features/dashboard/pages/dashboard/dashboard.component';
-import {TransactionsComponent} from "../../../../features/transactions/pages/transactions/transactions.component";
+import {TransactionsComponent} from "../../../../features/transactions/component/transactions/transactions.component";
+import {AccountComponent} from "../../../../features/account/components/account/account.component";
 
 @Component({
   selector: 'app-nav-parent',
@@ -18,13 +19,24 @@ export class NavParentComponent {
 
   ngAfterViewInit(){
     this.matSidenav = this.navbarService.getSidenav();
-    switch(String(this.router.url)) {
+    switch(this.getUrlWithoutParams()) {
       case "/":
         this.selectedPortal = new ComponentPortal(DashboardComponent);
         break;
       case "/transactions":
         this.selectedPortal = new ComponentPortal(TransactionsComponent);
         break;
+      case "/account":
+        console.log("essa2")
+        this.selectedPortal = new ComponentPortal(AccountComponent);
+        break;
     }
+  }
+
+  getUrlWithoutParams(){
+    let urlTree = this.router.parseUrl(this.router.url);
+    urlTree.queryParams = {};
+    urlTree.fragment = null; // optional
+    return urlTree.toString();
   }
 }

@@ -55,14 +55,11 @@ mat-grid-list {
       flex-grow: 1;
       overflow: hidden;
       .name {
-        //display:inline-block;
-        //max-width: 70%; /* Set a maximum width for the name */
         flex-shrink: 1;
         white-space: nowrap;
         overflow: hidden;
         min-width: 0;
         text-overflow: ellipsis;
-        //margin-left: 8px;
       }
       .mat-icon {
         flex-shrink: 0;
@@ -98,6 +95,14 @@ mat-divider {
 }
 
 @import '/src/styles';
+
+
+@media (max-width: 1200px) {
+  mat-sidenav {
+    width: 25%;
+  }
+}
+
 @media (max-width: $layout-small-width) {
   mat-sidenav {
     width: 92%;
@@ -108,5 +113,4 @@ mat-divider {
   .content {
     height: auto;
   }
-
 }
