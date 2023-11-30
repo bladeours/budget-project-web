@@ -27,7 +27,6 @@ export class NavParentComponent {
         this.selectedPortal = new ComponentPortal(TransactionsComponent);
         break;
       case "/account":
-        console.log("essa2")
         this.selectedPortal = new ComponentPortal(AccountComponent);
         break;
     }

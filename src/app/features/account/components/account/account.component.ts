@@ -10,7 +10,7 @@ export class AccountComponent {
   hash: string;
 
   constructor(private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(v => this.hash=v['id'])
+    this.route.queryParams.subscribe(v => this.hash=v['id']);
   }
 
 }

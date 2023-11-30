@@ -1,0 +1,60 @@
+.description{
+  width: 80%;
+  margin-right: 20px;
+}
+
+.balance {
+  width: 50%;
+}
+
+
+.description-grid > ::ng-deep .mat-grid-tile-content {
+  justify-content: flex-start !important;
+}
+
+.name-grid > ::ng-deep .mat-grid-tile-content {
+  justify-content: flex-start !important;
+}
+
+.balance-grid > ::ng-deep .mat-grid-tile-content {
+  justify-content: flex-start !important;
+}
+
+
+
+form {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  // justify-content: center;
+}
+
+.buttons{
+  text-align: center;
+}
+
+.delete-button{
+  margin-right: 10px;
+}
+
+.save-button{
+  margin-left: 10px;
+}
+
+@import '/src/styles';
+@media (max-width: $layout-small-width) {
+  .balance {
+    width: 70%;
+  }
+
+  .name-input{
+    margin-right: 10px;
+  }
+
+  .account-type-input{
+    margin-left: 10px;
+  }
+  .color-select{
+    margin-left: 10px;
+  }
+}

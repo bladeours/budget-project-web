@@ -2,6 +2,11 @@ query getAccount($hash: String!) {
   getAccount(hash: $hash) {
     hash
     color
+    balance
+    archived
+    name
+    description
+    accountType
   }
 }
 
@@ -183,4 +188,10 @@ mutation updateTransaction($transactionInput: TransactionInput!, $hash: String!)
 
 mutation deleteTransaction($hash: String!){
   deleteTransaction(hash: $hash)
+}
+
+mutation updateAccount($hash: String!, $accountInput: AccountInput!){
+  updateAccount(hash: $hash, accountInput: $accountInput){
+    hash
+  }
 }

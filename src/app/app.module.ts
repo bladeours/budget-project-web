@@ -46,7 +46,7 @@ import {GraphQLModule} from './graphql.module';
 import {DatePipe} from "@angular/common";
 import {AppDateAdapter, MY_DATE_FORMATS} from "./shared/utils/AppDateAdapter";
 import { CurrencyMaskModule } from 'ng2-currency-mask';
-import {AccountFormComponent} from "./features/account/components/account-from/account-form.component";
+import {AccountFormComponent} from "./features/account/components/account-form/account-form.component";
 import {AccountComponent} from "./features/account/components/account/account.component";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {ColorPickerComponent} from "./shared/components/color-picker/color-picker.component";

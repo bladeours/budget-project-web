@@ -1,9 +1,9 @@
+import { AccountInput, GetAccountGQL, UpdateAccountGQL } from './../__generated__';
 import {Injectable} from '@angular/core';
 import {
   AddTransactionGQL,
   DeleteTransactionGQL,
   Filter,
-  GetAccountGQL,
   GetAccountsGQL,
   GetCategoriesExpenseHashNameGQL,
   GetCategoriesHashNameGQL,
@@ -19,6 +19,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class GraphqlService {
+  
   constructor(private getAccountGQL: GetAccountGQL,
               private getTransactionsPageGQL: GetTransactionsPageGQL,
               private getAccountsGQL: GetAccountsGQL,
@@ -27,7 +28,8 @@ export class GraphqlService {
               private addTransactionGQL: AddTransactionGQL,
               private updateTransactionGQL: UpdateTransactionGQL,
               private deleteTransactionGQL: DeleteTransactionGQL,
-              private getCategoriesGQL: GetCategoriesHashNameGQL) { }
+              private getCategoriesGQL: GetCategoriesHashNameGQL,
+              private updateAccountGQL: UpdateAccountGQL) { }
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
     return this.getTransactionsPageGQL.fetch({page, filter});
@@ -59,5 +61,13 @@ export class GraphqlService {
 
   deleteTransaction(hash: string){
     return this.deleteTransactionGQL.mutate({hash});
+  }
+
+  getAccount(hash: string) {
+    return this.getAccountGQL.fetch({hash});
+  }
+
+  updateAccount(accountInput: AccountInput, hash: string) {
+    return this.updateAccountGQL.mutate({hash, accountInput});
   }
 }

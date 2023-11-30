@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {TransactionDialogComponent} from 'src/app/shared/components/transaction-dialog/transaction-dialog.component';
 import {Account, AccountType, LogicOperator} from "../../../../graphql/__generated__";
 import {GraphqlService} from "../../../../graphql/service/graphql.service";
+import { AccountComponent } from 'src/app/features/account/components/account/account.component';
 
 
 @Component({
@@ -101,5 +102,12 @@ export class NavbarComponent {
     });
   }
 
+  goToAccount(hash: string){
+    if (this.isSmall) {
+      this.sidenav.close();
+    }
+    this.selectedPortal = new ComponentPortal(AccountComponent);
+    this.router.navigate(["account"], {queryParams: {id: hash}});
+  } 
 
 }

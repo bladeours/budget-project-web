@@ -26,7 +26,7 @@
       <span>Add Transaction</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" *ngFor="let account of accountsRegular">
+    <button mat-button class="menu-button" *ngFor="let account of accountsRegular" (click)="goToAccount(account.hash)">
       <mat-icon>account_balance</mat-icon>
         <span class="name">{{account.name}}</span>
         <span class="balance">{{account.balance.toFixed(2)}}</span>
@@ -34,7 +34,7 @@
     <mat-divider></mat-divider>
 
 
-    <button mat-button class="menu-button" *ngFor="let account of accountsSavings">
+    <button mat-button class="menu-button" *ngFor="let account of accountsSavings" (click)="goToAccount(account.hash)">
         <div class="icon-name">
           <mat-icon>savings</mat-icon>
           <span class="name">{{account.name}}</span>

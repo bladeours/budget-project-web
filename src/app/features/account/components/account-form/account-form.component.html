@@ -1,0 +1,50 @@
+<form>
+  <mat-grid-list [cols]="2" rowHeight="100px">
+    <mat-grid-tile class="name-grid" [colspan]="1">
+      <mat-form-field class="name-input">
+        <mat-label>Name</mat-label>
+        <input matInput [formControl]="nameInput">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1">
+      <mat-form-field class="account-type-input">
+        <mat-label>Account Type</mat-label>
+        <mat-select [formControl]="accountTypeSelect">
+          <mat-option *ngFor="let accountType of accountTypes" [value]="accountType">{{
+            accountType.charAt(0).toUpperCase() + accountType.slice(1).toLowerCase()
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1"  class="balance-grid">
+      <mat-form-field class="balance">
+        <mat-label>Balance</mat-label>
+        <input matInput currencyMask placeholder="0.00" value="" [options]="{ prefix: 'zł '}"
+               [formControl]="balanceInput">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1">
+      <mat-form-field class="color-select">
+        <mat-label>Color</mat-label>
+        <mat-select [formControl]="colorSelect" [style.color]="colorSelect.value" >
+          <mat-option *ngFor="let color of colors" [value]="color" [ngStyle]="{'color': color}">
+            <mat-icon>color_lens</mat-icon>{{color.toUpperCase()}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+     </mat-grid-tile>
+     <mat-grid-tile [colspan]="2" class="description-grid">
+      <mat-form-field class="description">
+        <mat-label>Description</mat-label>
+        <input matInput [formControl]="descriptionInput">
+      </mat-form-field>
+      <mat-slide-toggle #archivedToggle>Archived</mat-slide-toggle>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="buttons">
+    <button mat-raised-button color="warn" class="delete-button" (click)="deleteAccount()">Delete</button>
+    <button mat-raised-button class="save-button" (click)="saveAccount()">Save</button>
+  </div>
+</form>
