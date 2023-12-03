@@ -1,14 +1,13 @@
 .wrapper {
   margin-top: 30px;
   width: 100%;
-  height: calc(100%  - 400px);
+  height: calc(100% - 400px);
   max-width: 800px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
   flex-direction: column;
-  display:block;
-
+  display: block;
 }
 
 .transactions-wrapper {
@@ -18,8 +17,18 @@
 
 mat-paginator {
   position: absolute;
-  display:block;
+  display: block;
   border-radius: 10px;
   width: 100%;
   bottom: 0;
+}
+
+@import "/src/styles";
+@media (max-width: $layout-small-width) {
+  .transactions-wrapper {
+    margin-bottom: 20px;
+  }
+  mat-paginator {
+    position: relative;
+  }
 }

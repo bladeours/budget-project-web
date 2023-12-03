@@ -21,12 +21,16 @@
       <mat-icon>attach_money</mat-icon>
       <span>Transactions</span>
     </button>
+    <button mat-button class="menu-button" (click)="goToCategories()">
+      <mat-icon>attach_money</mat-icon>
+      <span>Categories</span>
+    </button>
     <button mat-button class="menu-button" (click)="goToAddTransaction()">
       <mat-icon>add</mat-icon>
       <span>Add Transaction</span>
     </button>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" (click)="goToaddAccount()">
+    <button mat-button class="menu-button" (click)="goToAddAccount()">
       <mat-icon>add</mat-icon>
       <span>Add Account</span>
     </button>
@@ -45,20 +49,8 @@
         </div>
           <span class="balance">{{account.balance.toFixed(2)}}</span>
 
-
     </button>
 
-
-
-
-<!--    <button mat-button class="menu-button">-->
-<!--      <mat-icon>account_balance</mat-icon>-->
-<!--      <span>Account 2</span>-->
-<!--    </button>-->
-<!--    <button mat-button class="menu-button">-->
-<!--      <mat-icon>account_balance</mat-icon>-->
-<!--      <span>Account 3</span>-->
-<!--    </button>-->
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z4">

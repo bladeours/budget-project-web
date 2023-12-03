@@ -1,36 +1,49 @@
-import {MatSelectModule} from '@angular/material/select';
-import {Component, Inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle
+  MatDialogTitle,
 } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CurrencyMaskModule} from "ng2-currency-mask";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {Account, Category, TransactionType} from "../../../graphql/__generated__";
-import {GraphqlService} from "../../../graphql/service/graphql.service";
-import {TransactionDialogService} from "./transaction-dialog.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {TransactionCard} from "../../models/TransactionCard";
-import {forkJoin} from "rxjs";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatChipsModule} from "@angular/material/chips";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { forkJoin } from 'rxjs';
+import {
+  Account,
+  Category,
+  TransactionType,
+} from '../../../graphql/__generated__';
+import { GraphqlService } from '../../../graphql/service/graphql.service';
+import { TransactionCard } from '../../models/TransactionCard';
+import { TransactionDialogService } from './transaction-dialog.service';
 
 @Component({
   selector: 'app-add-transaction-dialog',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
     MatInputModule,
     FormsModule,
     MatButtonModule,
@@ -42,9 +55,13 @@ import {MatChipsModule} from "@angular/material/chips";
     CurrencyMaskModule,
     MatGridListModule,
     MatDatepickerModule,
-    MatNativeDateModule, ReactiveFormsModule, MatCheckboxModule, MatChipsModule],
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatChipsModule,
+  ],
   templateUrl: './transaction-dialog.component.html',
-  styleUrl: './transaction-dialog.component.scss'
+  styleUrl: './transaction-dialog.component.scss',
 })
 export class TransactionDialogComponent {
   typeGridCol: number;
@@ -55,16 +72,24 @@ export class TransactionDialogComponent {
   noteGridCol: number;
   incomeSubCategoryCol: number;
   expenseSubCategoryCol: number;
-  typeSelect: FormControl<any> = new FormControl(TransactionType.Expense, [Validators.required]);
+  typeSelect: FormControl<any> = new FormControl(TransactionType.Expense, [
+    Validators.required,
+  ]);
   needCheckBox: FormControl<undefined | string> = new FormControl();
   incomeSubCategorySelect = new FormControl();
   expenseSubCategorySelect = new FormControl();
   amount: FormControl<any> = new FormControl(null, [Validators.required]);
-  note = new FormControl("");
-  typeList: TransactionType[] = [TransactionType.Expense, TransactionType.Income, TransactionType.Transfer];
-  datePicker: FormControl<any> = new FormControl(new Date(), [Validators.required]);
-  leftLabel: string = "From Account";
-  rightLabel: string = "Category";
+  note = new FormControl('');
+  typeList: TransactionType[] = [
+    TransactionType.Expense,
+    TransactionType.Income,
+    TransactionType.Transfer,
+  ];
+  datePicker: FormControl<any> = new FormControl(new Date(), [
+    Validators.required,
+  ]);
+  leftLabel: string = 'From Account';
+  rightLabel: string = 'Category';
   leftSelect: FormControl<any> = new FormControl(null, [Validators.required]);
   rightSelect: FormControl<any> = new FormControl(null, [Validators.required]);
   leftObjects: any[] = [];
@@ -85,26 +110,29 @@ export class TransactionDialogComponent {
     note: this.note,
     subCategoryIncome: this.incomeSubCategorySelect,
     subCategoryExpense: this.expenseSubCategorySelect,
-    need: this.needCheckBox
+    need: this.needCheckBox,
   });
   protected readonly window = window;
-  title: string = "Add Transaction";
+  title: string = 'Add Transaction';
   isUpdate: boolean = false;
   protected readonly TransactionType = TransactionType;
 
-
-  constructor(private dialogRef: MatDialogRef<TransactionDialogComponent>, private observer: BreakpointObserver,
-              private graphqlService: GraphqlService, private fb: FormBuilder,
-              private transactionDialogService: TransactionDialogService, private _snackBar: MatSnackBar,
-              @Inject(MAT_DIALOG_DATA) public data: TransactionCard) {
-  }
+  constructor(
+    private dialogRef: MatDialogRef<TransactionDialogComponent>,
+    private observer: BreakpointObserver,
+    private graphqlService: GraphqlService,
+    private fb: FormBuilder,
+    private transactionDialogService: TransactionDialogService,
+    private _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: TransactionCard
+  ) {}
 
   ngAfterViewInit() {
     this.isUpdate = this.data !== null;
     this.setData();
-    this.typeSelect.valueChanges.subscribe(v => this.handleChangeType(v));
-    this.leftSelect.valueChanges.subscribe(v => this.handleChangeLeft(v));
-    this.rightSelect.valueChanges.subscribe(v => this.handleChangeRight(v));
+    this.typeSelect.valueChanges.subscribe((v) => this.handleChangeType(v));
+    this.leftSelect.valueChanges.subscribe((v) => this.handleChangeLeft(v));
+    this.rightSelect.valueChanges.subscribe((v) => this.handleChangeRight(v));
 
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches) {
@@ -127,30 +155,41 @@ export class TransactionDialogComponent {
         this.handleShowIncomeSubCategories();
       }
     });
-
   }
 
   saveTransaction(): void {
     if (this.formGroup.valid) {
-      let transactionInput = this.transactionDialogService.getTransactionInput(this.formGroup);
-      if(this.isUpdate){
-        this.graphqlService.updateTransaction(transactionInput, this.data.hash).subscribe(
-          {
-            next: value => {
-              this._snackBar.open("Transaction Updated", "Got it", {duration: 3000});
+      let transactionInput = this.transactionDialogService.getTransactionInput(
+        this.formGroup
+      );
+      if (this.isUpdate) {
+        this.graphqlService
+          .updateTransaction(transactionInput, this.data.hash)
+          .subscribe({
+            next: (value) => {
+              this._snackBar.open('Transaction Updated', 'Got it', {
+                duration: 3000,
+              });
               window.location.reload();
             },
-            error: err => this._snackBar.open("Something went wrong", "Got it", {duration: 3000})
+            error: (err) =>
+              this._snackBar.open('Something went wrong', 'Got it', {
+                duration: 3000,
+              }),
           });
       } else {
-        this.graphqlService.addTransaction(transactionInput).subscribe(
-          {
-            next: value => {
-              this._snackBar.open("Transaction Created", "Got it", {duration: 3000});
-              window.location.reload();
-            },
-            error: err => this._snackBar.open("Something went wrong", "Got it", {duration: 3000})
-          });
+        this.graphqlService.addTransaction(transactionInput).subscribe({
+          next: (value) => {
+            this._snackBar.open('Transaction Created', 'Got it', {
+              duration: 3000,
+            });
+            window.location.reload();
+          },
+          error: (err) =>
+            this._snackBar.open('Something went wrong', 'Got it', {
+              duration: 3000,
+            }),
+        });
       }
 
       this.dialogRef.close();
@@ -160,22 +199,26 @@ export class TransactionDialogComponent {
   private handleChangeType(type: TransactionType) {
     switch (type) {
       case TransactionType.Transfer:
-        this.leftLabel = "From Account";
-        this.rightLabel = "To Account";
+        this.leftLabel = 'From Account';
+        this.rightLabel = 'To Account';
         this.leftObjects = this.accounts;
         this.rightObjects = this.accounts;
         break;
       case TransactionType.Income:
-        this.leftLabel = "From Category";
-        this.rightLabel = "To Account";
-        this.leftObjects = this.incomeCategories.filter(c => c.parent === null);
+        this.leftLabel = 'From Category';
+        this.rightLabel = 'To Account';
+        this.leftObjects = this.incomeCategories.filter(
+          (c) => c.parent === null
+        );
         this.rightObjects = this.accounts;
         break;
       case TransactionType.Expense:
-        this.leftLabel = "From Account";
-        this.rightLabel = "Category";
+        this.leftLabel = 'From Account';
+        this.rightLabel = 'Category';
         this.leftObjects = this.accounts;
-        this.rightObjects = this.expenseCategories.filter(c => c.parent === null);
+        this.rightObjects = this.expenseCategories.filter(
+          (c) => c.parent === null
+        );
         break;
     }
     this.hideIncomeSubCategories();
@@ -215,7 +258,10 @@ export class TransactionDialogComponent {
   private handleChangeLeft(v: any) {
     if (this.typeSelect.value === TransactionType.Income) {
       let parentCategory = v as Category;
-      if (parentCategory.subCategories != undefined && parentCategory.subCategories?.length > 0) {
+      if (
+        parentCategory.subCategories != undefined &&
+        parentCategory.subCategories?.length > 0
+      ) {
         this.showIncomeSubCategories = true;
         this.handleShowIncomeSubCategories();
         this.incomeSubCategories = parentCategory.subCategories as Category[];
@@ -228,12 +274,15 @@ export class TransactionDialogComponent {
   private handleChangeRight(v: any) {
     if (this.typeSelect.value === TransactionType.Expense) {
       let parentCategory = v as Category;
-      if (parentCategory.subCategories != undefined && parentCategory.subCategories?.length > 0) {
+      if (
+        parentCategory.subCategories != undefined &&
+        parentCategory.subCategories?.length > 0
+      ) {
         this.showExpenseSubCategories = true;
         this.handleShowExpenseSubCategories();
         this.expenseSubCategories = parentCategory.subCategories as Category[];
       } else {
-        this.hideExpenseSubCategories()
+        this.hideExpenseSubCategories();
       }
     }
   }
@@ -242,28 +291,32 @@ export class TransactionDialogComponent {
     forkJoin({
       accounts: this.graphqlService.getAccounts({}),
       incomeCategories: this.graphqlService.getCategoriesIncomeHashName(),
-      expenseCategories: this.graphqlService.getCategoriesExpenseHashName()
+      expenseCategories: this.graphqlService.getCategoriesExpenseHashName(),
     }).subscribe({
-      next: v => {
+      next: (v) => {
         this.accounts = v.accounts.data.getAccounts as Array<Account>;
         this.leftObjects = this.accounts;
 
-        this.incomeCategories = v.incomeCategories.data.getCategories as Array<Category>;
+        this.incomeCategories = v.incomeCategories.data
+          .getCategories as Array<Category>;
 
-        this.expenseCategories = v.expenseCategories.data.getCategories as Array<Category>;
-        this.rightObjects = this.expenseCategories.filter(c => c.parent === null);
-        if(this.isUpdate){
+        this.expenseCategories = v.expenseCategories.data
+          .getCategories as Array<Category>;
+        this.rightObjects = this.expenseCategories.filter(
+          (c) => c.parent === null
+        );
+        if (this.isUpdate) {
           this.fillFields();
         }
       },
-      error: v => console.log(v)
-    })
+      error: (v) => console.log(v),
+    });
   }
 
   private fillFields() {
     this.typeSelect.setValue(this.data.type);
     this.datePicker.setValue(this.data.date.date);
-    this.title = "Update Transaction";
+    this.title = 'Update Transaction';
     this.amount.setValue(Math.abs(this.data.amount.amount));
     this.note.setValue(this.data.note);
     switch (this.data.type) {
@@ -276,13 +329,12 @@ export class TransactionDialogComponent {
         this.leftSelect.setValue(this.data.account);
         this.rightSelect.setValue(this.data.category);
         this.expenseSubCategorySelect.setValue(this.data.subCategory);
-        this.needCheckBox.setValue(this.data.need ? undefined : "need");
+        this.needCheckBox.setValue(this.data.need ? undefined : 'need');
         break;
       case TransactionType.Transfer:
         this.leftSelect.setValue(this.data.account);
         this.rightSelect.setValue(this.data.category);
     }
-
   }
 
   compareCategoryObjects(object1: any, object2: any) {
@@ -291,16 +343,18 @@ export class TransactionDialogComponent {
 
   deleteTransaction() {
     this.graphqlService.deleteTransaction(this.data.hash).subscribe({
-      next: v => {
-        this._snackBar.open("Transaction deleted", "Got it", {duration: 3000});
+      next: (v) => {
+        this._snackBar.open('Transaction deleted', 'Got it', {
+          duration: 3000,
+        });
         window.location.reload();
       },
-      error: v => {
-        this._snackBar.open("Something went wrong", "Got it", {duration: 3000});
+      error: (v) => {
+        this._snackBar.open('Something went wrong', 'Got it', {
+          duration: 3000,
+        });
         window.location.reload();
-      }
-    })
+      },
+    });
   }
-
-
 }

@@ -1,7 +1,14 @@
-import {Component, ElementRef, HostListener, Renderer2, ViewChild,} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {PageEvent} from '@angular/material/paginator';
-import {debounceTime} from 'rxjs';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
+import { debounceTime } from 'rxjs';
+
 import {
   Category,
   DateOperator,
@@ -11,12 +18,12 @@ import {
   StringExpression,
   StringOperator,
   TransactionsPage,
-} from '../../../../graphql/__generated__';
-import {GraphqlService} from '../../../../graphql/service/graphql.service';
-import {TransactionCard} from '../../../../shared/models/TransactionCard';
-import {TransactionCardService} from '../../service/transaction-card.service';
-import {myGreen, myRed} from '../../../../environments/environment';
-import {Utils} from 'src/app/shared/utils/Utils';
+} from 'src/app/graphql/__generated__';
+import { GraphqlService } from 'src/app/graphql/service/graphql.service';
+import { Utils } from 'src/app/shared/utils/Utils';
+import { myGreen, myRed } from '../../../../environments/environment';
+import { TransactionCard } from '../../../../shared/models/TransactionCard';
+import { TransactionCardService } from '../../service/transaction-card.service';
 
 @Component({
   selector: 'app-transactions',
@@ -93,18 +100,21 @@ export class TransactionsComponent {
 
   handleRangeDate(v: any) {
     if (this.range.valid) {
-      if(v.end == null || v.start == null){
+      if (v.end == null || v.start == null) {
         this.dateFilter = {};
         this.setSubFiltersAndRefresh();
         return;
       }
       this.dateFilter = {
-        logicOperator : LogicOperator.And,
+        logicOperator: LogicOperator.And,
         dateFilters: [
           {
             field: 'date',
             operator: DateOperator.Between,
-            values: [Utils.getFullDateString(v.start), Utils.getFullDateString(v.end)],
+            values: [
+              Utils.getFullDateString(v.start),
+              Utils.getFullDateString(v.end),
+            ],
           },
         ],
       };
@@ -112,7 +122,6 @@ export class TransactionsComponent {
       this.setSubFiltersAndRefresh();
     }
   }
-
 
   handleChangeCategories(value: Category[]) {
     if (this.categories.valid) {

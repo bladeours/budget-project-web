@@ -110,11 +110,20 @@ export class NavbarComponent {
     this.router.navigate(["account"], {queryParams: {id: hash}});
   }
 
-  goToaddAccount() {
+  goToAddAccount() {
     if (this.isSmall) {
       this.sidenav.close();
     }
     this.selectedPortal = new ComponentPortal(AccountComponent);
     this.router.navigate(["account"]);
   }
+
+  goToCategories(){
+    if (this.isSmall) {
+      this.sidenav.close();
+    }
+    this.selectedPortal = new ComponentPortal(DashboardComponent);
+    this.router.navigate([""]);
+  }
+
 }

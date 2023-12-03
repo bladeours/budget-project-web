@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
 import {PageEvent} from "@angular/material/paginator";
 import {TransactionCard} from "../../../../shared/models/TransactionCard";
-import {TransactionsPage} from "../../../../graphql/__generated__";
+import {LogicOperator, StringOperator, TransactionsPage} from "../../../../graphql/__generated__";
 import {GraphqlService} from "../../../../graphql/service/graphql.service";
 import {TransactionCardService} from "../../../transactions/service/transaction-card.service";
 
@@ -52,7 +52,9 @@ export class AccountTransactionsComponent {
     this.graphqlService
       .getTransactionsPage(
         {number: this.pageIndex, size: this.pageSize},
-        {}
+        {
+          //TODO
+        }
       )
       .subscribe((value) => {
         let transactionPage: TransactionsPage = value.data

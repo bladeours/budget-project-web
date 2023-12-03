@@ -1,5 +1,5 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
-import { baseUrl } from '../environments/environment';
+import { baseUrl } from 'src/app/environments/environment';
 
 const config: CodegenConfig = {
   schema: `${baseUrl}/graphql`,
