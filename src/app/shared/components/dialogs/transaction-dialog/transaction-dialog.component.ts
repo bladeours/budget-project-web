@@ -31,11 +31,11 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { forkJoin } from 'rxjs';
 import {
   Account,
-  Category,
+  Category, SubCategory,
   TransactionType,
-} from '../../../graphql/__generated__';
-import { GraphqlService } from '../../../graphql/service/graphql.service';
-import { TransactionCard } from '../../models/TransactionCard';
+} from '../../../../graphql/__generated__';
+import { GraphqlService } from '../../../../graphql/service/graphql.service';
+import { TransactionCard } from '../../../models/TransactionCard';
 import { TransactionDialogService } from './transaction-dialog.service';
 
 @Component({
@@ -97,8 +97,8 @@ export class TransactionDialogComponent {
   accounts: Account[] = [];
   incomeCategories: Category[] = [];
   expenseCategories: Category[] = [];
-  incomeSubCategories: Category[] = [];
-  expenseSubCategories: Category[] = [];
+  incomeSubCategories: SubCategory[] = [];
+  expenseSubCategories: SubCategory[] = [];
   showIncomeSubCategories: boolean = false;
   showExpenseSubCategories: boolean = false;
   formGroup: FormGroup = this.fb.group({
@@ -169,8 +169,7 @@ export class TransactionDialogComponent {
             next: (value) => {
               this._snackBar.open('Transaction Updated', 'Got it', {
                 duration: 3000,
-              });
-              window.location.reload();
+              }).afterDismissed().subscribe(() =>window.location.reload());
             },
             error: (err) =>
               this._snackBar.open('Something went wrong', 'Got it', {
@@ -182,8 +181,7 @@ export class TransactionDialogComponent {
           next: (value) => {
             this._snackBar.open('Transaction Created', 'Got it', {
               duration: 3000,
-            });
-            window.location.reload();
+            }).afterDismissed().subscribe(() =>window.location.reload());
           },
           error: (err) =>
             this._snackBar.open('Something went wrong', 'Got it', {
@@ -191,7 +189,6 @@ export class TransactionDialogComponent {
             }),
         });
       }
-
       this.dialogRef.close();
     }
   }
@@ -207,18 +204,14 @@ export class TransactionDialogComponent {
       case TransactionType.Income:
         this.leftLabel = 'From Category';
         this.rightLabel = 'To Account';
-        this.leftObjects = this.incomeCategories.filter(
-          (c) => c.parent === null
-        );
+        this.leftObjects = this.incomeCategories;
         this.rightObjects = this.accounts;
         break;
       case TransactionType.Expense:
         this.leftLabel = 'From Account';
         this.rightLabel = 'Category';
         this.leftObjects = this.accounts;
-        this.rightObjects = this.expenseCategories.filter(
-          (c) => c.parent === null
-        );
+        this.rightObjects = this.expenseCategories;
         break;
     }
     this.hideIncomeSubCategories();
@@ -264,7 +257,7 @@ export class TransactionDialogComponent {
       ) {
         this.showIncomeSubCategories = true;
         this.handleShowIncomeSubCategories();
-        this.incomeSubCategories = parentCategory.subCategories as Category[];
+        this.incomeSubCategories = parentCategory.subCategories as SubCategory[];
       } else {
         this.hideIncomeSubCategories();
       }
@@ -280,7 +273,7 @@ export class TransactionDialogComponent {
       ) {
         this.showExpenseSubCategories = true;
         this.handleShowExpenseSubCategories();
-        this.expenseSubCategories = parentCategory.subCategories as Category[];
+        this.expenseSubCategories = parentCategory.subCategories as SubCategory[];
       } else {
         this.hideExpenseSubCategories();
       }
@@ -302,9 +295,7 @@ export class TransactionDialogComponent {
 
         this.expenseCategories = v.expenseCategories.data
           .getCategories as Array<Category>;
-        this.rightObjects = this.expenseCategories.filter(
-          (c) => c.parent === null
-        );
+        this.rightObjects = this.expenseCategories;
         if (this.isUpdate) {
           this.fillFields();
         }

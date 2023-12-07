@@ -1,17 +1,16 @@
 import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
-import {PageEvent} from "@angular/material/paginator";
 import {TransactionCard} from "../../../../shared/models/TransactionCard";
-import {LogicOperator, StringOperator, TransactionsPage} from "../../../../graphql/__generated__";
 import {GraphqlService} from "../../../../graphql/service/graphql.service";
 import {TransactionCardService} from "../../../transactions/service/transaction-card.service";
-
+import {LogicOperator, StringOperator, TransactionsPage} from "../../../../graphql/__generated__";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-account-transactions',
-  templateUrl: './account-transactions.component.html',
-  styleUrl: './account-transactions.component.scss'
+  selector: 'app-category-transactions',
+  templateUrl: './category-transactions.component.html',
+  styleUrl: './category-transactions.component.scss'
 })
-export class AccountTransactionsComponent {
+export class CategoryTransactionsComponent {
   @Input()
   hash: string;
   @ViewChild('paginator', {read: ElementRef}) paginator: ElementRef;
@@ -40,40 +39,36 @@ export class AccountTransactionsComponent {
       let paginatorHeight = this.paginator.nativeElement.offsetHeight;
       let wrapperHeight = this.wrapper.nativeElement.offsetHeight;
       this.renderer.setStyle(
-        this.transactionWrapper.nativeElement,
-        'max-height',
-        wrapperHeight - paginatorHeight - 30 + 'px'
+          this.transactionWrapper.nativeElement,
+          'max-height',
+          wrapperHeight - paginatorHeight - 30 + 'px'
       );
     }
   }
 
   private setTransactions() {
     this.graphqlService
-      .getTransactionsPage(
-        {number: this.pageIndex, size: this.pageSize},
-        {
-          logicOperator: LogicOperator.Or,
-          stringFilters: [
+        .getTransactionsPage(
+            {number: this.pageIndex, size: this.pageSize},
             {
-              value: this.hash,
-              operator: StringOperator.Equals,
-              field: "accountTo.hash"
-            },
-            {
-              value: this.hash,
-              operator: StringOperator.Equals,
-              field: "accountFrom.hash"
+              logicOperator: LogicOperator.Or,
+              stringFilters: [
+                {
+                  value: this.hash,
+                  operator: StringOperator.Equals,
+                  field: "category.hash"
+                }
+              ]
             }
-          ]
-        }
-      )
-      .subscribe((value) => {
-        let transactionPage: TransactionsPage = value.data
-          .getTransactionsPage as TransactionsPage;
-        this.transactionCards =
-          this.transactionService.getTransactionCards(transactionPage);
-        this.length = transactionPage.totalElements as number;
-      });
+        )
+        .subscribe((value) => {
+          let transactionPage: TransactionsPage = value.data
+              .getTransactionsPage as TransactionsPage;
+          console.log(transactionPage)
+          this.transactionCards =
+              this.transactionService.getTransactionCards(transactionPage);
+          this.length = transactionPage.totalElements as number;
+        });
   }
 
   handlePageEvent(event: PageEvent) {

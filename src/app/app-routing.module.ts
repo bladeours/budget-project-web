@@ -19,6 +19,10 @@ const routes: Routes = [
       {
           path: 'account',
           component: HomeComponent
+      },
+      {
+        path: 'category',
+        component: HomeComponent
       }
     ]
   },

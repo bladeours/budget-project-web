@@ -1,0 +1,41 @@
+form {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons{
+  text-align: center;
+}
+
+.delete-button{
+  margin-right: 10px;
+}
+
+.save-button{
+  margin-left: 10px;
+}
+
+.addButton {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+}
+
+.subCategory {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subCategoryFormField {
+  width: calc(100% - 35px);
+
+}
+
+@import '/src/styles';
+@media (max-width: $layout-small-width) {
+
+  .subCategoryFormField {
+    width: calc(100% - 75px);
+  }
+}

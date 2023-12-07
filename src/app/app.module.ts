@@ -49,13 +49,19 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {AccountFormComponent} from "./features/account/components/account-form/account-form.component";
 import {AccountComponent} from "./features/account/components/account/account.component";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {ColorPickerComponent} from "./shared/components/color-picker/color-picker.component";
 import {
   AccountTransactionsComponent
 } from "./features/account/components/account-transactions/account-transactions.component";
+import {CategoryComponent} from "./features/category/components/category/category.component";
+import {MatExpansionModule} from "@angular/material/expansion";
+import { CategoryFormComponent } from './features/category/components/category-form/category-form.component';
+import { CategoryTransactionsComponent } from './features/category/components/category-transactions/category-transactions.component';
+import { AccountDialogComponent } from './shared/components/dialogs/account-dialog/account-dialog.component';
+import { CategoryDialogComponent } from './shared/components/dialogs/category-dialog/category-dialog.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
-  exports: [NavbarComponent, TransactionCardComponent],
+    exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -72,42 +78,48 @@ import {
     TransactionsComponent,
     AccountFormComponent,
     AccountComponent,
-    AccountTransactionsComponent
+    AccountTransactionsComponent,
+    CategoryComponent,
+    CategoryFormComponent,
+    CategoryTransactionsComponent,
+    AccountDialogComponent,
+    CategoryDialogComponent
   ],
-  imports: [
-    MatTableModule,
-    MatGridListModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatCardModule,
-    MatFormFieldModule,
-    FormsModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatTabsModule,
-    MatMenuModule,
-    MatSnackBarModule,
-    PortalModule,
-    MatPaginatorModule,
-    MatChipsModule,
-    MatAutocompleteModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    GraphQLModule,
-    MatDialogContent,
-    MatDialogModule,
-    CurrencyMaskModule,
-    MatSlideToggleModule,
-    ColorPickerComponent
-  ],
+    imports: [
+        MatTableModule,
+        MatGridListModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDividerModule,
+        MatCardModule,
+        MatFormFieldModule,
+        FormsModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatTabsModule,
+        MatMenuModule,
+        MatSnackBarModule,
+        PortalModule,
+        MatPaginatorModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule,
+        GraphQLModule,
+        MatDialogContent,
+        MatDialogModule,
+        CurrencyMaskModule,
+        MatSlideToggleModule,
+        MatExpansionModule,
+        MatTooltipModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

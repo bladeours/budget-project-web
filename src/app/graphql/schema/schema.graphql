@@ -73,22 +73,14 @@ query getTransactionsPage($page: Page!, $filter: Filter) {
         color
         hash
         income
-        parent {
-          name
-          hash
-          subCategories {
-            name
-            hash
-          }
-        }
         subCategories {
           name
           hash
         }
       }
       subCategory {
-        name
         hash
+        name
       }
       date
       need
@@ -117,14 +109,6 @@ query getCategoriesIncomeHashName{
       name
       hash
     }
-    parent {
-      name
-      hash
-      subCategories {
-        name
-        hash
-      }
-    }
   }
 }
 
@@ -136,14 +120,6 @@ query getCategoriesExpenseHashName{
     subCategories {
       name
       hash
-    }
-    parent {
-      name
-      hash
-      subCategories {
-        name
-        hash
-      }
     }
   }
 }
@@ -157,17 +133,6 @@ query getCategoriesHashName{
     subCategories {
       name
       hash
-      income
-    }
-    parent {
-      name
-      hash
-      income
-      subCategories {
-        name
-        hash
-        income
-      }
     }
   }
 }
@@ -204,4 +169,35 @@ mutation addAccount($accountInput: AccountInput!){
 
 mutation deleteAccount($hash: String!){
   deleteAccount(hash: $hash, removeSub: false)
+}
+
+mutation addCategory($categoryInput: CategoryInput!){
+  addCategory(categoryInput: $categoryInput){
+    hash
+  }
+
+}
+
+query getCategory($hash: String!){
+  getCategory(hash: $hash){
+    hash
+    name
+    income
+    subCategories {
+      name
+      hash
+    }
+    archived
+    color
+  }
+}
+
+mutation deleteCategory($hash: String!){
+  deleteCategory(hash: $hash)
+}
+
+mutation updateCategory($hash: String!, $categoryUpdateInput: CategoryUpdateInput!){
+  updateCategory(hash: $hash, categoryUpdateInput: $categoryUpdateInput){
+    hash
+  }
 }

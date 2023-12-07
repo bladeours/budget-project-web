@@ -10,15 +10,15 @@
 
 
 .description-grid > ::ng-deep .mat-grid-tile-content {
-  justify-content: flex-start !important;
+  justify-content: flex-start;
 }
 
 .name-grid > ::ng-deep .mat-grid-tile-content {
-  justify-content: flex-start !important;
+  justify-content: flex-start;
 }
 
 .balance-grid > ::ng-deep .mat-grid-tile-content {
-  justify-content: flex-start !important;
+  justify-content: flex-start;
 }
 
 
@@ -27,7 +27,6 @@ form {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  // justify-content: center;
 }
 
 .buttons{
@@ -45,7 +44,7 @@ form {
 @import '/src/styles';
 @media (max-width: $layout-small-width) {
   .balance {
-    width: 70%;
+    width: 75%;
   }
 
   .name-input{

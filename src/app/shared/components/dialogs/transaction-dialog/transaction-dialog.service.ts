@@ -3,11 +3,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {
   Account,
   Category,
-  Currency,
+  Currency, SubCategory,
   TransactionInput,
   TransactionType,
-} from '../../../graphql/__generated__';
-import { Utils } from './../../utils/Utils';
+} from '../../../../graphql/__generated__';
+import { Utils } from '../../../utils/Utils';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class TransactionDialogService {
           formGroup.get('subCategoryExpense')?.value !== null
         ) {
           subCategoryHash = (
-            formGroup.get('subCategoryExpense')?.value as unknown as Category
+            formGroup.get('subCategoryExpense')?.value as unknown as SubCategory
           ).hash;
         }
         categoryHash = (formGroup.get('right')?.value as unknown as Category)
@@ -41,7 +41,7 @@ export class TransactionDialogService {
           formGroup.get('subCategoryIncome')?.value !== null
         ) {
           subCategoryHash = (
-            formGroup.get('subCategoryIncome')?.value as unknown as Category
+            formGroup.get('subCategoryIncome')?.value as unknown as SubCategory
           ).hash;
         }
         categoryHash = (formGroup.get('left')?.value as unknown as Category)

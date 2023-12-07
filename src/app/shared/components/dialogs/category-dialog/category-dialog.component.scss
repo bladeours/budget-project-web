@@ -1,0 +1,30 @@
+.wrapper {
+  margin: 20px;
+  width: 50vw;
+  min-width: 300px;
+  max-width: 500px;
+  overflow: hidden;
+  padding-bottom: 10px;
+}
+
+.actions {
+  justify-content: center;
+}
+
+
+
+@import '/src/styles';
+@media (max-width: $layout-small-width) {
+  .wrapper {
+    width: 70vw;
+    min-width: auto;
+    max-height: 80vh;
+  }
+
+  mat-dialog-content {
+    overflow: hidden;
+  }
+  mat-dialog-content:hover {
+    overflow-y: scroll ;
+  }
+}

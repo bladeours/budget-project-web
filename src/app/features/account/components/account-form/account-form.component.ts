@@ -1,9 +1,10 @@
-import { GraphqlService } from '../../../../graphql/service/graphql.service';
-import { Component, Input, ViewChild } from '@angular/core';
+import {GraphqlService} from '../../../../graphql/service/graphql.service';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Account, AccountType } from '../../../../graphql/__generated__';
-import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { AccountService } from '../../service/account.service';
+import {Account, AccountType} from '../../../../graphql/__generated__';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {AccountService} from '../../service/account.service';
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-account-form',
@@ -11,6 +12,12 @@ import { AccountService } from '../../service/account.service';
   styleUrl: './account-form.component.scss',
 })
 export class AccountFormComponent {
+  @Output()
+  addAccountEvent = new EventEmitter<FormGroup>();
+  @Output()
+  closeEvent = new EventEmitter<any>();
+
+
   @Input()
   hash: string;
   colors = ['#FFCE30', '#E389B9', '#746AB0'];
@@ -31,14 +38,20 @@ export class AccountFormComponent {
     colorSelect: this.colorSelect,
   });
 
+  nameCol: number;
+  typeCol: number;
+  colorCol: number;
+  descriptionCol: number;
+  balanceCol: number;
+
 
   accountTypes = [AccountType.Regular, AccountType.Savings];
 
   constructor(
     private fb: FormBuilder,
     private graphqlService: GraphqlService,
-    private accountService: AccountService
-  ) {}
+    private accountService: AccountService,
+    private observer: BreakpointObserver) {}
 
   ngOnInit() {
     this.isCreate = (this.hash == null);
@@ -49,6 +62,21 @@ export class AccountFormComponent {
       });
     }
 
+    this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
+      if (res.matches && this.isCreate) {
+        this.nameCol = 2;
+        this.typeCol = 2;
+        this.colorCol = 2;
+        this.descriptionCol = 2;
+        this.balanceCol = 2;
+      } else {
+        this.nameCol = 1;
+        this.typeCol = 1;
+        this.colorCol = 1;
+        this.descriptionCol = 2;
+        this.balanceCol = 1;
+      }
+    });
   }
 
   deleteAccount() {
@@ -57,7 +85,7 @@ export class AccountFormComponent {
   saveAccount() {
     if(this.formGroup.valid){
       if(this.isCreate){
-        this.accountService.addAccount(this.formGroup, this.archivedToggle);
+        this.addAccountEvent.emit(this.formGroup);
       } else {
         this.accountService.updateAccount(this.formGroup, this.archivedToggle, this.hash);
       }
@@ -71,5 +99,9 @@ export class AccountFormComponent {
     this.balanceInput.setValue(account.balance);
     this.archivedToggle.checked = account.archived;
     this.colorSelect.setValue(account.color);
+  }
+
+  close() {
+    this.closeEvent.emit();
   }
 }

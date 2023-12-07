@@ -1,10 +1,10 @@
-import {Account, Category, TransactionType} from "../../graphql/__generated__";
+import {Account, Category, SubCategory, TransactionType} from "../../graphql/__generated__";
 
 export class TransactionCard {
   type: TransactionType;
   icon: string;
   category: Category | Account;
-  subCategory: Category | undefined;
+  subCategory: SubCategory | undefined;
   account: Account;
   amount: {
     amount: number;

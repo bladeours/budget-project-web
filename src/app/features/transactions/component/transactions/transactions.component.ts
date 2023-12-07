@@ -225,9 +225,7 @@ export class TransactionsComponent {
   private setCategories() {
     this.graphqlService.getCategories().subscribe({
       next: (v) => {
-        this.categoryList = (v.data.getCategories as Category[])
-          .filter((c) => c.parent === null)
-          .sort((c1, c2) => (c1.income ? 1 : -1));
+        this.categoryList = (v.data.getCategories as Category[]).sort((c1, c2) => (c1.income ? 1 : -1));
       },
     });
   }

@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   AccountInput,
-  AddAccountGQL,
-  AddTransactionGQL,
-  DeleteAccountGQL,
+  AddAccountGQL, AddCategoryGQL,
+  AddTransactionGQL, CategoryInput, CategoryUpdateInput,
+  DeleteAccountGQL, DeleteCategoryGQL,
   DeleteTransactionGQL,
   Filter,
   GetAccountGQL,
   GetAccountsGQL,
   GetCategoriesExpenseHashNameGQL,
   GetCategoriesHashNameGQL,
-  GetCategoriesIncomeHashNameGQL,
+  GetCategoriesIncomeHashNameGQL, GetCategoryGQL,
   GetTransactionsPageGQL,
   Page,
   TransactionInput,
-  UpdateAccountGQL,
+  UpdateAccountGQL, UpdateCategoryGQL,
   UpdateTransactionGQL,
 } from '../__generated__';
 
@@ -35,7 +35,11 @@ export class GraphqlService {
     private getCategoriesGQL: GetCategoriesHashNameGQL,
     private updateAccountGQL: UpdateAccountGQL,
     private addAccountGQL: AddAccountGQL,
-    private deleteAccountGQL: DeleteAccountGQL
+    private deleteAccountGQL: DeleteAccountGQL,
+    private addCategoryGQL: AddCategoryGQL,
+    private getCategoryGQL: GetCategoryGQL,
+    private deleteCategoryGQL: DeleteCategoryGQL,
+    private updateCategoryGQL: UpdateCategoryGQL
   ) {}
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
@@ -87,5 +91,21 @@ export class GraphqlService {
 
   deleteAccount(hash: string) {
     return this.deleteAccountGQL.mutate({ hash });
+  }
+
+  addCategory(categoryInput: CategoryInput){
+    return this.addCategoryGQL.mutate({categoryInput});
+  }
+
+  getCategory(hash: string){
+    return this.getCategoryGQL.fetch({hash});
+  }
+
+  deleteCategory(hash: string) {
+    return this.deleteCategoryGQL.mutate({hash});
+  }
+
+  updateCategory(hash:string, categoryUpdateInput: CategoryUpdateInput){
+    return this.updateCategoryGQL.mutate({hash, categoryUpdateInput});
   }
 }

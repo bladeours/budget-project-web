@@ -6,6 +6,7 @@ import {NavbarService} from 'src/app/core/service/navbar.service';
 import {DashboardComponent} from 'src/app/features/dashboard/pages/dashboard/dashboard.component';
 import {TransactionsComponent} from "../../../../features/transactions/component/transactions/transactions.component";
 import {AccountComponent} from "../../../../features/account/components/account/account.component";
+import {CategoryComponent} from "../../../../features/category/components/category/category.component";
 
 @Component({
   selector: 'app-nav-parent',
@@ -29,13 +30,16 @@ export class NavParentComponent {
       case "/account":
         this.selectedPortal = new ComponentPortal(AccountComponent);
         break;
+      case "/category":
+        this.selectedPortal = new ComponentPortal(CategoryComponent);
+        break;
     }
   }
 
   getUrlWithoutParams(){
     let urlTree = this.router.parseUrl(this.router.url);
     urlTree.queryParams = {};
-    urlTree.fragment = null; // optional
+    urlTree.fragment = null;
     return urlTree.toString();
   }
 }

@@ -7,10 +7,13 @@ import {ComponentPortal, Portal} from '@angular/cdk/portal';
 import {TransactionsComponent} from "../../../../features/transactions/component/transactions/transactions.component";
 import {DashboardComponent} from "../../../../features/dashboard/pages/dashboard/dashboard.component";
 import {MatDialog} from "@angular/material/dialog";
-import {TransactionDialogComponent} from 'src/app/shared/components/transaction-dialog/transaction-dialog.component';
-import {Account, AccountType, LogicOperator} from "../../../../graphql/__generated__";
+import {TransactionDialogComponent} from 'src/app/shared/components/dialogs/transaction-dialog/transaction-dialog.component';
+import {Account, AccountType, Category, LogicOperator} from "../../../../graphql/__generated__";
 import {GraphqlService} from "../../../../graphql/service/graphql.service";
 import { AccountComponent } from 'src/app/features/account/components/account/account.component';
+import {CategoryComponent} from "../../../../features/category/components/category/category.component";
+import {AccountDialogComponent} from "../../../../shared/components/dialogs/account-dialog/account-dialog.component";
+import {CategoryDialogComponent} from "../../../../shared/components/dialogs/category-dialog/category-dialog.component";
 
 
 @Component({
@@ -27,6 +30,8 @@ export class NavbarComponent {
   protected readonly AccountType = AccountType;
   accountsSavings: Account[];
   accountsRegular: Account[];
+  categoryIncome: Category[];
+  categoryExpense: Category[];
   balance: number = 0;
 
 
@@ -55,6 +60,7 @@ export class NavbarComponent {
       }
     });
     this.setAccounts();
+    this.setCategories();
   }
 
   goToTransactions() {
@@ -102,6 +108,22 @@ export class NavbarComponent {
     });
   }
 
+
+  setCategories() {
+    this.graphqlService.getCategoriesIncomeHashName().subscribe({
+      next: v => {
+        this.categoryIncome = v.data.getCategories as Category[];
+      },
+      error: error => console.log(error)
+    });
+    this.graphqlService.getCategoriesExpenseHashName().subscribe({
+      next: value => {
+        this.categoryExpense = value.data.getCategories as Category[];
+      }
+    });
+  }
+
+
   goToAccount(hash: string){
     if (this.isSmall) {
       this.sidenav.close();
@@ -114,16 +136,21 @@ export class NavbarComponent {
     if (this.isSmall) {
       this.sidenav.close();
     }
-    this.selectedPortal = new ComponentPortal(AccountComponent);
-    this.router.navigate(["account"]);
+    this.dialog.open(AccountDialogComponent);
   }
 
-  goToCategories(){
+  goToCategory(hash: string){
     if (this.isSmall) {
       this.sidenav.close();
     }
-    this.selectedPortal = new ComponentPortal(DashboardComponent);
-    this.router.navigate([""]);
+    this.selectedPortal = new ComponentPortal(CategoryComponent);
+    this.router.navigate(["category"], {queryParams: {id: hash}});
   }
 
+  goToAddCategory() {
+    if (this.isSmall) {
+      this.sidenav.close();
+    }
+    this.dialog.open(CategoryDialogComponent);
+  }
 }

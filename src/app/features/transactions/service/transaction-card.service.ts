@@ -1,5 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Account, Category, Transaction, TransactionsPage, TransactionType} from "../../../graphql/__generated__";
+import {
+  Account,
+  Category,
+  SubCategory,
+  Transaction,
+  TransactionsPage,
+  TransactionType
+} from "../../../graphql/__generated__";
 import {TransactionCard} from "../../../shared/models/TransactionCard";
 import {DatePipe} from "@angular/common";
 import {myGreen, myGrey, myRed} from "../../../environments/environment";
@@ -33,7 +40,7 @@ export class TransactionCardService {
     };
     transactionCard.icon = "money_off";
     transactionCard.category = this.chooseCategory(transaction);
-    transactionCard.subCategory = transaction.subCategory as Category;
+    transactionCard.subCategory = transaction.subCategory as SubCategory;
     transactionCard.account = this.chooseAccount(transaction);
     transactionCard.type = transaction.transactionType as TransactionType;
     transactionCard.note = transaction.note as string;
@@ -55,9 +62,6 @@ export class TransactionCardService {
   private chooseCategory(transaction: Transaction): Category | Account {
     if(transaction.transactionType === TransactionType.Transfer){
       return transaction.accountTo as Account;
-    }
-    if(transaction.category?.parent !== null){
-      return transaction.category?.parent as Category;
     }
     return transaction.category as Category;
   }

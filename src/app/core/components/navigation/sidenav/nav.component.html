@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav="matSidenav">
     <mat-card class="balance-card mat-elevation-z4">
       <mat-card-header>
-          <mat-card-title>Balance</mat-card-title>
+        <mat-card-title>Balance</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         {{balance.toFixed(2)}} zł
@@ -21,35 +21,80 @@
       <mat-icon>attach_money</mat-icon>
       <span>Transactions</span>
     </button>
-    <button mat-button class="menu-button" (click)="goToCategories()">
-      <mat-icon>attach_money</mat-icon>
-      <span>Categories</span>
-    </button>
     <button mat-button class="menu-button" (click)="goToAddTransaction()">
-      <mat-icon>add</mat-icon>
+      <mat-icon>add_shopping_cart</mat-icon>
       <span>Add Transaction</span>
     </button>
-    <mat-divider></mat-divider>
     <button mat-button class="menu-button" (click)="goToAddAccount()">
       <mat-icon>add</mat-icon>
       <span>Add Account</span>
     </button>
-    <button mat-button class="menu-button" *ngFor="let account of accountsRegular" (click)="goToAccount(account.hash)">
-      <mat-icon>account_balance</mat-icon>
-        <span class="name">{{account.name}}</span>
-        <span class="balance">{{account.balance.toFixed(2)}}</span>
+    <button mat-button class="menu-button" (click)="goToAddCategory()">
+      <mat-icon>add</mat-icon>
+      <span>Add Category</span>
     </button>
     <mat-divider></mat-divider>
-
-
-    <button mat-button class="menu-button" *ngFor="let account of accountsSavings" (click)="goToAccount(account.hash)">
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          regular
+        </mat-panel-title>
+        <mat-icon>account_balance</mat-icon>
+      </mat-expansion-panel-header>
+      <button mat-button class="menu-button" *ngFor="let account of accountsRegular"
+              (click)="goToAccount(account.hash)">
+        <mat-icon>account_balance</mat-icon>
+        <span class="name">{{account.name}}</span>
+        <span class="balance">{{account.balance.toFixed(2)}}</span>
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Savings
+        </mat-panel-title>
+        <mat-icon>savings</mat-icon>
+      </mat-expansion-panel-header>
+      <button mat-button class="menu-button" *ngFor="let account of accountsSavings"
+              (click)="goToAccount(account.hash)">
         <div class="icon-name">
           <mat-icon>savings</mat-icon>
           <span class="name">{{account.name}}</span>
         </div>
-          <span class="balance">{{account.balance.toFixed(2)}}</span>
-
-    </button>
+        <span class="balance">{{account.balance.toFixed(2)}}</span>
+      </button>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider>
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Income
+        </mat-panel-title>
+        <mat-icon>paid</mat-icon>
+      </mat-expansion-panel-header>
+      <button mat-button class="menu-button" *ngFor="let category of categoryIncome"
+              (click)="goToCategory(category.hash)">
+        <div class="icon-name">
+          <mat-icon>paid</mat-icon>
+          <span class="name">{{category.name}}</span>
+        </div>
+      </button>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Expense
+        </mat-panel-title>
+        <mat-icon>shopping_bag</mat-icon>
+      </mat-expansion-panel-header>
+      <button mat-button class="menu-button" *ngFor="let category of categoryExpense"
+              (click)="goToCategory(category.hash)">
+        <div class="icon-name">
+          <mat-icon>shopping_bag</mat-icon>
+          <span class="name">{{category.name}}</span>
+        </div>
+      </button>
+    </mat-expansion-panel>
 
   </mat-sidenav>
   <mat-sidenav-content>

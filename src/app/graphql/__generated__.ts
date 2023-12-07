@@ -87,22 +87,21 @@ export type Category = {
   hash: Scalars['String']['output'];
   income: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
-  parent?: Maybe<Category>;
-  subCategories?: Maybe<Array<Maybe<Category>>>;
+  subCategories?: Maybe<Array<Maybe<SubCategory>>>;
 };
 
 export type CategoryInput = {
-  archived?: InputMaybe<Scalars['Boolean']['input']>;
   color: Scalars['String']['input'];
   income: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
-  parentHash?: InputMaybe<Scalars['String']['input']>;
+  subCategories?: InputMaybe<Array<InputMaybe<SubCategoryInput>>>;
 };
 
 export type CategoryUpdateInput = {
-  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  archived: Scalars['Boolean']['input'];
   color: Scalars['String']['input'];
   name: Scalars['String']['input'];
+  subCategories?: InputMaybe<Array<InputMaybe<SubCategoryInput>>>;
 };
 
 export enum Currency {
@@ -301,6 +300,19 @@ export enum StringOperator {
   Equals = 'EQUALS'
 }
 
+export type SubCategory = {
+  __typename?: 'SubCategory';
+  color: Scalars['String']['output'];
+  hash: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  parent?: Maybe<Category>;
+};
+
+export type SubCategoryInput = {
+  hash?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
 export type Transaction = {
   __typename?: 'Transaction';
   accountFrom?: Maybe<Account>;
@@ -312,7 +324,7 @@ export type Transaction = {
   name?: Maybe<Scalars['String']['output']>;
   need?: Maybe<Scalars['Boolean']['output']>;
   note?: Maybe<Scalars['String']['output']>;
-  subCategory?: Maybe<Category>;
+  subCategory?: Maybe<SubCategory>;
   transactionType?: Maybe<TransactionType>;
 };
 
@@ -390,7 +402,7 @@ export type GetTransactionsPageQueryVariables = Exact<{
 }>;
 
 
-export type GetTransactionsPageQuery = { __typename?: 'Query', getTransactionsPage?: { __typename?: 'TransactionsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Transaction', transactionType?: TransactionType | null, hash?: string | null, name?: string | null, amount?: number | null, date?: string | null, need?: boolean | null, note?: string | null, accountFrom?: { __typename?: 'Account', hash: string, name: string } | null, accountTo?: { __typename?: 'Account', hash: string, name: string } | null, category?: { __typename?: 'Category', name: string, color: string, hash: string, income: boolean, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null, subCategory?: { __typename?: 'Category', name: string, hash: string } | null } | null> | null } | null };
+export type GetTransactionsPageQuery = { __typename?: 'Query', getTransactionsPage?: { __typename?: 'TransactionsPage', size?: number | null, number?: number | null, totalElements?: number | null, totalPages?: number | null, content?: Array<{ __typename?: 'Transaction', transactionType?: TransactionType | null, hash?: string | null, name?: string | null, amount?: number | null, date?: string | null, need?: boolean | null, note?: string | null, accountFrom?: { __typename?: 'Account', hash: string, name: string } | null, accountTo?: { __typename?: 'Account', hash: string, name: string } | null, category?: { __typename?: 'Category', name: string, color: string, hash: string, income: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null, subCategory?: { __typename?: 'SubCategory', hash: string, name: string } | null } | null> | null } | null };
 
 export type GetAccountsQueryVariables = Exact<{
   filter?: InputMaybe<Filter>;
@@ -402,17 +414,17 @@ export type GetAccountsQuery = { __typename?: 'Query', getAccounts?: Array<{ __t
 export type GetCategoriesIncomeHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesIncomeHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null } | null> | null };
+export type GetCategoriesIncomeHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
 
 export type GetCategoriesExpenseHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesExpenseHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null, parent?: { __typename?: 'Category', name: string, hash: string, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string } | null> | null } | null } | null> | null };
+export type GetCategoriesExpenseHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
 
 export type GetCategoriesHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, income: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string, income: boolean } | null> | null, parent?: { __typename?: 'Category', name: string, hash: string, income: boolean, subCategories?: Array<{ __typename?: 'Category', name: string, hash: string, income: boolean } | null> | null } | null } | null> | null };
+export type GetCategoriesHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, income: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
 
 export type AddTransactionMutationVariables = Exact<{
   transactionInput: TransactionInput;
@@ -457,6 +469,35 @@ export type DeleteAccountMutationVariables = Exact<{
 
 
 export type DeleteAccountMutation = { __typename?: 'Mutation', deleteAccount?: boolean | null };
+
+export type AddCategoryMutationVariables = Exact<{
+  categoryInput: CategoryInput;
+}>;
+
+
+export type AddCategoryMutation = { __typename?: 'Mutation', addCategory?: { __typename?: 'Category', hash: string } | null };
+
+export type GetCategoryQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+
+export type GetCategoryQuery = { __typename?: 'Query', getCategory?: { __typename?: 'Category', hash: string, name: string, income: boolean, archived: boolean, color: string, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null };
+
+export type DeleteCategoryMutationVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+
+export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteCategory?: boolean | null };
+
+export type UpdateCategoryMutationVariables = Exact<{
+  hash: Scalars['String']['input'];
+  categoryUpdateInput: CategoryUpdateInput;
+}>;
+
+
+export type UpdateCategoryMutation = { __typename?: 'Mutation', updateCategory?: { __typename?: 'Category', hash: string } | null };
 
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
@@ -606,22 +647,14 @@ export const GetTransactionsPageDocument = gql`
         color
         hash
         income
-        parent {
-          name
-          hash
-          subCategories {
-            name
-            hash
-          }
-        }
         subCategories {
           name
           hash
         }
       }
       subCategory {
-        name
         hash
+        name
       }
       date
       need
@@ -674,14 +707,6 @@ export const GetCategoriesIncomeHashNameDocument = gql`
       name
       hash
     }
-    parent {
-      name
-      hash
-      subCategories {
-        name
-        hash
-      }
-    }
   }
 }
     `;
@@ -708,14 +733,6 @@ export const GetCategoriesExpenseHashNameDocument = gql`
       name
       hash
     }
-    parent {
-      name
-      hash
-      subCategories {
-        name
-        hash
-      }
-    }
   }
 }
     `;
@@ -740,17 +757,6 @@ export const GetCategoriesHashNameDocument = gql`
     subCategories {
       name
       hash
-      income
-    }
-    parent {
-      name
-      hash
-      income
-      subCategories {
-        name
-        hash
-        income
-      }
     }
   }
 }
@@ -867,6 +873,84 @@ export const DeleteAccountDocument = gql`
   })
   export class DeleteAccountGQL extends Apollo.Mutation<DeleteAccountMutation, DeleteAccountMutationVariables> {
     override document = DeleteAccountDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddCategoryDocument = gql`
+    mutation addCategory($categoryInput: CategoryInput!) {
+  addCategory(categoryInput: $categoryInput) {
+    hash
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddCategoryGQL extends Apollo.Mutation<AddCategoryMutation, AddCategoryMutationVariables> {
+    override document = AddCategoryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetCategoryDocument = gql`
+    query getCategory($hash: String!) {
+  getCategory(hash: $hash) {
+    hash
+    name
+    income
+    subCategories {
+      name
+      hash
+    }
+    archived
+    color
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetCategoryGQL extends Apollo.Query<GetCategoryQuery, GetCategoryQueryVariables> {
+    override document = GetCategoryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteCategoryDocument = gql`
+    mutation deleteCategory($hash: String!) {
+  deleteCategory(hash: $hash)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteCategoryGQL extends Apollo.Mutation<DeleteCategoryMutation, DeleteCategoryMutationVariables> {
+    override document = DeleteCategoryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateCategoryDocument = gql`
+    mutation updateCategory($hash: String!, $categoryUpdateInput: CategoryUpdateInput!) {
+  updateCategory(hash: $hash, categoryUpdateInput: $categoryUpdateInput) {
+    hash
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateCategoryGQL extends Apollo.Mutation<UpdateCategoryMutation, UpdateCategoryMutationVariables> {
+    override document = UpdateCategoryDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

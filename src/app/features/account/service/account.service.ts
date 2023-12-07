@@ -1,4 +1,4 @@
-import {AccountInput, AccountType, Currency} from './../../../graphql/__generated__';
+import {AccountInput, AccountType, Currency} from '../../../graphql/__generated__';
 import {Injectable} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
@@ -24,18 +24,32 @@ export class AccountService {
     });
   }
 
-  addAccount(formGroup: FormGroup, archivedToggle: MatSlideToggle) {
-    let accountInput: AccountInput = this.getAccountInput(formGroup, archivedToggle);
+  addAccount(formGroup: FormGroup) {
+    let accountInput: AccountInput = this.getAccountInputForAdd(formGroup);
     this.graphqlService.addAccount(accountInput).subscribe({
       next: v => {
         this.snackBar.open("Account created properly", "close", {
           duration: 2000
         }).afterDismissed()
-          .subscribe(() =>
-            this.router.navigate(["account"], {queryParams: {id: v.data?.addAccount?.hash}}).then(() => window.location.reload()));
+            .subscribe(() =>
+                this.router.navigate(["account"], {queryParams: {id: v.data?.addAccount?.hash}}).then(() => window.location.reload()));
       }
     })
   }
+
+
+  private getAccountInputForAdd(formGroup: FormGroup): AccountInput {
+    return {
+      accountType: formGroup.get("accountTypeSelect")?.value as AccountType,
+      archived: false,
+      balance: formGroup.get("balanceInput")?.value as number,
+      color: formGroup.get("colorSelect")?.value as string,
+      currency: Currency.Pln,
+      description: formGroup.get("descriptionInput")?.value as string,
+      name: formGroup.get("nameInput")?.value as string,
+    };
+  }
+
 
   private getAccountInput(formGroup: FormGroup, archivedToggle: MatSlideToggle): AccountInput {
     return {
@@ -56,7 +70,7 @@ export class AccountService {
           duration: 2000
         }).afterDismissed()
           .subscribe(() =>
-            this.router.navigate(["account"]).then(() => window.location.reload()));
+            this.router.navigate([""]).then(() => window.location.reload()));
       }
     })
   }
