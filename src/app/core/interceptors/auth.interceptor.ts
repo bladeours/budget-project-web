@@ -36,12 +36,25 @@ export class AuthInterceptor implements HttpInterceptor {
         throw error
       }),
       switchMap((response) => {
-        const accessToken = response.data.authenticate.jwt;
+        const accessToken = response.data.refreshToken.jwt;
         const req = this.getClonedRequest(request, accessToken);
-        this.authService.setAuth(response);
+        this.authService.setAuth(accessToken);
         return next.handle(req);
       })
     );
+
+    // this.authService.refreshToken().subscribe({
+    //   next: response => {
+    //     const accessToken = response.data.authenticate.jwt;
+    //     const req = this.getClonedRequest(request, accessToken);
+    //     this.authService.setAuth(response);
+    //     return next.handle(req);
+    // },
+    //   error: err => {
+    //     localStorage.removeItem(AuthService.accessTokenKey)
+    //     throw err
+    //   }
+    // });
   }
 
   getClonedRequest(request: HttpRequest<unknown>, accessToken: string): HttpRequest<unknown> {

@@ -37,7 +37,7 @@ export class AuthService {
 
   refreshToken(): Observable<any> {
     AuthInterceptor.ignoreJwt = true;
-    return this.refreshTokenGQL.mutate();
+    return this.refreshTokenGQL.mutate({});
   }
 
   logout() {
