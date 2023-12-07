@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AuthInterceptor} from 'src/app/core/interceptors/auth.interceptor';
 import {AuthenticateGQL, LogoutGQL, RefreshTokenGQL, RegisterGQL} from 'src/app/graphql/__generated__';
-import {JwtResponse} from '../models/JwtResponse';
 import {AuthInput} from '../models/AuthInput';
 
 @Injectable({

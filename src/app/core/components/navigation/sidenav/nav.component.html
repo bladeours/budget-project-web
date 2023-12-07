@@ -47,8 +47,22 @@
         <span class="name">{{account.name}}</span>
         <span class="balance">{{account.balance.toFixed(2)}}</span>
       </button>
+      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="accountsRegularArchived.length > 0">
+        <mat-expansion-panel-header class="archivedColor">
+          <mat-panel-title class="archivedColor">
+            archived
+          </mat-panel-title>
+          <mat-icon>account_balance</mat-icon>
+        </mat-expansion-panel-header>
+        <button mat-button class="menu-button archivedColor" *ngFor="let account of accountsRegularArchived"
+                (click)="goToAccount(account.hash)">
+          <mat-icon>account_balance</mat-icon>
+          <span class="name">{{account.name}}</span>
+          <span class="balance">{{account.balance.toFixed(2)}}</span>
+        </button>
+      </mat-expansion-panel>
     </mat-expansion-panel>
-    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle >
       <mat-expansion-panel-header>
         <mat-panel-title>
           Savings
@@ -63,6 +77,20 @@
         </div>
         <span class="balance">{{account.balance.toFixed(2)}}</span>
       </button>
+      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="accountsSavingsArchived.length > 0">
+        <mat-expansion-panel-header class="archivedColor">
+          <mat-panel-title class="archivedColor">
+            archived
+          </mat-panel-title>
+          <mat-icon>savings</mat-icon>
+        </mat-expansion-panel-header>
+        <button mat-button class="menu-button archivedColor" *ngFor="let account of accountsSavingsArchived"
+                (click)="goToAccount(account.hash)">
+          <mat-icon>account_balance</mat-icon>
+          <span class="name">{{account.name}}</span>
+          <span class="balance">{{account.balance.toFixed(2)}}</span>
+        </button>
+      </mat-expansion-panel>
     </mat-expansion-panel>
     <mat-divider></mat-divider>
     <mat-expansion-panel class="mat-elevation-z0" hideToggle>
@@ -79,6 +107,21 @@
           <span class="name">{{category.name}}</span>
         </div>
       </button>
+      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="categoryArchivedIncome.length > 0">
+        <mat-expansion-panel-header class="archivedColor">
+          <mat-panel-title class="archivedColor">
+            archived
+          </mat-panel-title>
+          <mat-icon>paid</mat-icon>
+        </mat-expansion-panel-header>
+        <button mat-button class="menu-button archivedColor" *ngFor="let category of categoryArchivedIncome"
+                (click)="goToCategory(category.hash)">
+          <div class="icon-name">
+            <mat-icon>paid</mat-icon>
+            <span class="name">{{category.name}}</span>
+          </div>
+        </button>
+      </mat-expansion-panel>
     </mat-expansion-panel>
     <mat-expansion-panel class="mat-elevation-z0" hideToggle>
       <mat-expansion-panel-header>
@@ -94,6 +137,21 @@
           <span class="name">{{category.name}}</span>
         </div>
       </button>
+      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="categoryArchivedExpense.length > 0">
+        <mat-expansion-panel-header class="archivedColor">
+          <mat-panel-title class="archivedColor">
+            archived
+          </mat-panel-title>
+          <mat-icon>shopping_bag</mat-icon>
+        </mat-expansion-panel-header>
+        <button mat-button class="menu-button archivedColor" *ngFor="let category of categoryArchivedExpense"
+                (click)="goToCategory(category.hash)">
+          <div class="icon-name">
+            <mat-icon>shopping_bag</mat-icon>
+            <span class="name">{{category.name}}</span>
+          </div>
+        </button>
+      </mat-expansion-panel>
     </mat-expansion-panel>
 
   </mat-sidenav>

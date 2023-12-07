@@ -47,7 +47,14 @@ mat-expansion-panel{
   .mat-expansion-panel-header {
     padding: 0 5px 0 0;
   }
+}
+.archivedExpansion > * {
+  margin-left: 10px;
 
+}
+
+.archivedColor {
+  color: #8c8c8c !important;
 }
 
 .menu-button {

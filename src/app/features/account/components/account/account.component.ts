@@ -14,11 +14,6 @@ export class AccountComponent {
     constructor(private route: ActivatedRoute, private router: Router, private dialog: MatDialog) {
         this.route.queryParams.subscribe(v => {
             this.hash = v['id'];
-            if (this.hash == undefined) {
-                this.router.navigate([""]).then(() => {
-                    this.dialog.open(AccountDialogComponent);
-                });
-            }
         });
     }
 

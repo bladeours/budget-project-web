@@ -29,9 +29,13 @@ export class NavbarComponent {
   isSmall: boolean = false;
   protected readonly AccountType = AccountType;
   accountsSavings: Account[];
+  accountsSavingsArchived: Account[] = [];
   accountsRegular: Account[];
+  accountsRegularArchived: Account[] = [];
   categoryIncome: Category[];
+  categoryArchivedIncome: Category[] = [];
   categoryExpense: Category[];
+  categoryArchivedExpense: Category[] = [];
   balance: number = 0;
 
 
@@ -92,7 +96,8 @@ export class NavbarComponent {
       accountTypeFilters: [{field: "accountType", value: AccountType.Savings}]
     }).subscribe({
       next: v => {
-        this.accountsSavings = v.data.getAccounts as Account[];
+        this.accountsSavings = (v.data.getAccounts as Account[]).filter(a => !a.archived);
+        this.accountsSavingsArchived = (v.data.getAccounts as Account[]).filter(a => a.archived);
         this.accountsSavings.forEach(a => this.balance += a.balance);
       },
       error: error => console.log(error)
@@ -101,8 +106,9 @@ export class NavbarComponent {
       logicOperator: LogicOperator.And,
       accountTypeFilters: [{field: "accountType", value: AccountType.Regular}]
     }).subscribe({
-      next: value => {
-        this.accountsRegular = value.data.getAccounts as Account[];
+      next: v => {
+        this.accountsRegular = (v.data.getAccounts as Account[]).filter(a => !a.archived);
+        this.accountsRegularArchived = (v.data.getAccounts as Account[]).filter(a => a.archived);
         this.accountsRegular.forEach(a => this.balance += a.balance)
       }
     });
@@ -112,13 +118,15 @@ export class NavbarComponent {
   setCategories() {
     this.graphqlService.getCategoriesIncomeHashName().subscribe({
       next: v => {
-        this.categoryIncome = v.data.getCategories as Category[];
+        this.categoryIncome = (v.data.getCategories as Category[]).filter(c => !c.archived);
+        this.categoryArchivedIncome = (v.data.getCategories as Category[]).filter(c => c.archived);
       },
       error: error => console.log(error)
     });
     this.graphqlService.getCategoriesExpenseHashName().subscribe({
       next: value => {
-        this.categoryExpense = value.data.getCategories as Category[];
+        this.categoryExpense = (value.data.getCategories as Category[]).filter(c => !c.archived);
+        this.categoryArchivedExpense = (value.data.getCategories as Category[]).filter(c => c.archived);
       }
     });
   }
