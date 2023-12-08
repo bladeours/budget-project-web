@@ -5,6 +5,7 @@ import {HomeComponent} from './features/home/pages/home/home.component';
 import {AuthComponent} from './features/authorization/pages/auth/auth/auth.component';
 import {authGuard} from "./core/guard/authGuard";
 import {AccountComponent} from "./features/account/components/account/account.component";
+import {PageNotFoundComponent} from "./core/components/page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
@@ -23,9 +24,10 @@ const routes: Routes = [
       {
         path: 'category',
         component: HomeComponent
-      }
+      },
     ]
   },
+  { path: '**', component: PageNotFoundComponent, canActivate: [authGuard]},
   {path: 'logout', component: LogoutComponent, canActivate: [authGuard]},
   {path: 'register', component: AuthComponent},
   {path: 'login', component: AuthComponent},

@@ -64,7 +64,6 @@ export class CategoryTransactionsComponent {
         .subscribe((value) => {
           let transactionPage: TransactionsPage = value.data
               .getTransactionsPage as TransactionsPage;
-          console.log(transactionPage)
           this.transactionCards =
               this.transactionService.getTransactionCards(transactionPage);
           this.length = transactionPage.totalElements as number;

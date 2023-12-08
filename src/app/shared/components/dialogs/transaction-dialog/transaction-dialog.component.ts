@@ -299,8 +299,7 @@ export class TransactionDialogComponent {
         if (this.isUpdate) {
           this.fillFields();
         }
-      },
-      error: (v) => console.log(v),
+      }
     });
   }
 

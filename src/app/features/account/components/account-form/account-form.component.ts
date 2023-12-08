@@ -57,8 +57,7 @@ export class AccountFormComponent {
     this.isCreate = (this.hash == null);
     if(!this.isCreate){
       this.graphqlService.getAccount(this.hash).subscribe({
-        next: (v) => this.setAccount(v.data.getAccount as Account),
-        error: (err) => console.log(err),
+        next: (v) => this.setAccount(v.data.getAccount as Account)
       });
     }
 

@@ -99,8 +99,7 @@ export class NavbarComponent {
         this.accountsSavings = (v.data.getAccounts as Account[]).filter(a => !a.archived);
         this.accountsSavingsArchived = (v.data.getAccounts as Account[]).filter(a => a.archived);
         this.accountsSavings.forEach(a => this.balance += a.balance);
-      },
-      error: error => console.log(error)
+      }
     });
     this.graphqlService.getAccounts({
       logicOperator: LogicOperator.And,
@@ -120,8 +119,7 @@ export class NavbarComponent {
       next: v => {
         this.categoryIncome = (v.data.getCategories as Category[]).filter(c => !c.archived);
         this.categoryArchivedIncome = (v.data.getCategories as Category[]).filter(c => c.archived);
-      },
-      error: error => console.log(error)
+      }
     });
     this.graphqlService.getCategoriesExpenseHashName().subscribe({
       next: value => {

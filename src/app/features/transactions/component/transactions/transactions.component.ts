@@ -194,7 +194,6 @@ export class TransactionsComponent {
   }
 
   private handleChangeFrom(value: number) {
-    console.log(this.from.validator);
     if (this.from.valid) {
       if (this.to.value == null) {
         this.amountToFilter = {};

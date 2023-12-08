@@ -59,6 +59,7 @@ import { CategoryTransactionsComponent } from './features/category/components/ca
 import { AccountDialogComponent } from './shared/components/dialogs/account-dialog/account-dialog.component';
 import { CategoryDialogComponent } from './shared/components/dialogs/category-dialog/category-dialog.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 
 @NgModule({
     exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -83,7 +84,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     CategoryFormComponent,
     CategoryTransactionsComponent,
     AccountDialogComponent,
-    CategoryDialogComponent
+    CategoryDialogComponent,
+    PageNotFoundComponent
   ],
     imports: [
         MatTableModule,

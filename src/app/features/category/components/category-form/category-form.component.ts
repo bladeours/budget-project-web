@@ -59,13 +59,9 @@ export class CategoryFormComponent {
             this.graphqlService.getCategory(this.hash).subscribe({
                 next: (v) => {
                     this.setCategory(v.data.getCategory as Category);
-                },
-                error: (err) => console.log(err),
+                }
             });
         }
-        this.subCategoriesChip.valueChanges.subscribe((value) => {
-            console.log('SubCategoriesChip value:', value)
-        });
         this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
             if (res.matches && this.isCreate) {
                 this.nameCol = 2;
@@ -108,7 +104,6 @@ export class CategoryFormComponent {
     }
 
     removeSubCategory(subCategory: SubCategoryInput) {
-        console.log(subCategory)
         this.subCategories = this.subCategories.filter(value => value !== subCategory);
         this.calculateChipRowSpan();
     }
