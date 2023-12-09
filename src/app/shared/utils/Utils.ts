@@ -1,5 +1,5 @@
 export class Utils {
-  public static getFullDateString(date: Date): string{
+  public static getFullDateString(date: Date): string {
     return date.toISOString();
   }
 }

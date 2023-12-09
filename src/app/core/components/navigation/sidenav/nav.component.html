@@ -5,31 +5,35 @@
         <mat-card-title>Balance</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        {{balance.toFixed(2)}} zł
+        {{ balance.toFixed(2) }} zł
       </mat-card-content>
     </mat-card>
     <mat-divider></mat-divider>
-    <button mat-button class="menu-button" (click)="goToDashboard()">
+    <button (click)="goToDashboard()" class="menu-button" mat-button>
       <mat-icon>home</mat-icon>
       <span>Dashboard</span>
     </button>
-    <button mat-button class="menu-button">
+    <button class="menu-button" mat-button>
       <mat-icon>score</mat-icon>
       <span>Budget</span>
     </button>
-    <button mat-button class="menu-button" (click)="goToTransactions()">
+    <button (click)="goToStatistics()" class="menu-button" mat-button>
+      <mat-icon>score</mat-icon>
+      <span>Statistics</span>
+    </button>
+    <button (click)="goToTransactions()" class="menu-button" mat-button>
       <mat-icon>attach_money</mat-icon>
       <span>Transactions</span>
     </button>
-    <button mat-button class="menu-button" (click)="goToAddTransaction()">
+    <button (click)="goToAddTransaction()" class="menu-button" mat-button>
       <mat-icon>add_shopping_cart</mat-icon>
       <span>Add Transaction</span>
     </button>
-    <button mat-button class="menu-button" (click)="goToAddAccount()">
+    <button (click)="goToAddAccount()" class="menu-button" mat-button>
       <mat-icon>add</mat-icon>
       <span>Add Account</span>
     </button>
-    <button mat-button class="menu-button" (click)="goToAddCategory()">
+    <button (click)="goToAddCategory()" class="menu-button" mat-button>
       <mat-icon>add</mat-icon>
       <span>Add Category</span>
     </button>
@@ -41,54 +45,56 @@
         </mat-panel-title>
         <mat-icon>account_balance</mat-icon>
       </mat-expansion-panel-header>
-      <button mat-button class="menu-button" *ngFor="let account of accountsRegular"
-              (click)="goToAccount(account.hash)">
+      <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsRegular" class="menu-button"
+              mat-button>
         <mat-icon>account_balance</mat-icon>
-        <span class="name">{{account.name}}</span>
-        <span class="balance">{{account.balance.toFixed(2)}}</span>
+        <span class="name">{{ account.name }}</span>
+        <span class="balance">{{ account.balance.toFixed(2) }}</span>
       </button>
-      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="accountsRegularArchived.length > 0">
+      <mat-expansion-panel *ngIf="accountsRegularArchived.length > 0" class="archivedExpansion mat-elevation-z0"
+                           hideToggle>
         <mat-expansion-panel-header class="archivedColor">
           <mat-panel-title class="archivedColor">
             archived
           </mat-panel-title>
           <mat-icon>account_balance</mat-icon>
         </mat-expansion-panel-header>
-        <button mat-button class="menu-button archivedColor" *ngFor="let account of accountsRegularArchived"
-                (click)="goToAccount(account.hash)">
+        <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsRegularArchived" class="menu-button archivedColor"
+                mat-button>
           <mat-icon>account_balance</mat-icon>
-          <span class="name">{{account.name}}</span>
-          <span class="balance">{{account.balance.toFixed(2)}}</span>
+          <span class="name">{{ account.name }}</span>
+          <span class="balance">{{ account.balance.toFixed(2) }}</span>
         </button>
       </mat-expansion-panel>
     </mat-expansion-panel>
-    <mat-expansion-panel class="mat-elevation-z0" hideToggle >
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
           Savings
         </mat-panel-title>
         <mat-icon>savings</mat-icon>
       </mat-expansion-panel-header>
-      <button mat-button class="menu-button" *ngFor="let account of accountsSavings"
-              (click)="goToAccount(account.hash)">
+      <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsSavings" class="menu-button"
+              mat-button>
         <div class="icon-name">
           <mat-icon>savings</mat-icon>
-          <span class="name">{{account.name}}</span>
+          <span class="name">{{ account.name }}</span>
         </div>
-        <span class="balance">{{account.balance.toFixed(2)}}</span>
+        <span class="balance">{{ account.balance.toFixed(2) }}</span>
       </button>
-      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="accountsSavingsArchived.length > 0">
+      <mat-expansion-panel *ngIf="accountsSavingsArchived.length > 0" class="archivedExpansion mat-elevation-z0"
+                           hideToggle>
         <mat-expansion-panel-header class="archivedColor">
           <mat-panel-title class="archivedColor">
             archived
           </mat-panel-title>
           <mat-icon>savings</mat-icon>
         </mat-expansion-panel-header>
-        <button mat-button class="menu-button archivedColor" *ngFor="let account of accountsSavingsArchived"
-                (click)="goToAccount(account.hash)">
+        <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsSavingsArchived" class="menu-button archivedColor"
+                mat-button>
           <mat-icon>account_balance</mat-icon>
-          <span class="name">{{account.name}}</span>
-          <span class="balance">{{account.balance.toFixed(2)}}</span>
+          <span class="name">{{ account.name }}</span>
+          <span class="balance">{{ account.balance.toFixed(2) }}</span>
         </button>
       </mat-expansion-panel>
     </mat-expansion-panel>
@@ -100,25 +106,26 @@
         </mat-panel-title>
         <mat-icon>paid</mat-icon>
       </mat-expansion-panel-header>
-      <button mat-button class="menu-button" *ngFor="let category of categoryIncome"
-              (click)="goToCategory(category.hash)">
+      <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryIncome" class="menu-button"
+              mat-button>
         <div class="icon-name">
           <mat-icon>paid</mat-icon>
-          <span class="name">{{category.name}}</span>
+          <span class="name">{{ category.name }}</span>
         </div>
       </button>
-      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="categoryArchivedIncome.length > 0">
+      <mat-expansion-panel *ngIf="categoryArchivedIncome.length > 0" class="archivedExpansion mat-elevation-z0"
+                           hideToggle>
         <mat-expansion-panel-header class="archivedColor">
           <mat-panel-title class="archivedColor">
             archived
           </mat-panel-title>
           <mat-icon>paid</mat-icon>
         </mat-expansion-panel-header>
-        <button mat-button class="menu-button archivedColor" *ngFor="let category of categoryArchivedIncome"
-                (click)="goToCategory(category.hash)">
+        <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryArchivedIncome" class="menu-button archivedColor"
+                mat-button>
           <div class="icon-name">
             <mat-icon>paid</mat-icon>
-            <span class="name">{{category.name}}</span>
+            <span class="name">{{ category.name }}</span>
           </div>
         </button>
       </mat-expansion-panel>
@@ -130,25 +137,26 @@
         </mat-panel-title>
         <mat-icon>shopping_bag</mat-icon>
       </mat-expansion-panel-header>
-      <button mat-button class="menu-button" *ngFor="let category of categoryExpense"
-              (click)="goToCategory(category.hash)">
+      <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryExpense" class="menu-button"
+              mat-button>
         <div class="icon-name">
           <mat-icon>shopping_bag</mat-icon>
-          <span class="name">{{category.name}}</span>
+          <span class="name">{{ category.name }}</span>
         </div>
       </button>
-      <mat-expansion-panel class="archivedExpansion mat-elevation-z0" hideToggle *ngIf="categoryArchivedExpense.length > 0">
+      <mat-expansion-panel *ngIf="categoryArchivedExpense.length > 0" class="archivedExpansion mat-elevation-z0"
+                           hideToggle>
         <mat-expansion-panel-header class="archivedColor">
           <mat-panel-title class="archivedColor">
             archived
           </mat-panel-title>
           <mat-icon>shopping_bag</mat-icon>
         </mat-expansion-panel-header>
-        <button mat-button class="menu-button archivedColor" *ngFor="let category of categoryArchivedExpense"
-                (click)="goToCategory(category.hash)">
+        <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryArchivedExpense" class="menu-button archivedColor"
+                mat-button>
           <div class="icon-name">
             <mat-icon>shopping_bag</mat-icon>
-            <span class="name">{{category.name}}</span>
+            <span class="name">{{ category.name }}</span>
           </div>
         </button>
       </mat-expansion-panel>

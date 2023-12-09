@@ -9,6 +9,9 @@ type Query {
   getCategoriesPage(page: Page!, filter: Filter): CategoriesPage
   getCategories(filter: Filter): [Category]
   getCategory(hash: String!): Category
+
+  getAmountByCategory(startDate: String!, endDate: String!, income: Boolean!): [CategoryAmount]
+
 }
 
 

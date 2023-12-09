@@ -1,0 +1,5 @@
+type CategoryAmount {
+  name: String!,
+  amount: Float!,
+  color: String!
+}

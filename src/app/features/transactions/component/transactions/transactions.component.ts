@@ -47,19 +47,19 @@ export class TransactionsComponent {
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [10, 25, 50];
-  protected readonly myGreen = myGreen;
-  protected readonly myRed = myRed;
   categoryList: Category[] = [];
   categoryFilter: Filter = {};
   amountToFilter: Filter = {};
   amountFromFilter: Filter = {};
   dateFilter: Filter = {};
   filter: Filter = { logicOperator: LogicOperator.And, subFilters: [] };
+  protected readonly myGreen = myGreen;
+  protected readonly myRed = myRed;
 
   constructor(
     private graphqlService: GraphqlService,
     private transactionService: TransactionCardService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {}
 
   ngAfterViewInit() {
@@ -83,19 +83,6 @@ export class TransactionsComponent {
   @HostListener('window:resize')
   onWindowResize() {
     this.resizeTransactionWrapper();
-  }
-
-  private resizeTransactionWrapper() {
-    if (window.innerWidth > 800) {
-      let paginatorHeight = this.paginator.nativeElement.offsetHeight;
-      let wrapperHeight = this.wrapper.nativeElement.offsetHeight;
-      let filtersHeight = this.filters.nativeElement.offsetHeight;
-      this.renderer.setStyle(
-        this.transactionWrapper.nativeElement,
-        'max-height',
-        wrapperHeight - paginatorHeight - filtersHeight - 30 + 'px'
-      );
-    }
   }
 
   handleRangeDate(v: any) {
@@ -147,53 +134,14 @@ export class TransactionsComponent {
     }
   }
 
-  setSubFiltersAndRefresh() {
-    this.filter.subFilters = [
-      this.categoryFilter,
-      this.amountToFilter,
-      this.amountFromFilter,
-      this.dateFilter,
-    ];
+  handlePageEvent(event: PageEvent) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
     this.setTransactions();
   }
 
-  setTransactions() {
-    this.graphqlService
-      .getTransactionsPage(
-        { number: this.pageIndex, size: this.pageSize },
-        this.filter
-      )
-      .subscribe((value) => {
-        let transactionPage: TransactionsPage = value.data
-          .getTransactionsPage as TransactionsPage;
-        this.transactionCards =
-          this.transactionService.getTransactionCards(transactionPage);
-        this.length = transactionPage.totalElements as number;
-      });
-  }
-
-  private handleChangeTo(value: number) {
-    if (this.to.valid) {
-      if (this.to.value == null) {
-        this.amountFromFilter = {};
-        this.setSubFiltersAndRefresh();
-        return;
-      }
-      this.amountFromFilter = {
-        doubleFilters: [
-          {
-            field: 'amount',
-            operator: NumberOperator.Lte,
-            value: value,
-          },
-        ],
-        logicOperator: LogicOperator.And,
-      };
-    }
-    this.setSubFiltersAndRefresh();
-  }
-
-  private handleChangeFrom(value: number) {
+  handleChangeFrom(value: number) {
     if (this.from.valid) {
       if (this.to.value == null) {
         this.amountToFilter = {};
@@ -214,17 +162,71 @@ export class TransactionsComponent {
     this.setSubFiltersAndRefresh();
   }
 
-  handlePageEvent(event: PageEvent) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
+  handleChangeTo(value: number) {
+    if (this.to.valid) {
+      if (this.to.value == null) {
+        this.amountFromFilter = {};
+        this.setSubFiltersAndRefresh();
+        return;
+      }
+      this.amountFromFilter = {
+        doubleFilters: [
+          {
+            field: 'amount',
+            operator: NumberOperator.Lte,
+            value: value,
+          },
+        ],
+        logicOperator: LogicOperator.And,
+      };
+    }
+    this.setSubFiltersAndRefresh();
+  }
+
+  private setSubFiltersAndRefresh() {
+    this.filter.subFilters = [
+      this.categoryFilter,
+      this.amountToFilter,
+      this.amountFromFilter,
+      this.dateFilter,
+    ];
     this.setTransactions();
+  }
+
+  private setTransactions() {
+    this.graphqlService
+      .getTransactionsPage(
+        { number: this.pageIndex, size: this.pageSize },
+        this.filter,
+      )
+      .subscribe((value) => {
+        let transactionPage: TransactionsPage = value.data
+          .getTransactionsPage as TransactionsPage;
+        this.transactionCards =
+          this.transactionService.getTransactionCards(transactionPage);
+        this.length = transactionPage.totalElements as number;
+      });
+  }
+
+  private resizeTransactionWrapper() {
+    if (window.innerWidth > 800) {
+      let paginatorHeight = this.paginator.nativeElement.offsetHeight;
+      let wrapperHeight = this.wrapper.nativeElement.offsetHeight;
+      let filtersHeight = this.filters.nativeElement.offsetHeight;
+      this.renderer.setStyle(
+        this.transactionWrapper.nativeElement,
+        'max-height',
+        wrapperHeight - paginatorHeight - filtersHeight - 30 + 'px',
+      );
+    }
   }
 
   private setCategories() {
     this.graphqlService.getCategories().subscribe({
       next: (v) => {
-        this.categoryList = (v.data.getCategories as Category[]).sort((c1, c2) => (c1.income ? 1 : -1));
+        this.categoryList = (v.data.getCategories as Category[]).sort(
+          (c1, c2) => (c1.income ? 1 : -1),
+        );
       },
     });
   }

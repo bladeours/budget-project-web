@@ -1,43 +1,43 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LogoutComponent} from './features/authorization/pages/logout/logout.component';
-import {HomeComponent} from './features/home/pages/home/home.component';
-import {AuthComponent} from './features/authorization/pages/auth/auth/auth.component';
-import {authGuard} from "./core/guard/authGuard";
-import {AccountComponent} from "./features/account/components/account/account.component";
-import {PageNotFoundComponent} from "./core/components/page-not-found/page-not-found.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LogoutComponent } from './features/authorization/pages/logout/logout.component';
+import { AuthComponent } from './features/authorization/pages/auth/auth/auth.component';
+import { authGuard } from './core/guard/authGuard';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+import { NavParentComponent } from './core/components/navigation/nav-parent/nav-parent.component';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard],
-    component: HomeComponent,
+    component: NavParentComponent,
     children: [
       {
-          path: 'transactions',
-          component: HomeComponent,
+        path: 'transactions',
+        component: NavParentComponent,
       },
       {
-          path: 'account',
-          component: HomeComponent
+        path: 'account',
+        component: NavParentComponent,
       },
       {
         path: 'category',
-        component: HomeComponent
+        component: NavParentComponent,
       },
-    ]
+      {
+        path: 'statistics',
+        component: NavParentComponent,
+      },
+    ],
   },
-  { path: '**', component: PageNotFoundComponent, canActivate: [authGuard]},
-  {path: 'logout', component: LogoutComponent, canActivate: [authGuard]},
-  {path: 'register', component: AuthComponent},
-  {path: 'login', component: AuthComponent},
+  { path: 'logout', component: LogoutComponent, canActivate: [authGuard] },
+  { path: 'register', component: AuthComponent },
+  { path: 'login', component: AuthComponent },
+  { path: '**', component: PageNotFoundComponent, canActivate: [authGuard] },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-
-export class AppRoutingModule {
-
-}
+export class AppRoutingModule {}

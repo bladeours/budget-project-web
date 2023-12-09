@@ -1,33 +1,51 @@
-import {GraphqlService} from '../../../../graphql/service/graphql.service';
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Account, AccountType} from '../../../../graphql/__generated__';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {AccountService} from '../../service/account.service';
-import {BreakpointObserver} from "@angular/cdk/layout";
+import { GraphqlService } from '../../../../graphql/service/graphql.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Account, AccountType } from '../../../../graphql/__generated__';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { AccountService } from '../../service/account.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { colors } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-account-form',
   templateUrl: './account-form.component.html',
   styleUrl: './account-form.component.scss',
 })
-export class AccountFormComponent {
+export class AccountFormComponent implements OnInit {
   @Output()
   addAccountEvent = new EventEmitter<FormGroup>();
   @Output()
   closeEvent = new EventEmitter<any>();
-
-
   @Input()
   hash: string;
-  colors = ['#FFCE30', '#E389B9', '#746AB0'];
+  protected readonly colors = colors;
   nameInput: FormControl<any> = new FormControl('', [Validators.required]);
   descriptionInput: FormControl<any> = new FormControl();
-  balanceInput: FormControl<any> = new FormControl(0, [Validators.required, Validators.min(0)]);
-  @ViewChild("archivedToggle")
+  balanceInput: FormControl<any> = new FormControl(0, [
+    Validators.required,
+    Validators.min(0),
+  ]);
+  @ViewChild('archivedToggle')
   archivedToggle: MatSlideToggle;
-  accountTypeSelect: FormControl<any> = new FormControl('', [Validators.required]);
-  colorSelect: FormControl<any> = new FormControl(this.colors[0], [Validators.required]);
+  accountTypeSelect: FormControl<any> = new FormControl('', [
+    Validators.required,
+  ]);
+  colorSelect: FormControl<any> = new FormControl(colors[0], [
+    Validators.required,
+  ]);
   isCreate: boolean = false;
 
   formGroup: FormGroup = this.fb.group({
@@ -44,20 +62,20 @@ export class AccountFormComponent {
   descriptionCol: number;
   balanceCol: number;
 
-
   accountTypes = [AccountType.Regular, AccountType.Savings];
 
   constructor(
     private fb: FormBuilder,
     private graphqlService: GraphqlService,
     private accountService: AccountService,
-    private observer: BreakpointObserver) {}
+    private observer: BreakpointObserver,
+  ) {}
 
   ngOnInit() {
-    this.isCreate = (this.hash == null);
-    if(!this.isCreate){
+    this.isCreate = this.hash == null;
+    if (!this.isCreate) {
       this.graphqlService.getAccount(this.hash).subscribe({
-        next: (v) => this.setAccount(v.data.getAccount as Account)
+        next: (v) => this.setAccount(v.data.getAccount as Account),
       });
     }
 
@@ -81,12 +99,17 @@ export class AccountFormComponent {
   deleteAccount() {
     this.accountService.deleteAccount(this.hash);
   }
+
   saveAccount() {
-    if(this.formGroup.valid){
-      if(this.isCreate){
+    if (this.formGroup.valid) {
+      if (this.isCreate) {
         this.addAccountEvent.emit(this.formGroup);
       } else {
-        this.accountService.updateAccount(this.formGroup, this.archivedToggle, this.hash);
+        this.accountService.updateAccount(
+          this.formGroup,
+          this.archivedToggle,
+          this.hash,
+        );
       }
     }
   }

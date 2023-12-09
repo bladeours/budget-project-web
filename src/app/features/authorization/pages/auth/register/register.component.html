@@ -1,14 +1,14 @@
 <!-- <h1>Register</h1> -->
-<form [formGroup]="formGroup" (ngSubmit)="register()">
+<form (ngSubmit)="register()" [formGroup]="formGroup">
   <mat-form-field>
-    <input matInput placeholder="username" formControlName="email" />
+    <input formControlName="email" matInput placeholder="username" />
   </mat-form-field>
   <mat-form-field>
     <input
+      formControlName="password"
       matInput
       placeholder="password"
       type="password"
-      formControlName="password"
     />
   </mat-form-field>
   <mat-card-actions>

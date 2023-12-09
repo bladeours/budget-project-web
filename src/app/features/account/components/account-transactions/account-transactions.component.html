@@ -1,5 +1,5 @@
-<div class="wrapper" #wrapper>
-  <div class="transactions-wrapper" #transactionWrapper>
+<div #wrapper class="wrapper">
+  <div #transactionWrapper class="transactions-wrapper">
     <div *ngFor="let transactionCard of transactionCards">
       <app-transaction-card
         [transactionCard]="transactionCard"
@@ -8,12 +8,12 @@
   </div>
   <mat-paginator
     #paginator
-    [length]="length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    [pageIndex]="pageIndex"
-    aria-label="Select page"
     (page)="handlePageEvent($event)"
+    [length]="length"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
+    aria-label="Select page"
   >
   </mat-paginator>
 </div>

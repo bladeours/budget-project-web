@@ -1,0 +1,27 @@
+<div class="wrapper">
+  <mat-grid-list [cols]="1" rowHeight="90px">
+    <mat-grid-tile [colspan]="1" class="date-grid">
+      <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input formControlName="start" matStartDate placeholder="Start date">
+          <input formControlName="end" matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" class="date-grid">
+      <mat-chip-listbox aria-label="Fish selection" [formControl]="chipListControl">
+        <mat-chip-option>Day</mat-chip-option>
+        <mat-chip-option>Week</mat-chip-option>
+        <mat-chip-option selected>Month</mat-chip-option>
+        <mat-chip-option>Year</mat-chip-option>
+      </mat-chip-listbox>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="charts-container">
+    <div [merge]="mergeOptions" [options]="optionsExpense" [theme]="'dark'" class="demo-chart" echarts></div>
+    <div [merge]="mergeOptions" [options]="optionsExpenseBar" [theme]="'dark'" class="demo-chart" echarts></div>
+  </div>
+</div>

@@ -38,16 +38,18 @@ mat-grid-list {
   width: 100%;
 }
 
-mat-expansion-panel{
+mat-expansion-panel {
   background-color: transparent;
 
-  ::ng-deep .mat-expansion-panel-body{
+  ::ng-deep .mat-expansion-panel-body {
     padding: 0;
   }
+
   .mat-expansion-panel-header {
     padding: 0 5px 0 0;
   }
 }
+
 .archivedExpansion > * {
   margin-left: 10px;
 
@@ -67,11 +69,12 @@ mat-expansion-panel{
     display: flex;
     justify-content: space-between;
 
-    .icon-name{
+    .icon-name {
       display: flex;
       align-items: center;
       flex-grow: 1;
       overflow: hidden;
+
       .name {
         flex-shrink: 1;
         white-space: nowrap;
@@ -79,6 +82,7 @@ mat-expansion-panel{
         min-width: 0;
         text-overflow: ellipsis;
       }
+
       .mat-icon {
         flex-shrink: 0;
         margin-right: 8px;
@@ -89,14 +93,11 @@ mat-expansion-panel{
   }
 
 
-
-
   mat-icon {
     margin-right: 8px;
   }
 
 }
-
 
 
 .avatar {

@@ -90,6 +90,13 @@ export type Category = {
   subCategories?: Maybe<Array<Maybe<SubCategory>>>;
 };
 
+export type CategoryAmount = {
+  __typename?: 'CategoryAmount';
+  amount: Scalars['Float']['output'];
+  color: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type CategoryInput = {
   color: Scalars['String']['input'];
   income: Scalars['Boolean']['input'];
@@ -239,6 +246,7 @@ export type Query = {
   getAccount?: Maybe<Account>;
   getAccounts?: Maybe<Array<Maybe<Account>>>;
   getAccountsPage?: Maybe<AccountsPage>;
+  getAmountByCategory?: Maybe<Array<Maybe<CategoryAmount>>>;
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getCategoriesPage?: Maybe<CategoriesPage>;
   getCategory?: Maybe<Category>;
@@ -260,6 +268,13 @@ export type QueryGetAccountsArgs = {
 export type QueryGetAccountsPageArgs = {
   filter?: InputMaybe<Filter>;
   page: Page;
+};
+
+
+export type QueryGetAmountByCategoryArgs = {
+  endDate: Scalars['String']['input'];
+  income: Scalars['Boolean']['input'];
+  startDate: Scalars['String']['input'];
 };
 
 
@@ -498,6 +513,15 @@ export type UpdateCategoryMutationVariables = Exact<{
 
 
 export type UpdateCategoryMutation = { __typename?: 'Mutation', updateCategory?: { __typename?: 'Category', hash: string } | null };
+
+export type GetAmountByCategoryQueryVariables = Exact<{
+  startDate: Scalars['String']['input'];
+  endDate: Scalars['String']['input'];
+  income: Scalars['Boolean']['input'];
+}>;
+
+
+export type GetAmountByCategoryQuery = { __typename?: 'Query', getAmountByCategory?: Array<{ __typename?: 'CategoryAmount', name: string, amount: number, color: string } | null> | null };
 
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
@@ -951,6 +975,26 @@ export const UpdateCategoryDocument = gql`
   })
   export class UpdateCategoryGQL extends Apollo.Mutation<UpdateCategoryMutation, UpdateCategoryMutationVariables> {
     override document = UpdateCategoryDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetAmountByCategoryDocument = gql`
+    query getAmountByCategory($startDate: String!, $endDate: String!, $income: Boolean!) {
+  getAmountByCategory(income: $income, startDate: $startDate, endDate: $endDate) {
+    name
+    amount
+    color
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAmountByCategoryGQL extends Apollo.Query<GetAmountByCategoryQuery, GetAmountByCategoryQueryVariables> {
+    override document = GetAmountByCategoryDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

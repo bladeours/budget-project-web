@@ -201,3 +201,11 @@ mutation updateCategory($hash: String!, $categoryUpdateInput: CategoryUpdateInpu
     hash
   }
 }
+
+query getAmountByCategory($startDate: String!, $endDate: String!, $income: Boolean!){
+  getAmountByCategory(income: $income, startDate: $startDate, endDate: $endDate){
+    name
+    amount
+    color
+  }
+}

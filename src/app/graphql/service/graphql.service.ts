@@ -2,20 +2,27 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   AccountInput,
-  AddAccountGQL, AddCategoryGQL,
-  AddTransactionGQL, CategoryInput, CategoryUpdateInput,
-  DeleteAccountGQL, DeleteCategoryGQL,
+  AddAccountGQL,
+  AddCategoryGQL,
+  AddTransactionGQL,
+  CategoryInput,
+  CategoryUpdateInput,
+  DeleteAccountGQL,
+  DeleteCategoryGQL,
   DeleteTransactionGQL,
   Filter,
   GetAccountGQL,
   GetAccountsGQL,
+  GetAmountByCategoryGQL,
   GetCategoriesExpenseHashNameGQL,
   GetCategoriesHashNameGQL,
-  GetCategoriesIncomeHashNameGQL, GetCategoryGQL,
+  GetCategoriesIncomeHashNameGQL,
+  GetCategoryGQL,
   GetTransactionsPageGQL,
   Page,
   TransactionInput,
-  UpdateAccountGQL, UpdateCategoryGQL,
+  UpdateAccountGQL,
+  UpdateCategoryGQL,
   UpdateTransactionGQL,
 } from '../__generated__';
 
@@ -39,7 +46,8 @@ export class GraphqlService {
     private addCategoryGQL: AddCategoryGQL,
     private getCategoryGQL: GetCategoryGQL,
     private deleteCategoryGQL: DeleteCategoryGQL,
-    private updateCategoryGQL: UpdateCategoryGQL
+    private updateCategoryGQL: UpdateCategoryGQL,
+    private getAmountByCategoryGQL: GetAmountByCategoryGQL,
   ) {}
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
@@ -93,19 +101,23 @@ export class GraphqlService {
     return this.deleteAccountGQL.mutate({ hash });
   }
 
-  addCategory(categoryInput: CategoryInput){
-    return this.addCategoryGQL.mutate({categoryInput});
+  addCategory(categoryInput: CategoryInput) {
+    return this.addCategoryGQL.mutate({ categoryInput });
   }
 
-  getCategory(hash: string){
-    return this.getCategoryGQL.fetch({hash});
+  getCategory(hash: string) {
+    return this.getCategoryGQL.fetch({ hash });
   }
 
   deleteCategory(hash: string) {
-    return this.deleteCategoryGQL.mutate({hash});
+    return this.deleteCategoryGQL.mutate({ hash });
   }
 
-  updateCategory(hash:string, categoryUpdateInput: CategoryUpdateInput){
-    return this.updateCategoryGQL.mutate({hash, categoryUpdateInput});
+  updateCategory(hash: string, categoryUpdateInput: CategoryUpdateInput) {
+    return this.updateCategoryGQL.mutate({ hash, categoryUpdateInput });
+  }
+
+  getAmountByCategory(startDate: string, endDate: string, income: boolean) {
+    return this.getAmountByCategoryGQL.fetch({ startDate, endDate, income });
   }
 }

@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {AuthService} from '../../service/auth.service';
-import {AuthInput} from "../../models/AuthInput";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
+import { MatSnackBarService } from '../../../../shared/service/mat-snack-bar.service';
 
 @Component({
   selector: 'app-logout',
@@ -10,20 +9,22 @@ import {AuthInput} from "../../models/AuthInput";
   styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router, private matSnackBar: MatSnackBar) {
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private matSnackBarService: MatSnackBarService,
+  ) {}
 
   ngOnInit(): void {
-    this.authService.logout()
-      .subscribe({
-        next: (response) => {
-          localStorage.removeItem(AuthService.accessTokenKey);
-          this.matSnackBar.open("Logout properly", "close", {
-            duration: 3000
-          });
-          this.router.navigate(["login"]);
-        },
-        error: (error) => alert(error),
-      });
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.removeItem(AuthService.accessTokenKey);
+        this.matSnackBarService
+          .open('Logout properly')
+          .afterDismissed()
+          .subscribe(() => this.router.navigate(['login']));
+      },
+      error: (error) => alert(error),
+    });
   }
 }

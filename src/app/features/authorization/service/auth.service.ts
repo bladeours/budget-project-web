@@ -1,8 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {AuthInterceptor} from 'src/app/core/interceptors/auth.interceptor';
-import {AuthenticateGQL, LogoutGQL, RefreshTokenGQL, RegisterGQL} from 'src/app/graphql/__generated__';
-import {AuthInput} from '../models/AuthInput';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
+import {
+  AuthenticateGQL,
+  LogoutGQL,
+  RefreshTokenGQL,
+  RegisterGQL,
+} from 'src/app/graphql/__generated__';
+import { AuthInput } from '../models/AuthInput';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +15,12 @@ import {AuthInput} from '../models/AuthInput';
 export class AuthService {
   public static readonly accessTokenKey = 'accessToken';
 
-  constructor(private logoutGQL: LogoutGQL,
-              private authenticateGQL: AuthenticateGQL,
-              private registerGQL: RegisterGQL,
-              private refreshTokenGQL: RefreshTokenGQL) {}
+  constructor(
+    private logoutGQL: LogoutGQL,
+    private authenticateGQL: AuthenticateGQL,
+    private registerGQL: RegisterGQL,
+    private refreshTokenGQL: RefreshTokenGQL,
+  ) {}
 
   public isAuthenticated(): boolean {
     const accessToken = localStorage.getItem(AuthService.accessTokenKey);
@@ -22,12 +29,12 @@ export class AuthService {
 
   register(authInput: AuthInput): Observable<any> {
     AuthInterceptor.ignoreJwt = true;
-    return this.registerGQL.mutate({authInput});
+    return this.registerGQL.mutate({ authInput });
   }
 
   login(authInput: AuthInput): Observable<any> {
     AuthInterceptor.ignoreJwt = true;
-    return this.authenticateGQL.mutate({authInput});
+    return this.authenticateGQL.mutate({ authInput });
   }
 
   setAuth(jwt: string) {

@@ -1,0 +1,31 @@
+.demo-chart {
+  height: auto;
+}
+.wrapper {
+  width: 100%;
+  //max-width: 800px;
+  max-height: 100%;
+  overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+.charts-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.demo-chart {
+  flex: 1;
+  height: auto;
+  margin-right: 10px;
+}
+
+@import '/src/styles';
+@media (max-width: $layout-small-width) {
+  .charts-container {
+    flex-direction: column; /* Stack charts vertically on mobile */
+  }
+  .demo-chart {
+    margin-right: 0;
+  }
+}

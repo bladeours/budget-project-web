@@ -1,4 +1,9 @@
-import {Account, Category, SubCategory, TransactionType} from "../../graphql/__generated__";
+import {
+  Account,
+  Category,
+  SubCategory,
+  TransactionType,
+} from '../../graphql/__generated__';
 
 export class TransactionCard {
   type: TransactionType;

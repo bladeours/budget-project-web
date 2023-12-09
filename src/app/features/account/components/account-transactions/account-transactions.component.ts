@@ -1,20 +1,30 @@
-import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
-import {PageEvent} from "@angular/material/paginator";
-import {TransactionCard} from "../../../../shared/models/TransactionCard";
-import {LogicOperator, StringOperator, TransactionsPage} from "../../../../graphql/__generated__";
-import {GraphqlService} from "../../../../graphql/service/graphql.service";
-import {TransactionCardService} from "../../../transactions/service/transaction-card.service";
-
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { TransactionCard } from '../../../../shared/models/TransactionCard';
+import {
+  LogicOperator,
+  StringOperator,
+  TransactionsPage,
+} from '../../../../graphql/__generated__';
+import { GraphqlService } from '../../../../graphql/service/graphql.service';
+import { TransactionCardService } from '../../../transactions/service/transaction-card.service';
 
 @Component({
   selector: 'app-account-transactions',
   templateUrl: './account-transactions.component.html',
-  styleUrl: './account-transactions.component.scss'
+  styleUrl: './account-transactions.component.scss',
 })
-export class AccountTransactionsComponent {
+export class AccountTransactionsComponent implements OnInit {
   @Input()
   hash: string;
-  @ViewChild('paginator', {read: ElementRef}) paginator: ElementRef;
+  @ViewChild('paginator', { read: ElementRef }) paginator: ElementRef;
   @ViewChild('wrapper') wrapper: ElementRef;
   @ViewChild('transactionWrapper') transactionWrapper: ElementRef;
 
@@ -24,16 +34,23 @@ export class AccountTransactionsComponent {
   pageIndex = 0;
   pageSizeOptions = [10, 25, 50];
 
+  constructor(
+    private renderer: Renderer2,
+    private graphqlService: GraphqlService,
+    private transactionService: TransactionCardService,
+  ) {}
 
-  constructor(private renderer: Renderer2, private graphqlService: GraphqlService, private transactionService: TransactionCardService) {
-  }
-
-
-  ngAfterViewInit() {
+  ngOnInit() {
     this.setTransactions();
     this.resizeTransactionWrapper();
   }
 
+  handlePageEvent(event: PageEvent) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.setTransactions();
+  }
 
   private resizeTransactionWrapper() {
     if (window.innerWidth > 800) {
@@ -42,7 +59,7 @@ export class AccountTransactionsComponent {
       this.renderer.setStyle(
         this.transactionWrapper.nativeElement,
         'max-height',
-        wrapperHeight - paginatorHeight - 30 + 'px'
+        wrapperHeight - paginatorHeight - 30 + 'px',
       );
     }
   }
@@ -50,22 +67,22 @@ export class AccountTransactionsComponent {
   private setTransactions() {
     this.graphqlService
       .getTransactionsPage(
-        {number: this.pageIndex, size: this.pageSize},
+        { number: this.pageIndex, size: this.pageSize },
         {
           logicOperator: LogicOperator.Or,
           stringFilters: [
             {
               value: this.hash,
               operator: StringOperator.Equals,
-              field: "accountTo.hash"
+              field: 'accountTo.hash',
             },
             {
               value: this.hash,
               operator: StringOperator.Equals,
-              field: "accountFrom.hash"
-            }
-          ]
-        }
+              field: 'accountFrom.hash',
+            },
+          ],
+        },
       )
       .subscribe((value) => {
         let transactionPage: TransactionsPage = value.data
@@ -74,13 +91,5 @@ export class AccountTransactionsComponent {
           this.transactionService.getTransactionCards(transactionPage);
         this.length = transactionPage.totalElements as number;
       });
-  }
-
-  handlePageEvent(event: PageEvent) {
-    this.length = event.length;
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.setTransactions();
-
   }
 }

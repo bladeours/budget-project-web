@@ -1,22 +1,23 @@
 <mat-toolbar>
-   <button
-    mat-icon-button
-    *ngIf="matSidenav?.mode === 'over'"
+  <button
     (click)="matSidenav.toggle()"
-  > 
-   <mat-icon *ngIf="!matSidenav?.opened"> menu </mat-icon>
-   <mat-icon *ngIf="matSidenav?.opened"> close </mat-icon>
+    *ngIf="matSidenav?.mode === 'over'"
+    mat-icon-button
+  >
+    <mat-icon *ngIf="!matSidenav?.opened"> menu</mat-icon>
+    <mat-icon *ngIf="matSidenav?.opened"> close</mat-icon>
   </button>
   <span>Budget</span>
   <span class="spacer"></span>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon class="user-icon" aria-hidden="false" aria-label="user icon"
-    >person</mat-icon>
+  <button [matMenuTriggerFor]="menu" mat-icon-button>
+    <mat-icon aria-hidden="false" aria-label="user icon" class="user-icon"
+    >person
+    </mat-icon>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>Profile</button>
-      <button mat-menu-item (click)="logout()">Logout</button>
+      <button (click)="logout()" mat-menu-item>Logout</button>
     </mat-menu>
-    
+
   </button>
 </mat-toolbar>
 

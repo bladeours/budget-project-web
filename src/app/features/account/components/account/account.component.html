@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <app-account-form [hash]="hash" *ngIf="hash"></app-account-form>
-  <app-account-transactions [hash]="hash" *ngIf="hash"></app-account-transactions>
+  <app-account-form *ngIf="hash" [hash]="hash"></app-account-form>
+  <app-account-transactions *ngIf="hash" [hash]="hash"></app-account-transactions>
 </div>
 

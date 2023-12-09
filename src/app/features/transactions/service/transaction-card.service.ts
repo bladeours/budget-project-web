@@ -1,25 +1,25 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Account,
   Category,
   SubCategory,
   Transaction,
   TransactionsPage,
-  TransactionType
-} from "../../../graphql/__generated__";
-import {TransactionCard} from "../../../shared/models/TransactionCard";
-import {DatePipe} from "@angular/common";
-import {myGreen, myGrey, myRed} from "../../../environments/environment";
+  TransactionType,
+} from '../../../graphql/__generated__';
+import { TransactionCard } from '../../../shared/models/TransactionCard';
+import { DatePipe } from '@angular/common';
+import { myGreen, myGrey, myRed } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TransactionCardService {
+  constructor(private datePipe: DatePipe) {}
 
-  constructor(private datePipe: DatePipe) {
-  }
-
-  getTransactionCards(transactionsPage: TransactionsPage): TransactionCard[] {
+  public getTransactionCards(
+    transactionsPage: TransactionsPage,
+  ): TransactionCard[] {
     let transactionCards: TransactionCard[] = [];
     for (let transaction of transactionsPage.content as Transaction[]) {
       transactionCards.push(this.transformToTransactionCard(transaction));
@@ -27,18 +27,28 @@ export class TransactionCardService {
     return transactionCards;
   }
 
-  private transformToTransactionCard(transaction: Transaction): TransactionCard {
+  private transformToTransactionCard(
+    transaction: Transaction,
+  ): TransactionCard {
     let transactionCard: TransactionCard = new TransactionCard();
     transactionCard.hash = transaction.hash as string;
     transactionCard.date = {
       date: new Date(transaction.date as string),
-      string: this.datePipe.transform(new Date(transaction.date as string), 'dd-MM-yyyy') as string
+      string: this.datePipe.transform(
+        new Date(transaction.date as string),
+        'dd-MM-yyyy',
+      ) as string,
     };
     transactionCard.amount = {
-      amount: transaction.transactionType == TransactionType.Expense ? (transaction.amount as number) * -1 : transaction.amount as number,
-      color: this.chooseAmountColor(transaction.transactionType as TransactionType)
+      amount:
+        transaction.transactionType == TransactionType.Expense
+          ? (transaction.amount as number) * -1
+          : (transaction.amount as number),
+      color: this.chooseAmountColor(
+        transaction.transactionType as TransactionType,
+      ),
     };
-    transactionCard.icon = "money_off";
+    transactionCard.icon = 'money_off';
     transactionCard.category = this.chooseCategory(transaction);
     transactionCard.subCategory = transaction.subCategory as SubCategory;
     transactionCard.account = this.chooseAccount(transaction);
@@ -60,7 +70,7 @@ export class TransactionCardService {
   }
 
   private chooseCategory(transaction: Transaction): Category | Account {
-    if(transaction.transactionType === TransactionType.Transfer){
+    if (transaction.transactionType === TransactionType.Transfer) {
       return transaction.accountTo as Account;
     }
     return transaction.category as Category;
@@ -76,5 +86,4 @@ export class TransactionCardService {
         return myGrey;
     }
   }
-
 }

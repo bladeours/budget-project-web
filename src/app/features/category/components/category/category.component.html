@@ -1,4 +1,4 @@
 <div class="wrapper">
-    <app-category-form [hash]="hash" *ngIf="hash"></app-category-form>
-    <app-category-transactions [hash]="hash" *ngIf="hash"></app-category-transactions>
+  <app-category-form *ngIf="hash" [hash]="hash"></app-category-form>
+  <app-category-transactions *ngIf="hash" [hash]="hash"></app-category-transactions>
 </div>

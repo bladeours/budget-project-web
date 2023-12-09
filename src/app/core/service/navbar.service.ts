@@ -6,7 +6,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class NavbarService {
   private sidenav: MatSidenav;
+
   constructor() {}
+
   public setSidenav(sidenav: MatSidenav) {
     this.sidenav = sidenav;
   }
@@ -14,5 +16,4 @@ export class NavbarService {
   public getSidenav(): MatSidenav {
     return this.sidenav;
   }
-
 }
