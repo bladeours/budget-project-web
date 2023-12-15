@@ -22,7 +22,7 @@ export class AppDateAdapter extends NativeDateAdapter {
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
     } else {
-      return date.toDateString();
+      return date.toLocaleDateString('en-gb', displayFormat);
     }
   }
 }

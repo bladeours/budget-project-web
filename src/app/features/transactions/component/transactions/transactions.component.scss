@@ -19,7 +19,7 @@
   margin-left: 10px;
 }
 
-mat-paginator {
+.paginator {
   position: absolute;
   display: block;
   border-radius: 10px;
@@ -69,7 +69,7 @@ mat-paginator {
   .transactions-wrapper {
     margin-bottom: 20px;
   }
-  mat-paginator {
+  .paginator {
     position: relative;
   }
 

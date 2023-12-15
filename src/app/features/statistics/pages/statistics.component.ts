@@ -7,6 +7,8 @@ import { PieChartService } from '../service/pie-chart.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Data } from '../model/Data';
 import { BarChartService } from '../service/bar-chart.service';
+import { CalendarHeaderComponent } from '../../../shared/components/calendar/calendar-header/calendar-header.component';
+import { DateService } from '../../../shared/service/date.service';
 
 @Component({
   selector: 'app-statistics',
@@ -18,15 +20,12 @@ export class StatisticsComponent implements OnInit {
   optionsExpenseBar: EChartsOption;
   expenseData: any[] | undefined;
   range = new FormGroup({
-    start: new FormControl<Date | null>(
-      new Date(new Date().setMonth(new Date().getMonth() - 1)),
-    ),
-    end: new FormControl<Date | null>(new Date()),
+    start: new FormControl(),
+    end: new FormControl(),
   });
   mergeOptions: EChartsOption;
   dateCol: number;
   chipCol: number;
-  chipListControl: FormControl = new FormControl();
   isSmall: boolean = false;
 
   constructor(
@@ -34,14 +33,16 @@ export class StatisticsComponent implements OnInit {
     private pieChartService: PieChartService,
     private barChartService: BarChartService,
     private observer: BreakpointObserver,
+    private dateService: DateService,
   ) {}
 
   ngOnInit(): void {
-    this.chipListControl.valueChanges.subscribe((v) =>
-      this.handleChipChange(v),
-    );
     this.range.valueChanges.subscribe((v) => {
       this.setData(v, this.isSmall);
+    });
+    this.range.setValue({
+      start: this.dateService.getCurrentMonthStart(),
+      end: this.dateService.getCurrentMonthEnd(),
     });
 
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
@@ -55,39 +56,6 @@ export class StatisticsComponent implements OnInit {
         this.isSmall = false;
       }
       this.setData(this.range.value, this.isSmall);
-    });
-  }
-
-  private handleChipChange(v: string) {
-    let start: Date;
-    let end: Date;
-    switch (v) {
-      case 'Day':
-        start = new Date();
-        start.setDate(start.getDate() - 1);
-        end = new Date();
-        break;
-      case 'Week':
-        start = new Date();
-        start.setDate(start.getDate() - 7);
-
-        end = new Date();
-        break;
-      case 'Month':
-        start = new Date(new Date().setMonth(new Date().getMonth() - 1));
-        end = new Date();
-        break;
-      case 'Year':
-        start = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
-        end = new Date();
-        break;
-      default:
-        start = new Date();
-        end = new Date();
-    }
-    this.range.setValue({
-      start: start,
-      end: end,
     });
   }
 
@@ -187,4 +155,6 @@ export class StatisticsComponent implements OnInit {
       ],
     };
   }
+
+  protected readonly CalendarHeaderComponent = CalendarHeaderComponent;
 }

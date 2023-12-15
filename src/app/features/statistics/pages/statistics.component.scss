@@ -23,7 +23,7 @@
 @import '/src/styles';
 @media (max-width: $layout-small-width) {
   .charts-container {
-    flex-direction: column; /* Stack charts vertically on mobile */
+    flex-direction: column;
   }
   .demo-chart {
     margin-right: 0;

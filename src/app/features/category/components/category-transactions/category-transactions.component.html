@@ -6,14 +6,16 @@
       ></app-transaction-card>
     </div>
   </div>
-  <mat-paginator
-    #paginator
-    (page)="handlePageEvent($event)"
-    [length]="length"
-    [pageIndex]="pageIndex"
-    [pageSizeOptions]="pageSizeOptions"
-    [pageSize]="pageSize"
-    aria-label="Select page"
-  >
-  </mat-paginator>
+<!--  <mat-paginator-->
+<!--    #paginator-->
+<!--    (page)="handlePageEvent($event)"-->
+<!--    [length]="length"-->
+<!--    [pageIndex]="pageIndex"-->
+<!--    [pageSizeOptions]="pageSizeOptions"-->
+<!--    [pageSize]="pageSize"-->
+<!--    aria-label="Select page"-->
+<!--  >-->
+<!--  </mat-paginator>-->
+  <app-my-paginator #paginator class="paginator" (pageEventEmitter)="handlePageEvent($event)" [length]="length"></app-my-paginator>
+
 </div>

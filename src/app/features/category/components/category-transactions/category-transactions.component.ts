@@ -42,7 +42,7 @@ export class CategoryTransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.setTransactions();
-    this.resizeTransactionWrapper();
+    setTimeout(() => this.resizeTransactionWrapper(), 2);
   }
 
   handlePageEvent(event: PageEvent) {

@@ -1,0 +1,5 @@
+<mat-card class="mat-elevation-z0">
+  <mat-chip-listbox>
+      <mat-chip-option *ngFor="let item of customPresets" (click)="selectRange(item)">{{item}}</mat-chip-option>
+  </mat-chip-listbox>
+</mat-card>

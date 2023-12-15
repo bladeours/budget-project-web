@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnInit,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -24,29 +25,31 @@ import { Utils } from 'src/app/shared/utils/Utils';
 import { myGreen, myRed } from '../../../../environments/environment';
 import { TransactionCard } from '../../../../shared/models/TransactionCard';
 import { TransactionCardService } from '../../service/transaction-card.service';
+import { CalendarHeaderComponent } from '../../../../shared/components/calendar/calendar-header/calendar-header.component';
+import { DateService } from '../../../../shared/service/date.service';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
 })
-export class TransactionsComponent {
+export class TransactionsComponent implements OnInit {
   @ViewChild('paginator', { read: ElementRef }) paginator: ElementRef;
   @ViewChild('wrapper') wrapper: ElementRef;
   @ViewChild('filters') filters: ElementRef;
-  @ViewChild('transactionWrapper') transactionWrapper: ElementRef;
+  @ViewChild('transactionWrapper', { read: ElementRef })
+  transactionWrapper: ElementRef;
   transactionCards: TransactionCard[] = [];
   categories: FormControl<any> = new FormControl();
   from = new FormControl();
   to = new FormControl();
   range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
+    start: new FormControl(),
+    end: new FormControl(),
   });
   length = 100;
-  pageSize = 10;
+  pageSize = 25;
   pageIndex = 0;
-  pageSizeOptions = [10, 25, 50];
   categoryList: Category[] = [];
   categoryFilter: Filter = {};
   amountToFilter: Filter = {};
@@ -60,11 +63,12 @@ export class TransactionsComponent {
     private graphqlService: GraphqlService,
     private transactionService: TransactionCardService,
     private renderer: Renderer2,
+    private dateService: DateService,
   ) {}
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.setTransactions();
-    this.resizeTransactionWrapper();
+    setTimeout(() => this.resizeTransactionWrapper(), 2);
     this.setCategories();
     this.categories.valueChanges
       .pipe(debounceTime(1000))
@@ -78,6 +82,10 @@ export class TransactionsComponent {
     this.range.valueChanges
       .pipe(debounceTime(1000))
       .subscribe((v) => this.handleRangeDate(v));
+    this.range.setValue({
+      start: this.dateService.getCurrentMonthStart(),
+      end: this.dateService.getCurrentMonthEnd(),
+    });
   }
 
   @HostListener('window:resize')
@@ -224,10 +232,12 @@ export class TransactionsComponent {
   private setCategories() {
     this.graphqlService.getCategories().subscribe({
       next: (v) => {
-        this.categoryList = (v.data.getCategories as Category[]).sort(
-          (c1, c2) => (c1.income ? 1 : -1),
-        );
+        this.categoryList = (v.data.getCategories as Category[])
+          .slice()
+          .sort((c1, c2) => (c1.income ? 1 : -1));
       },
     });
   }
+
+  protected readonly CalendarHeaderComponent = CalendarHeaderComponent;
 }

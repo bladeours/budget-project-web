@@ -10,7 +10,7 @@
         [for]="picker"
         matIconSuffix
       ></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+      <mat-date-range-picker #picker [calendarHeaderComponent]="CalendarHeaderComponent"></mat-date-range-picker>
     </mat-form-field>
 
     <mat-form-field class="categoriesForm">
@@ -42,14 +42,5 @@
       ></app-transaction-card>
     </div>
   </div>
-  <mat-paginator
-    #paginator
-    (page)="handlePageEvent($event)"
-    [length]="length"
-    [pageIndex]="pageIndex"
-    [pageSizeOptions]="pageSizeOptions"
-    [pageSize]="pageSize"
-    aria-label="Select page"
-  >
-  </mat-paginator>
+  <app-my-paginator class="paginator" [length]="length" #paginator (pageEventEmitter)="handlePageEvent($event)" ></app-my-paginator>
 </div>

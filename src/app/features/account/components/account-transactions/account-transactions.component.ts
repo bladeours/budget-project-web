@@ -26,13 +26,13 @@ export class AccountTransactionsComponent implements OnInit {
   hash: string;
   @ViewChild('paginator', { read: ElementRef }) paginator: ElementRef;
   @ViewChild('wrapper') wrapper: ElementRef;
-  @ViewChild('transactionWrapper') transactionWrapper: ElementRef;
+  @ViewChild('transactionWrapper', { read: ElementRef })
+  transactionWrapper: ElementRef;
 
   transactionCards: TransactionCard[] = [];
   length = 100;
-  pageSize = 10;
+  pageSize = 25;
   pageIndex = 0;
-  pageSizeOptions = [10, 25, 50];
 
   constructor(
     private renderer: Renderer2,
@@ -42,7 +42,7 @@ export class AccountTransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.setTransactions();
-    this.resizeTransactionWrapper();
+    setTimeout(() => this.resizeTransactionWrapper(), 2);
   }
 
   handlePageEvent(event: PageEvent) {

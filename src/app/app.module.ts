@@ -62,6 +62,9 @@ import { PageNotFoundComponent } from './core/components/page-not-found/page-not
 import { NgxEchartsModule } from 'ngx-echarts';
 import { StatisticsComponent } from './features/statistics/pages/statistics.component';
 import { TransactionDialogComponent } from './features/transactions/dialog/transaction-dialog/transaction-dialog.component';
+import { CalendarHeaderComponent } from './shared/components/calendar/calendar-header/calendar-header.component';
+import { CalendarRangePanelComponent } from './shared/components/calendar/calendar-range-panel/calendar-range-panel.component';
+import { MyPaginatorComponent } from './shared/components/my-paginator/my-paginator.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -89,6 +92,9 @@ import { TransactionDialogComponent } from './features/transactions/dialog/trans
     PageNotFoundComponent,
     StatisticsComponent,
     TransactionDialogComponent,
+    CalendarHeaderComponent,
+    CalendarRangePanelComponent,
+    MyPaginatorComponent,
   ],
   imports: [
     MatTableModule,

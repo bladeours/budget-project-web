@@ -8,16 +8,8 @@
           <input formControlName="end" matEndDate placeholder="End date">
         </mat-date-range-input>
         <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-date-range-picker #picker [calendarHeaderComponent]="CalendarHeaderComponent"></mat-date-range-picker>
       </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" class="date-grid">
-      <mat-chip-listbox aria-label="Fish selection" [formControl]="chipListControl">
-        <mat-chip-option>Day</mat-chip-option>
-        <mat-chip-option>Week</mat-chip-option>
-        <mat-chip-option selected>Month</mat-chip-option>
-        <mat-chip-option>Year</mat-chip-option>
-      </mat-chip-listbox>
     </mat-grid-tile>
   </mat-grid-list>
   <div class="charts-container">
