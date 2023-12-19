@@ -210,6 +210,7 @@ export class TransactionsComponent implements OnInit {
       .subscribe((value) => {
         let transactionPage: TransactionsPage = value.data
           .getTransactionsPage as TransactionsPage;
+          // console.log(transactionPage.content.category?.color)
         this.transactionCards =
           this.transactionService.getTransactionCards(transactionPage);
         this.length = transactionPage.totalElements as number;

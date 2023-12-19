@@ -105,6 +105,7 @@ query getCategoriesIncomeHashName{
     hash
     name
     archived
+    color
     subCategories {
       name
       hash
@@ -117,6 +118,7 @@ query getCategoriesExpenseHashName{
     hash
     name
     archived
+    color
     subCategories {
       name
       hash
@@ -130,6 +132,7 @@ query getCategoriesHashName{
     name
     archived
     income
+    color
     subCategories {
       name
       hash

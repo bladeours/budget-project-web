@@ -27,10 +27,14 @@ form {
   margin-right: auto;
 }
 
-.subCategoryFormField {
-  width: calc(100% - 35px);
-
+.subCategoryGridTile {
+overflow-y: auto;
 }
+.openColorPickerButton {
+  width: 60%;
+  margin-bottom: 15px;
+}
+
 
 @import '/src/styles';
 @media (max-width: $layout-small-width) {

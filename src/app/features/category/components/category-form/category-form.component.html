@@ -3,35 +3,44 @@
     <mat-grid-tile [colspan]="nameCol" class="name-grid">
       <mat-form-field class="name-input">
         <mat-label>Name</mat-label>
-        <input [formControl]="nameInput" matInput>
+        <input [formControl]="nameInput" matInput />
       </mat-form-field>
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="colorCol">
-      <mat-form-field class="color-select">
-        <mat-label>Color</mat-label>
-        <mat-select [formControl]="colorSelect" [style.color]="colorSelect.value">
-          <mat-option *ngFor="let color of colors" [ngStyle]="{'color': color}" [value]="color">
-            <mat-icon>color_lens</mat-icon>
-            {{ color.toUpperCase() }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <button
+        mat-fab
+        extended
+        class="openColorPickerButton"
+        #openColorPickerButton
+        (click)="openColorPicker()"
+      >
+        Color
+      </button>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="subCategoryCol" [rowspan]="subCategoryRow" class="subCategoryGridTile">
-      <mat-form-field class="example-form-field">
+    <mat-grid-tile
+      [colspan]="subCategoryCol"
+      [rowspan]="subCategoryRow"
+      class="subCategoryGridTile"
+    >
+      <mat-form-field class="subCategoryField">
         <mat-label>SubCategories</mat-label>
         <mat-chip-grid #chipGrid>
-          <mat-chip-row (removed)="removeSubCategory(subCategory)" *ngFor="let subCategory of subCategories">
+          <mat-chip-row
+            (removed)="removeSubCategory(subCategory)"
+            *ngFor="let subCategory of subCategories"
+          >
             {{ subCategory.name }}
             <button matChipRemove>
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-row>
         </mat-chip-grid>
-        <input (matChipInputTokenEnd)="addSubCategory($event)"
-               [matChipInputFor]="chipGrid"
-               placeholder="subCategory..." />
+        <input
+          (matChipInputTokenEnd)="addSubCategory($event)"
+          [matChipInputFor]="chipGrid"
+          placeholder="subCategory..."
+        />
       </mat-form-field>
     </mat-grid-tile>
 
@@ -39,15 +48,30 @@
       <mat-slide-toggle #incomeToggle>Income</mat-slide-toggle>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="!isCreate" [colspan]="toggleCol">
-      <mat-slide-toggle #archiveToggle>archive</mat-slide-toggle>
+      <mat-slide-toggle #archiveToggle>Archive</mat-slide-toggle>
     </mat-grid-tile>
   </mat-grid-list>
 
   <div class="buttons">
-    <button (click)="deleteCategory()" *ngIf="!isCreate" class="delete-button" color="warn" mat-raised-button>
+    <button
+      (click)="deleteCategory()"
+      *ngIf="!isCreate"
+      class="delete-button"
+      color="warn"
+      mat-raised-button
+    >
       Delete
     </button>
-    <button (click)="close()" *ngIf="isCreate" class="delete-button" mat-raised-button>Close</button>
-    <button (click)="saveCategory()" class="save-button" mat-raised-button>Save</button>
+    <button
+      (click)="close()"
+      *ngIf="isCreate"
+      class="delete-button"
+      mat-raised-button
+    >
+      Close
+    </button>
+    <button (click)="saveCategory()" class="save-button" mat-raised-button>
+      Save
+    </button>
   </div>
 </form>

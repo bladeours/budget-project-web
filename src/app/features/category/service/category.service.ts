@@ -7,7 +7,7 @@ import {
 } from '../../../graphql/__generated__';
 import { GraphqlService } from '../../../graphql/service/graphql.service';
 import { Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatSnackBarService } from '../../../shared/service/mat-snack-bar.service';
 
@@ -22,11 +22,12 @@ export class CategoryService {
   ) {}
 
   public addCategory(
-    formGroup: FormGroup,
+    nameInput: FormControl,
+    color: string,
     incomeToggle: MatSlideToggle,
     subCategories: SubCategory[],
   ) {
-    let input = this.getCategoryInput(formGroup, incomeToggle, subCategories);
+    let input = this.getCategoryInput(nameInput, color, incomeToggle, subCategories);
     this.graphqlService.addCategory(input).subscribe({
       next: (v) => {
         this.matSnackBarService
@@ -45,12 +46,14 @@ export class CategoryService {
 
   public updateCategory(
     hash: string,
-    formGroup: FormGroup,
+    nameInput: FormControl,
+    color: string,
     archivedToggle: MatSlideToggle,
     subCategories: SubCategoryInput[],
   ) {
     let input = this.getCategoryUpdateInput(
-      formGroup,
+      nameInput,
+      color,
       archivedToggle,
       subCategories,
     );
@@ -76,27 +79,29 @@ export class CategoryService {
   }
 
   private getCategoryInput(
-    formGroup: FormGroup,
+    nameInput: FormControl,
+    color: string,
     incomeToggle: MatSlideToggle,
     subCategories: SubCategory[],
   ): CategoryInput {
     return {
-      color: formGroup.get('colorSelect')?.value,
+      color: color,
       income: incomeToggle.checked,
-      name: formGroup.get('nameInput')?.value,
+      name: nameInput.value,
       subCategories: subCategories,
     };
   }
 
   private getCategoryUpdateInput(
-    formGroup: FormGroup,
+    nameInput: FormControl,
+    color: string,
     archivedToggle: MatSlideToggle,
     subCategories: SubCategoryInput[],
   ): CategoryUpdateInput {
     return {
-      color: formGroup.get('colorSelect')?.value,
+      color: color,
       archived: archivedToggle.checked,
-      name: formGroup.get('nameInput')?.value,
+      name: nameInput.value,
       subCategories: subCategories,
     };
   }

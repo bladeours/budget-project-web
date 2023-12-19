@@ -102,37 +102,6 @@
     <mat-expansion-panel class="mat-elevation-z0" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Income
-        </mat-panel-title>
-        <mat-icon>paid</mat-icon>
-      </mat-expansion-panel-header>
-      <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryIncome" class="menu-button"
-              mat-button>
-        <div class="icon-name">
-          <mat-icon>paid</mat-icon>
-          <span class="name">{{ category.name }}</span>
-        </div>
-      </button>
-      <mat-expansion-panel *ngIf="categoryArchivedIncome.length > 0" class="archivedExpansion mat-elevation-z0"
-                           hideToggle>
-        <mat-expansion-panel-header class="archivedColor">
-          <mat-panel-title class="archivedColor">
-            archived
-          </mat-panel-title>
-          <mat-icon>paid</mat-icon>
-        </mat-expansion-panel-header>
-        <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryArchivedIncome" class="menu-button archivedColor"
-                mat-button>
-          <div class="icon-name">
-            <mat-icon>paid</mat-icon>
-            <span class="name">{{ category.name }}</span>
-          </div>
-        </button>
-      </mat-expansion-panel>
-    </mat-expansion-panel>
-    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
           Expense
         </mat-panel-title>
         <mat-icon>shopping_bag</mat-icon>
@@ -140,7 +109,7 @@
       <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryExpense" class="menu-button"
               mat-button>
         <div class="icon-name">
-          <mat-icon>shopping_bag</mat-icon>
+          <mat-icon [ngStyle]="{'color': category.color}">shopping_bag</mat-icon>
           <span class="name">{{ category.name }}</span>
         </div>
       </button>
@@ -155,13 +124,43 @@
         <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryArchivedExpense" class="menu-button archivedColor"
                 mat-button>
           <div class="icon-name">
-            <mat-icon>shopping_bag</mat-icon>
+            <mat-icon [ngStyle]="{'color': category.color}">shopping_bag</mat-icon>
             <span class="name">{{ category.name }}</span>
           </div>
         </button>
       </mat-expansion-panel>
     </mat-expansion-panel>
-
+    <mat-expansion-panel class="mat-elevation-z0" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Income
+        </mat-panel-title>
+        <mat-icon>paid</mat-icon>
+      </mat-expansion-panel-header>
+      <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryIncome" class="menu-button"
+              mat-button>
+        <div class="icon-name">
+          <mat-icon [ngStyle]="{'color': category.color}" >paid</mat-icon>
+          <span class="name">{{ category.name }}</span>
+        </div>
+      </button>
+      <mat-expansion-panel *ngIf="categoryArchivedIncome.length > 0" class="archivedExpansion mat-elevation-z0"
+                           hideToggle>
+        <mat-expansion-panel-header class="archivedColor">
+          <mat-panel-title class="archivedColor">
+            archived
+          </mat-panel-title>
+          <mat-icon>paid</mat-icon>
+        </mat-expansion-panel-header>
+        <button (click)="goToCategory(category.hash)" *ngFor="let category of categoryArchivedIncome" class="menu-button archivedColor"
+                mat-button>
+          <div class="icon-name">
+            <mat-icon [ngStyle]="{'color': category.color}">paid</mat-icon>
+            <span class="name">{{ category.name }}</span>
+          </div>
+        </button>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content mat-elevation-z4">

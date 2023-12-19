@@ -65,6 +65,7 @@ import { TransactionDialogComponent } from './features/transactions/dialog/trans
 import { CalendarHeaderComponent } from './shared/components/calendar/calendar-header/calendar-header.component';
 import { CalendarRangePanelComponent } from './shared/components/calendar/calendar-range-panel/calendar-range-panel.component';
 import { MyPaginatorComponent } from './shared/components/my-paginator/my-paginator.component';
+import { ColorPickerComponent } from './shared/components/color-picker/color-picker.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -95,6 +96,7 @@ import { MyPaginatorComponent } from './shared/components/my-paginator/my-pagina
     CalendarHeaderComponent,
     CalendarRangePanelComponent,
     MyPaginatorComponent,
+    ColorPickerComponent,
   ],
   imports: [
     MatTableModule,

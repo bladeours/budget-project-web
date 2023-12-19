@@ -21,6 +21,7 @@ export class TransactionCardComponent implements OnInit {
     if (this.transactionCard.date.date > new Date()) {
       this.opacity = 0.5;
     }
+    console.log(this.transactionCard.category.color)
   }
 
   handleClick() {

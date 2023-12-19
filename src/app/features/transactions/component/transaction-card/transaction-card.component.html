@@ -3,7 +3,7 @@
     {{ transactionCard.date.string }}
   </div>
   <mat-card-header>
-    <mat-card-title>
+    <mat-card-title [ngStyle]="{'color': transactionCard.category.color}">
       {{ transactionCard.category.name }}
     </mat-card-title>
     <mat-card-subtitle>

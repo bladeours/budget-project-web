@@ -14,8 +14,8 @@ export class AccountDialogComponent {
     private accountService: AccountService,
   ) {}
 
-  addAccount(formGroup: FormGroup) {
-    this.accountService.addAccount(formGroup);
+  addAccount($event: any) {
+    this.accountService.addAccount($event.form, $event.color);
     this.dialogRef.close();
   }
 

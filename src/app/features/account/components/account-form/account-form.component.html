@@ -25,15 +25,15 @@
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="colorCol">
-      <mat-form-field class="color-select">
-        <mat-label>Color</mat-label>
-        <mat-select [formControl]="colorSelect" [style.color]="colorSelect.value">
-          <mat-option *ngFor="let color of colors" [ngStyle]="{'color': color}" [value]="color">
-            <mat-icon>color_lens</mat-icon>
-            {{ color.toUpperCase() }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <button
+        mat-fab
+        extended
+        class="openColorPickerButton"
+        #openColorPickerButton
+        (click)="openColorPicker()"
+      >
+        Color
+      </button>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="descriptionCol" class="description-grid">
       <mat-form-field class="description">

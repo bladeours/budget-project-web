@@ -39,6 +39,10 @@ form {
 .save-button {
   margin-left: 10px;
 }
+.openColorPickerButton {
+  width: 60%;
+  margin-bottom: 15px;
+}
 
 @import '/src/styles';
 @media (max-width: $layout-small-width) {

@@ -48,6 +48,7 @@ export class TransactionCardService {
         transaction.transactionType as TransactionType,
       ),
     };
+    
     transactionCard.icon = 'money_off';
     transactionCard.category = this.chooseCategory(transaction);
     transactionCard.subCategory = transaction.subCategory as SubCategory;

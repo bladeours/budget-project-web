@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   Component,
   ElementRef,
@@ -7,10 +8,12 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { FormControl, Validators } from '@angular/forms';
 import { MatChipGrid, MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { ColorPickerComponent } from 'src/app/shared/components/color-picker/color-picker.component';
+import { colors } from '../../../../environments/environment';
 import {
   Category,
   SubCategory,
@@ -18,7 +21,6 @@ import {
 } from '../../../../graphql/__generated__';
 import { GraphqlService } from '../../../../graphql/service/graphql.service';
 import { CategoryService } from '../../service/category.service';
-import { colors } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-category-form',
@@ -40,20 +42,16 @@ export class CategoryFormComponent implements OnInit {
   incomeToggle: MatSlideToggle;
   @ViewChild('archiveToggle')
   archiveToggle: MatSlideToggle;
+  @ViewChild('openColorPickerButton', { read: ElementRef })
+  colorButton: ElementRef;
+  currentColor: string;
 
   subCategories: SubCategoryInput[] = [];
   isCreate: Boolean = false;
 
   nameInput: FormControl<any> = new FormControl('', [Validators.required]);
-  colorSelect: FormControl<any> = new FormControl(colors[0], [
-    Validators.required,
-  ]);
   protected readonly colors = colors;
 
-  form = this.fb.group({
-    colorSelect: this.colorSelect,
-    nameInput: this.nameInput,
-  });
 
   nameCol: number;
   colorCol: number;
@@ -62,8 +60,8 @@ export class CategoryFormComponent implements OnInit {
   subCategoryRow: number = 1;
 
   constructor(
+    private dialog: MatDialog,
     private observer: BreakpointObserver,
-    private fb: FormBuilder,
     private graphqlService: GraphqlService,
     private categoryService: CategoryService,
   ) {}
@@ -76,7 +74,13 @@ export class CategoryFormComponent implements OnInit {
           this.setCategory(v.data.getCategory as Category);
         },
       });
+    } else {
+      this.currentColor = colors[Math.floor(Math.random()*colors.length)];
+      setTimeout(() => {
+        this.colorButton.nativeElement.style.backgroundColor = this.currentColor
+      } , 2);
     }
+      
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches && this.isCreate) {
         this.nameCol = 2;
@@ -96,20 +100,25 @@ export class CategoryFormComponent implements OnInit {
     this.categoryService.deleteCategory(this.hash);
   }
   saveCategory() {
-    if (this.isCreate) {
-      this.addCategoryEvent.emit({
-        formGroup: this.form,
-        incomeToggle: this.incomeToggle,
-        subCategories: this.subCategories,
-      });
-    } else {
-      this.categoryService.updateCategory(
-        this.hash,
-        this.form,
-        this.archiveToggle,
-        this.subCategories,
-      );
+    if(this.nameInput.valid){
+      if (this.isCreate) {
+        this.addCategoryEvent.emit({
+          nameInput: this.nameInput,
+          color: this.currentColor,
+          incomeToggle: this.incomeToggle,
+          subCategories: this.subCategories,
+        });
+      } else {
+        this.categoryService.updateCategory(
+          this.hash,
+          this.nameInput,
+          this.currentColor,
+          this.archiveToggle,
+          this.subCategories,
+        );
+      }
     }
+    
   }
 
   addSubCategory(event: MatChipInputEvent): void {
@@ -129,7 +138,8 @@ export class CategoryFormComponent implements OnInit {
   }
   setCategory(category: Category) {
     this.nameInput.setValue(category.name);
-    this.colorSelect.setValue(category.color);
+    this.currentColor = category.color;
+    this.colorButton.nativeElement.style.backgroundColor = this.currentColor;
     this.archiveToggle.checked = category.archived;
     if (
       category.subCategories !== undefined &&
@@ -145,15 +155,24 @@ export class CategoryFormComponent implements OnInit {
   }
 
   calculateChipRowSpan() {
-    if (this.subCategories.length == 0) {
-      this.subCategoryRow = 1;
-    } else {
-      this.subCategoryRow =
-        this.chipGridRef.nativeElement.offsetHeight / 60 + 1;
-    }
+    // if (this.subCategories.length == 0) {
+    //   this.subCategoryRow = 1;
+    // } else {
+    //   this.subCategoryRow =
+    //     this.chipGridRef.nativeElement.offsetHeight / 60 + 1;
+    // }
   }
 
   close() {
     this.closeEvent.emit();
+  }
+
+  openColorPicker() {
+    this.dialog.open(ColorPickerComponent).componentInstance.colorPicked.subscribe(
+      color => {
+        this.currentColor = color;
+        this.colorButton.nativeElement.style.backgroundColor = color;
+      }
+    );
   }
 }

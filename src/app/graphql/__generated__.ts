@@ -429,17 +429,17 @@ export type GetAccountsQuery = { __typename?: 'Query', getAccounts?: Array<{ __t
 export type GetCategoriesIncomeHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesIncomeHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
+export type GetCategoriesIncomeHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, color: string, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
 
 export type GetCategoriesExpenseHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesExpenseHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
+export type GetCategoriesExpenseHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, color: string, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
 
 export type GetCategoriesHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCategoriesHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, income: boolean, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
+export type GetCategoriesHashNameQuery = { __typename?: 'Query', getCategories?: Array<{ __typename?: 'Category', hash: string, name: string, archived: boolean, income: boolean, color: string, subCategories?: Array<{ __typename?: 'SubCategory', name: string, hash: string } | null> | null } | null> | null };
 
 export type AddTransactionMutationVariables = Exact<{
   transactionInput: TransactionInput;
@@ -727,6 +727,7 @@ export const GetCategoriesIncomeHashNameDocument = gql`
     hash
     name
     archived
+    color
     subCategories {
       name
       hash
@@ -753,6 +754,7 @@ export const GetCategoriesExpenseHashNameDocument = gql`
     hash
     name
     archived
+    color
     subCategories {
       name
       hash
@@ -778,6 +780,7 @@ export const GetCategoriesHashNameDocument = gql`
     name
     archived
     income
+    color
     subCategories {
       name
       hash

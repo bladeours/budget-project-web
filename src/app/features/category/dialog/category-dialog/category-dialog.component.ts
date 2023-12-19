@@ -19,7 +19,8 @@ export class CategoryDialogComponent {
 
   addCategory($event: any) {
     this.categoryService.addCategory(
-      $event.formGroup,
+      $event.nameInput,
+      $event.color,
       $event.incomeToggle,
       $event.subCategories,
     );

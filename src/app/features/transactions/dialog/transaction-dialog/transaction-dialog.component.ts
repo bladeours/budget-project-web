@@ -11,6 +11,7 @@ import { forkJoin } from 'rxjs';
 import {
   Account,
   Category,
+  LogicOperator,
   SubCategory,
   TransactionType,
 } from '../../../../graphql/__generated__';
@@ -255,7 +256,10 @@ export class TransactionDialogComponent implements OnInit {
 
   private setData() {
     forkJoin({
-      accounts: this.graphqlService.getAccounts({}),
+      accounts: this.graphqlService.getAccounts({booleanFilters: [{
+        field: "archived",
+        value: false
+      }],logicOperator: LogicOperator.And }),
       incomeCategories: this.graphqlService.getCategoriesIncomeHashName(),
       expenseCategories: this.graphqlService.getCategoriesExpenseHashName(),
     }).subscribe({
@@ -263,11 +267,11 @@ export class TransactionDialogComponent implements OnInit {
         this.accounts = v.accounts.data.getAccounts as Array<Account>;
         this.leftObjects = this.accounts;
 
-        this.incomeCategories = v.incomeCategories.data
-          .getCategories as Array<Category>;
+        this.incomeCategories = (v.incomeCategories.data
+          .getCategories as Array<Category>).filter(c => !c.archived);
 
-        this.expenseCategories = v.expenseCategories.data
-          .getCategories as Array<Category>;
+        this.expenseCategories = (v.expenseCategories.data
+          .getCategories as Array<Category>).filter(c => !c.archived);
         this.rightObjects = this.expenseCategories;
         if (this.isUpdate) {
           this.fillFields();

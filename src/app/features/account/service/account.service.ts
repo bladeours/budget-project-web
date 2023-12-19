@@ -24,10 +24,12 @@ export class AccountService {
     formGroup: FormGroup<any>,
     archivedToggle: MatSlideToggle,
     hash: string,
+    color: string
   ) {
     let accountInput: AccountInput = this.getAccountInput(
       formGroup,
       archivedToggle,
+      color
     );
     this.graphqlService.updateAccount(accountInput, hash).subscribe({
       next: (v) => {
@@ -39,8 +41,8 @@ export class AccountService {
     });
   }
 
-  addAccount(formGroup: FormGroup) {
-    let accountInput: AccountInput = this.getAccountInputForAdd(formGroup);
+  addAccount(formGroup: FormGroup, color: string) {
+    let accountInput: AccountInput = this.getAccountInputForAdd(formGroup, color);
     this.graphqlService.addAccount(accountInput).subscribe({
       next: (v) => {
         this.matSnackBarService
@@ -70,12 +72,12 @@ export class AccountService {
     });
   }
 
-  private getAccountInputForAdd(formGroup: FormGroup): AccountInput {
+  private getAccountInputForAdd(formGroup: FormGroup, color: string): AccountInput {
     return {
       accountType: formGroup.get('accountTypeSelect')?.value as AccountType,
       archived: false,
       balance: formGroup.get('balanceInput')?.value as number,
-      color: formGroup.get('colorSelect')?.value as string,
+      color: color,
       currency: Currency.Pln,
       description: formGroup.get('descriptionInput')?.value as string,
       name: formGroup.get('nameInput')?.value as string,
@@ -85,12 +87,13 @@ export class AccountService {
   private getAccountInput(
     formGroup: FormGroup,
     archivedToggle: MatSlideToggle,
+    color: string
   ): AccountInput {
     return {
       accountType: formGroup.get('accountTypeSelect')?.value as AccountType,
       archived: archivedToggle.checked,
       balance: formGroup.get('balanceInput')?.value as number,
-      color: formGroup.get('colorSelect')?.value as string,
+      color: color,
       currency: Currency.Pln,
       description: formGroup.get('descriptionInput')?.value as string,
       name: formGroup.get('nameInput')?.value as string,
