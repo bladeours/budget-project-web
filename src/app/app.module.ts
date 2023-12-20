@@ -37,6 +37,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -66,6 +67,8 @@ import { CalendarHeaderComponent } from './shared/components/calendar/calendar-h
 import { CalendarRangePanelComponent } from './shared/components/calendar/calendar-range-panel/calendar-range-panel.component';
 import { MyPaginatorComponent } from './shared/components/my-paginator/my-paginator.component';
 import { ColorPickerComponent } from './shared/components/color-picker/color-picker.component';
+import { BudgetComponent } from './features/budget/components/budget/budget.component';
+import { CalendarYearMonthComponent } from './shared/components/calendar-year-month/calendar-year-month.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -97,6 +100,8 @@ import { ColorPickerComponent } from './shared/components/color-picker/color-pic
     CalendarRangePanelComponent,
     MyPaginatorComponent,
     ColorPickerComponent,
+    BudgetComponent,
+    CalendarYearMonthComponent,
   ],
   imports: [
     MatTableModule,
@@ -132,6 +137,7 @@ import { ColorPickerComponent } from './shared/components/color-picker/color-pic
     MatSlideToggleModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatProgressBarModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),

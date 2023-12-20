@@ -424,7 +424,7 @@ export type GetAccountsQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountsQuery = { __typename?: 'Query', getAccounts?: Array<{ __typename?: 'Account', hash: string, name: string, archived: boolean, balance: number } | null> | null };
+export type GetAccountsQuery = { __typename?: 'Query', getAccounts?: Array<{ __typename?: 'Account', hash: string, name: string, archived: boolean, balance: number, color: string } | null> | null };
 
 export type GetCategoriesIncomeHashNameQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -705,6 +705,7 @@ export const GetAccountsDocument = gql`
     name
     archived
     balance
+    color
   }
 }
     `;

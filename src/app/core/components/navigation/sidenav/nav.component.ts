@@ -20,6 +20,7 @@ import { CategoryComponent } from '../../../../features/category/components/cate
 import { AccountDialogComponent } from '../../../../features/account/dialog/account-dialog/account-dialog.component';
 import { CategoryDialogComponent } from '../../../../features/category/dialog/category-dialog/category-dialog.component';
 import { StatisticsComponent } from '../../../../features/statistics/pages/statistics.component';
+import { BudgetComponent } from 'src/app/features/budget/components/budget/budget.component';
 
 @Component({
   selector: 'app-nav',
@@ -126,6 +127,8 @@ export class NavbarComponent {
           this.accountsRegularArchived = (
             v.data.getAccounts as Account[]
           ).filter((a) => a.archived);
+          console.log((v.data.getAccounts as Account[]).at(1))
+          console.log(":essas")
           this.accountsRegular.forEach((a) => (this.balance += a.balance));
         },
       });
@@ -190,5 +193,13 @@ export class NavbarComponent {
     }
     this.selectedPortal = new ComponentPortal(StatisticsComponent);
     this.router.navigate(['statistics']);
+  }
+
+  goToBudget() {
+    if (this.isSmall) {
+      this.sidenav.close();
+    }
+    this.selectedPortal = new ComponentPortal(BudgetComponent);
+    this.router.navigate(['budget']);
   }
 }

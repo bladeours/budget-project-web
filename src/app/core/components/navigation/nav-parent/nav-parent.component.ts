@@ -8,6 +8,7 @@ import { TransactionsComponent } from '../../../../features/transactions/compone
 import { AccountComponent } from '../../../../features/account/components/account/account.component';
 import { CategoryComponent } from '../../../../features/category/components/category/category.component';
 import { StatisticsComponent } from '../../../../features/statistics/pages/statistics.component';
+import { BudgetComponent } from 'src/app/features/budget/components/budget/budget.component';
 
 @Component({
   selector: 'app-nav-parent',
@@ -40,6 +41,9 @@ export class NavParentComponent {
         break;
       case '/statistics':
         this.selectedPortal = new ComponentPortal(StatisticsComponent);
+        break;
+      case '/budget':
+        this.selectedPortal = new ComponentPortal(BudgetComponent);
         break;
     }
   }

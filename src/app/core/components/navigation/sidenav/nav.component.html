@@ -13,7 +13,7 @@
       <mat-icon>home</mat-icon>
       <span>Dashboard</span>
     </button>
-    <button class="menu-button" mat-button>
+    <button class="menu-button" (click)="goToBudget()" mat-button>
       <mat-icon>score</mat-icon>
       <span>Budget</span>
     </button>
@@ -47,7 +47,7 @@
       </mat-expansion-panel-header>
       <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsRegular" class="menu-button"
               mat-button>
-        <mat-icon>account_balance</mat-icon>
+        <mat-icon [ngStyle]="{'color': account.color}">account_balance</mat-icon>
         <span class="name">{{ account.name }}</span>
         <span class="balance">{{ account.balance.toFixed(2) }}</span>
       </button>
@@ -61,7 +61,7 @@
         </mat-expansion-panel-header>
         <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsRegularArchived" class="menu-button archivedColor"
                 mat-button>
-          <mat-icon>account_balance</mat-icon>
+          <mat-icon [ngStyle]="{'color': account.color}">account_balance</mat-icon>
           <span class="name">{{ account.name }}</span>
           <span class="balance">{{ account.balance.toFixed(2) }}</span>
         </button>
@@ -77,7 +77,7 @@
       <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsSavings" class="menu-button"
               mat-button>
         <div class="icon-name">
-          <mat-icon>savings</mat-icon>
+          <mat-icon [ngStyle]="{'color': account.color}">savings</mat-icon>
           <span class="name">{{ account.name }}</span>
         </div>
         <span class="balance">{{ account.balance.toFixed(2) }}</span>
@@ -92,7 +92,7 @@
         </mat-expansion-panel-header>
         <button (click)="goToAccount(account.hash)" *ngFor="let account of accountsSavingsArchived" class="menu-button archivedColor"
                 mat-button>
-          <mat-icon>account_balance</mat-icon>
+          <mat-icon [ngStyle]="{'color': account.color}">account_balance</mat-icon>
           <span class="name">{{ account.name }}</span>
           <span class="balance">{{ account.balance.toFixed(2) }}</span>
         </button>

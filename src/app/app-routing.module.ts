@@ -28,6 +28,10 @@ const routes: Routes = [
         path: 'statistics',
         component: NavParentComponent,
       },
+      {
+        path: 'budget',
+        component: NavParentComponent,
+      },
     ],
   },
   { path: 'logout', component: LogoutComponent, canActivate: [authGuard] },

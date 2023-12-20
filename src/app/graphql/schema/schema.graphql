@@ -95,6 +95,7 @@ query getAccounts($filter: Filter){
     name
     archived
     balance
+    color
   }
 }
 
