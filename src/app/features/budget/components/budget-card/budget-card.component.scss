@@ -1,0 +1,60 @@
+@use '../../../../../../node_modules/@angular/material/index' as mat;
+
+.categoryCard {
+  border-radius: 10px;
+  margin-top: 10px;
+  //background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    @include mat.elevation(6);
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-mdc-card-header-text {
+  display: none;
+}
+
+.leftHeader {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+}
+
+.categoryName {
+  font-size: large;
+  font-weight: 570;
+}
+
+.budgeted {
+  font-size: medium;
+
+}
+
+.percent {
+  font-size: large;
+  width: 20%;
+  text-align: center;
+}
+
+.leftAmount {
+  width: 40%;
+  font-size: medium;
+  text-align: right;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 10px;
+
+}
+
+::ng-deep .mat-mdc-card-actions {
+  margin-top: -10px;
+  padding-top: 0;
+  padding-bottom: 0;
+}

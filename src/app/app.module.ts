@@ -37,7 +37,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -69,6 +69,8 @@ import { MyPaginatorComponent } from './shared/components/my-paginator/my-pagina
 import { ColorPickerComponent } from './shared/components/color-picker/color-picker.component';
 import { BudgetComponent } from './features/budget/components/budget/budget.component';
 import { CalendarYearMonthComponent } from './shared/components/calendar-year-month/calendar-year-month.component';
+import { BudgetCardComponent } from './features/budget/components/budget-card/budget-card.component';
+import { BudgetDialogComponent } from './features/budget/dialog/budget-dialog/budget-dialog.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -102,6 +104,8 @@ import { CalendarYearMonthComponent } from './shared/components/calendar-year-mo
     ColorPickerComponent,
     BudgetComponent,
     CalendarYearMonthComponent,
+    BudgetCardComponent,
+    BudgetDialogComponent,
   ],
   imports: [
     MatTableModule,

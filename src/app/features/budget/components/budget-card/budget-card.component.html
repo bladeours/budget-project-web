@@ -1,0 +1,46 @@
+<mat-card class="categoryCard">
+  <mat-card-header class="header">
+    <div class="leftHeader">
+      <div class="categoryName" [ngStyle]="{color: budget.budget?.category?.color}">{{ budget.budget?.category?.name }}</div>
+      <div class="budgeted">{{ budget.budget?.plannedBudget }}zł</div>
+    </div>
+    <div class="percent">{{ budget.percent?.toFixed() }}%</div>
+    <div class="leftAmount">
+      <div>
+        Left: {{ budget.left?.toFixed(2) }}zł
+      </div>
+      <div>
+        <button mat-icon-button (click)="editBudget(budget.budget?.hash)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteBudget(budget.budget?.hash)">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-actions>
+    <mat-progress-bar mode="determinate" [value]="budget.percent?.toFixed(0)"></mat-progress-bar>
+  </mat-card-actions>
+  <mat-expansion-panel #subCategoryPanel>
+    <mat-card class="categoryCard" (click)="toggle()">
+      <mat-card-header class="header">
+        <div class="leftHeader">
+          <div class="categoryName">Restaurant</div>
+          <div class="budgeted">100.00zł</div>
+        </div>
+        <div class="percent">50%</div>
+        <div class="leftAmount">
+          Left: 32.23zł
+        </div>
+      </mat-card-header>
+      <mat-card-actions>
+        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+      </mat-card-actions>
+    </mat-card>
+  </mat-expansion-panel>
+</mat-card>
+
+
+

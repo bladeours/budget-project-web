@@ -3,17 +3,21 @@ import { Observable } from 'rxjs';
 import {
   AccountInput,
   AddAccountGQL,
+  AddBudgetGQL,
   AddCategoryGQL,
   AddTransactionGQL,
+  BudgetInput,
   CategoryInput,
   CategoryUpdateInput,
   DeleteAccountGQL,
+  DeleteBudgetGQL,
   DeleteCategoryGQL,
   DeleteTransactionGQL,
   Filter,
   GetAccountGQL,
   GetAccountsGQL,
   GetAmountByCategoryGQL,
+  GetBudgetsGQL,
   GetCategoriesExpenseHashNameGQL,
   GetCategoriesHashNameGQL,
   GetCategoriesIncomeHashNameGQL,
@@ -22,6 +26,7 @@ import {
   Page,
   TransactionInput,
   UpdateAccountGQL,
+  UpdateBudgetGQL,
   UpdateCategoryGQL,
   UpdateTransactionGQL,
 } from '../__generated__';
@@ -48,6 +53,10 @@ export class GraphqlService {
     private deleteCategoryGQL: DeleteCategoryGQL,
     private updateCategoryGQL: UpdateCategoryGQL,
     private getAmountByCategoryGQL: GetAmountByCategoryGQL,
+    private getBudgetsGQL: GetBudgetsGQL,
+    private addBudgetGQL: AddBudgetGQL,
+    private updateBudgetGQL: UpdateBudgetGQL,
+    private deleteBudgetGQL: DeleteBudgetGQL,
   ) {}
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
@@ -119,5 +128,21 @@ export class GraphqlService {
 
   getAmountByCategory(startDate: string, endDate: string, income: boolean) {
     return this.getAmountByCategoryGQL.fetch({ startDate, endDate, income });
+  }
+
+  getBudgets(date: string) {
+    return this.getBudgetsGQL.fetch({ date });
+  }
+
+  updateBudget(plannedBudget: number, hash: string) {
+    return this.updateBudgetGQL.mutate({ plannedBudget, hash });
+  }
+
+  deleteBudget(hash: string) {
+    return this.deleteBudgetGQL.mutate({ hash });
+  }
+
+  addBudget(budgetInput: BudgetInput) {
+    return this.addBudgetGQL.mutate({ budgetInput });
   }
 }

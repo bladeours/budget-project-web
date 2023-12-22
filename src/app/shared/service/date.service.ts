@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
-import { day } from '../../environments/environment';
+import { firstDayOfTheMonth } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +39,9 @@ export class DateService {
     const year = this.dateAdapter.getYear(forDay);
     const month = this.dateAdapter.getMonth(forDay);
     let date = this.dateAdapter.createDate(year, month, 1);
-    return this.dateAdapter.addCalendarDays(date, end ? day - 2 : day - 1);
+    return this.dateAdapter.addCalendarDays(
+      date,
+      end ? firstDayOfTheMonth - 2 : firstDayOfTheMonth - 1,
+    );
   }
 }

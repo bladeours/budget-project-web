@@ -127,8 +127,7 @@ export class NavbarComponent {
           this.accountsRegularArchived = (
             v.data.getAccounts as Account[]
           ).filter((a) => a.archived);
-          console.log((v.data.getAccounts as Account[]).at(1))
-          console.log(":essas")
+          console.log((v.data.getAccounts as Account[]).at(1));
           this.accountsRegular.forEach((a) => (this.balance += a.balance));
         },
       });

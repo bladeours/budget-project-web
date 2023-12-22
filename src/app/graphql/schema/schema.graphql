@@ -213,3 +213,36 @@ query getAmountByCategory($startDate: String!, $endDate: String!, $income: Boole
     color
   }
 }
+
+query getBudgets($date: String!){
+  getBudgets(date: $date){
+    percent
+    left
+    budget {
+      plannedBudget
+      hash
+      category {
+        color
+        name
+        hash
+      }
+
+    }
+  }
+}
+
+mutation addBudget($budgetInput: BudgetInput!){
+  addBudget(budgetInput: $budgetInput){
+    hash
+  }
+}
+
+mutation updateBudget($plannedBudget: Float!, $hash: String!){
+  updateBudget(plannedBudget: $plannedBudget, hash: $hash){
+    hash
+  }
+}
+
+mutation deleteBudget($hash: String!){
+  deleteBudget(hash: $hash)
+}

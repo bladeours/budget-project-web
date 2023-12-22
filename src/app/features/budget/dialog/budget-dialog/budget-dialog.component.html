@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Edit Budget</h1>
+<div mat-dialog-content>
+  <p [ngStyle]="{color: budget.budget?.category?.color}" >{{ budget.budget?.category?.name }}</p>
+  <mat-form-field class="balance">
+    <mat-label>Planned Budget</mat-label>
+    <input [formControl]="plannedBudgetInput" [options]="{ prefix: 'zł '}" currencyMask matInput placeholder="0.00"
+           value="">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="buttons">
+  <button mat-raised-button (click)="close()">Close</button>
+  <button mat-raised-button  (click)="save()">Save</button>
+</div>

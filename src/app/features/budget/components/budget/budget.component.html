@@ -1,6 +1,8 @@
 <div #wrapper class="wrapper">
-  <app-calendar-year-month></app-calendar-year-month>
-
-  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-
+  <div class="calendarWrapper">
+    <app-calendar-year-month (changeDateEvent)="setDate($event)"></app-calendar-year-month>
+  </div>
+  <div class="budgets">
+    <app-budget-card *ngFor="let budget of budgets" [budget]="budget" [date]="date"></app-budget-card>
+  </div>
 </div>
