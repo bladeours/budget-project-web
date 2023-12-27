@@ -1,8 +1,8 @@
-<mat-card class="categoryCard">
+<mat-card class="categoryCard" (click)="toggle()">
   <mat-card-header class="header">
     <div class="leftHeader">
       <div class="categoryName" [ngStyle]="{color: budget.budget?.category?.color}">{{ budget.budget?.category?.name }}</div>
-      <div class="budgeted">{{ budget.budget?.plannedBudget }}zł</div>
+      <div class="budgeted">{{ budget.budget?.plannedBudget?.toFixed(2) }}zł</div>
     </div>
     <div class="percent">{{ budget.percent?.toFixed() }}%</div>
     <div class="leftAmount">
@@ -10,13 +10,12 @@
         Left: {{ budget.left?.toFixed(2) }}zł
       </div>
       <div>
-        <button mat-icon-button (click)="editBudget(budget.budget?.hash)">
+        <button mat-icon-button (click)="editBudget()">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button (click)="deleteBudget(budget.budget?.hash)">
           <mat-icon>delete</mat-icon>
         </button>
-
       </div>
     </div>
   </mat-card-header>

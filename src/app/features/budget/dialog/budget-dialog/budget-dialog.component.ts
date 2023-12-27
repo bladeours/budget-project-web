@@ -25,6 +25,7 @@ export class BudgetDialogComponent implements OnInit {
   ngOnInit(): void {
     this.budget = this.data.budget;
     this.date = this.data.date;
+    this.plannedBudgetInput.setValue(this.data.budget.budget?.plannedBudget); 
   }
 
   close() {

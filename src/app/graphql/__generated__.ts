@@ -85,6 +85,7 @@ export type BudgetDto = {
   budget?: Maybe<Budget>;
   left?: Maybe<Scalars['Float']['output']>;
   percent?: Maybe<Scalars['Float']['output']>;
+  sum?: Maybe<Scalars['Float']['output']>;
 };
 
 export type BudgetInput = {
@@ -180,11 +181,13 @@ export type Mutation = {
   addAccount?: Maybe<Account>;
   addBudget?: Maybe<Budget>;
   addCategory?: Maybe<Category>;
+  addPlannedIncome?: Maybe<PlannedIncome>;
   addTransaction?: Maybe<Transaction>;
   authenticate?: Maybe<JwtResponse>;
   deleteAccount?: Maybe<Scalars['Boolean']['output']>;
   deleteBudget?: Maybe<Scalars['Boolean']['output']>;
   deleteCategory?: Maybe<Scalars['Boolean']['output']>;
+  deletePlannedIncome?: Maybe<Scalars['Boolean']['output']>;
   deleteTransaction?: Maybe<Scalars['Boolean']['output']>;
   logout?: Maybe<Scalars['Boolean']['output']>;
   refreshToken?: Maybe<JwtResponse>;
@@ -192,6 +195,7 @@ export type Mutation = {
   updateAccount?: Maybe<Account>;
   updateBudget?: Maybe<Budget>;
   updateCategory?: Maybe<Category>;
+  updatePlannedIncome?: Maybe<PlannedIncome>;
   updateTransaction?: Maybe<Transaction>;
 };
 
@@ -208,6 +212,11 @@ export type MutationAddBudgetArgs = {
 
 export type MutationAddCategoryArgs = {
   categoryInput: CategoryInput;
+};
+
+
+export type MutationAddPlannedIncomeArgs = {
+  plannedIncomeInput: PlannedIncomeInput;
 };
 
 
@@ -233,6 +242,11 @@ export type MutationDeleteBudgetArgs = {
 
 
 export type MutationDeleteCategoryArgs = {
+  hash: Scalars['String']['input'];
+};
+
+
+export type MutationDeletePlannedIncomeArgs = {
   hash: Scalars['String']['input'];
 };
 
@@ -265,6 +279,12 @@ export type MutationUpdateCategoryArgs = {
 };
 
 
+export type MutationUpdatePlannedIncomeArgs = {
+  amount: Scalars['Float']['input'];
+  hash: Scalars['String']['input'];
+};
+
+
 export type MutationUpdateTransactionArgs = {
   hash: Scalars['String']['input'];
   transactionInput: TransactionInput;
@@ -283,6 +303,25 @@ export type Page = {
   size: Scalars['Int']['input'];
 };
 
+export type PlannedIncome = {
+  __typename?: 'PlannedIncome';
+  amount: Scalars['Float']['output'];
+  date: Scalars['String']['output'];
+  hash?: Maybe<Scalars['String']['output']>;
+};
+
+export type PlannedIncomeDto = {
+  __typename?: 'PlannedIncomeDto';
+  left: Scalars['Float']['output'];
+  percent: Scalars['Float']['output'];
+  plannedIncome: PlannedIncome;
+};
+
+export type PlannedIncomeInput = {
+  amount: Scalars['Float']['input'];
+  date: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAccount?: Maybe<Account>;
@@ -293,6 +332,7 @@ export type Query = {
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getCategoriesPage?: Maybe<CategoriesPage>;
   getCategory?: Maybe<Category>;
+  getPlannedIncome?: Maybe<PlannedIncomeDto>;
   getTransaction?: Maybe<Transaction>;
   getTransactionsPage?: Maybe<TransactionsPage>;
 };
@@ -339,6 +379,11 @@ export type QueryGetCategoriesPageArgs = {
 
 export type QueryGetCategoryArgs = {
   hash: Scalars['String']['input'];
+};
+
+
+export type QueryGetPlannedIncomeArgs = {
+  date?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -599,6 +644,35 @@ export type DeleteBudgetMutationVariables = Exact<{
 
 
 export type DeleteBudgetMutation = { __typename?: 'Mutation', deleteBudget?: boolean | null };
+
+export type GetPlannedIncomeQueryVariables = Exact<{
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetPlannedIncomeQuery = { __typename?: 'Query', getPlannedIncome?: { __typename?: 'PlannedIncomeDto', left: number, percent: number, plannedIncome: { __typename?: 'PlannedIncome', hash?: string | null, date: string, amount: number } } | null };
+
+export type AddPlannedIncomeMutationVariables = Exact<{
+  plannedIncomeInput: PlannedIncomeInput;
+}>;
+
+
+export type AddPlannedIncomeMutation = { __typename?: 'Mutation', addPlannedIncome?: { __typename?: 'PlannedIncome', hash?: string | null } | null };
+
+export type UpdatePlannedIncomeMutationVariables = Exact<{
+  hash: Scalars['String']['input'];
+  amount: Scalars['Float']['input'];
+}>;
+
+
+export type UpdatePlannedIncomeMutation = { __typename?: 'Mutation', updatePlannedIncome?: { __typename?: 'PlannedIncome', hash?: string | null } | null };
+
+export type DeletePlannedIncomeMutationVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+
+export type DeletePlannedIncomeMutation = { __typename?: 'Mutation', deletePlannedIncome?: boolean | null };
 
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
@@ -1156,6 +1230,82 @@ export const DeleteBudgetDocument = gql`
   })
   export class DeleteBudgetGQL extends Apollo.Mutation<DeleteBudgetMutation, DeleteBudgetMutationVariables> {
     override document = DeleteBudgetDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPlannedIncomeDocument = gql`
+    query getPlannedIncome($date: String!) {
+  getPlannedIncome(date: $date) {
+    left
+    percent
+    plannedIncome {
+      hash
+      date
+      amount
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPlannedIncomeGQL extends Apollo.Query<GetPlannedIncomeQuery, GetPlannedIncomeQueryVariables> {
+    override document = GetPlannedIncomeDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddPlannedIncomeDocument = gql`
+    mutation addPlannedIncome($plannedIncomeInput: PlannedIncomeInput!) {
+  addPlannedIncome(plannedIncomeInput: $plannedIncomeInput) {
+    hash
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddPlannedIncomeGQL extends Apollo.Mutation<AddPlannedIncomeMutation, AddPlannedIncomeMutationVariables> {
+    override document = AddPlannedIncomeDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdatePlannedIncomeDocument = gql`
+    mutation updatePlannedIncome($hash: String!, $amount: Float!) {
+  updatePlannedIncome(hash: $hash, amount: $amount) {
+    hash
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdatePlannedIncomeGQL extends Apollo.Mutation<UpdatePlannedIncomeMutation, UpdatePlannedIncomeMutationVariables> {
+    override document = UpdatePlannedIncomeDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeletePlannedIncomeDocument = gql`
+    mutation deletePlannedIncome($hash: String!) {
+  deletePlannedIncome(hash: $hash)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeletePlannedIncomeGQL extends Apollo.Mutation<DeletePlannedIncomeMutation, DeletePlannedIncomeMutationVariables> {
+    override document = DeletePlannedIncomeDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

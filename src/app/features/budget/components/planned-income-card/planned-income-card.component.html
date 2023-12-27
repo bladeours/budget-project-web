@@ -1,0 +1,29 @@
+<mat-card class="categoryCard">
+  <mat-card-header class="header">
+    <div class="leftHeader">
+      <div class="categoryName" > Planned Income </div>
+      <div class="budgeted">{{ plannedIncome.plannedIncome.amount.toFixed(2) }}zł</div>
+    </div>
+    <div class="percent">{{ plannedIncome.percent.toFixed()}}%</div>
+    <div class="leftAmount">
+      <div>
+        Left: {{ plannedIncome.left.toFixed(2) }}zł
+      </div>
+      <div>
+        <button mat-icon-button (click)="editPlannedIncome()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deletePlannedIncome()">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+      </div>
+    </div>
+  </mat-card-header>
+  <mat-card-actions>
+    <mat-progress-bar mode="determinate" [value]="plannedIncome.percent.toFixed(0)"></mat-progress-bar>
+  </mat-card-actions>
+</mat-card>
+
+
+

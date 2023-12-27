@@ -1,6 +1,12 @@
+import {
+  PlannedIncome,
+  PlannedIncomeDto,
+} from './../../../../graphql/__generated__';
 import { Component, OnInit } from '@angular/core';
 import { GraphqlService } from '../../../../graphql/service/graphql.service';
 import { BudgetDto } from '../../../../graphql/__generated__';
+import { Utils } from 'src/app/shared/utils/Utils';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-budget',
@@ -9,20 +15,26 @@ import { BudgetDto } from '../../../../graphql/__generated__';
 })
 export class BudgetComponent implements OnInit {
   budgets: BudgetDto[] = [];
+  plannedIncome: PlannedIncomeDto;
   date: Date;
   constructor(private graphqlService: GraphqlService) {}
 
   ngOnInit(): void {
-    this.setBudgets();
+    this.setData();
   }
 
-  private setBudgets() {
-    this.graphqlService
-      .getBudgets('2023-12-09T15:52:18.526275423+01:00')
-      .subscribe((v) => (this.budgets = v.data.getBudgets as BudgetDto[]));
+  private setData() {
+    forkJoin({
+      budgets: this.graphqlService.getBudgets(Utils.getFullDateString(this.date)),
+      plannedIncome: this.graphqlService.getPlannedIncome(Utils.getFullDateString(this.date))
+    }).subscribe(v => {
+      this.plannedIncome = v.plannedIncome.data.getPlannedIncome as PlannedIncomeDto,
+      this.budgets = v.budgets.data.getBudgets as BudgetDto[]
+    });
   }
 
   setDate($event: Date) {
     this.date = $event;
+    this.setData();
   }
 }

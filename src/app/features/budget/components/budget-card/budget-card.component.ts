@@ -1,10 +1,10 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { BudgetDto, Maybe, Scalars } from '../../../../graphql/__generated__';
-import { BudgetService } from '../../service/budget.service';
-import { MatDialog } from '@angular/material/dialog';
-import { BudgetDialogComponent } from '../../dialog/budget-dialog/budget-dialog.component';
 import { MatSnackBarService } from '../../../../shared/service/mat-snack-bar.service';
+import { BudgetDialogComponent } from '../../dialog/budget-dialog/budget-dialog.component';
+import { BudgetService } from '../../service/budget.service';
 
 @Component({
   selector: 'app-budget-card',
@@ -18,23 +18,30 @@ export class BudgetCardComponent {
   budget: BudgetDto;
   @Input()
   date: Date;
+  toggleLock: Boolean = false;
   constructor(
     private budgetService: BudgetService,
     private dialog: MatDialog,
     private snackBar: MatSnackBarService,
   ) {}
+
+
   toggle() {
-    this.subCategoryPanel.toggle();
+    // if(!this.toggleLock){
+    //   this.subCategoryPanel.toggle();
+    // }
   }
 
-  editBudget(hash: Maybe<Scalars['String']['output']> | undefined) {
-    console.log(this.date);
+  editBudget() {
+    console.log("edit")
+    this.toggleLock = true;
     this.dialog.open(BudgetDialogComponent, {
       data: { budget: this.budget, date: this.date },
-    });
+    }).afterClosed().subscribe(() => this.toggleLock = false);
   }
 
   deleteBudget(hash: Maybe<Scalars['String']['output']> | undefined) {
+    this.toggleLock = true;
     this.budgetService.deleteBudget(hash as string).subscribe(() =>
       this.snackBar
         .open('budget deleted properly')

@@ -8,9 +8,48 @@
   flex-direction: column;
   display: block;
 }
-.calendarWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+
+.budgets {
+  max-height: 90%;
+  overflow-y: auto;
 }
 
+.headerWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center ;
+}
+
+.calendar {
+  order: 1;
+}
+
+
+mat-divider {
+  margin-top: 10px;
+}
+
+
+@import '/src/styles';
+
+@media (max-width: $layout-small-width) {
+  .headerWrapper {
+    flex-wrap: wrap;
+  }
+
+  .calendar {
+    order: 0;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .incomeCard {
+    order: 1;
+  }
+  
+  .plannedCard {
+    order: 2;
+  }
+  
+}

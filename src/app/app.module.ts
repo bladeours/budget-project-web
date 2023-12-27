@@ -71,6 +71,8 @@ import { BudgetComponent } from './features/budget/components/budget/budget.comp
 import { CalendarYearMonthComponent } from './shared/components/calendar-year-month/calendar-year-month.component';
 import { BudgetCardComponent } from './features/budget/components/budget-card/budget-card.component';
 import { BudgetDialogComponent } from './features/budget/dialog/budget-dialog/budget-dialog.component';
+import { PlannedIncomeCardComponent } from './features/budget/components/planned-income-card/planned-income-card.component';
+import { PlannedIncomeDialogComponent } from './features/budget/dialog/planned-income-dialog/planned-income-dialog.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -106,6 +108,8 @@ import { BudgetDialogComponent } from './features/budget/dialog/budget-dialog/bu
     CalendarYearMonthComponent,
     BudgetCardComponent,
     BudgetDialogComponent,
+    PlannedIncomeCardComponent,
+    PlannedIncomeDialogComponent,
   ],
   imports: [
     MatTableModule,

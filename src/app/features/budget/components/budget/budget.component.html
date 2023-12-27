@@ -1,8 +1,10 @@
 <div #wrapper class="wrapper">
-  <div class="calendarWrapper">
-    <app-calendar-year-month (changeDateEvent)="setDate($event)"></app-calendar-year-month>
+  <div class="headerWrapper">
+    <app-calendar-year-month class="calendar" (changeDateEvent)="setDate($event)"></app-calendar-year-month>
   </div>
   <div class="budgets">
+    <app-planned-income-card [plannedIncome]="plannedIncome" [date]="date" *ngIf="plannedIncome"></app-planned-income-card>
+    <mat-divider></mat-divider>
     <app-budget-card *ngFor="let budget of budgets" [budget]="budget" [date]="date"></app-budget-card>
   </div>
 </div>
