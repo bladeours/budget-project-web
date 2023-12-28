@@ -274,3 +274,10 @@ mutation updatePlannedIncome($hash: String!, $amount: Float!) {
 mutation deletePlannedIncome($hash: String!) {
   deletePlannedIncome(hash: $hash)
 }
+
+query getIncomeExpense($date: String!) {
+  getIncomeExpense(date: $date){
+    income
+    expense
+  }
+}

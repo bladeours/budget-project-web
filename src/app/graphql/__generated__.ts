@@ -166,6 +166,12 @@ export type Filter = {
   subFilters?: InputMaybe<Array<InputMaybe<Filter>>>;
 };
 
+export type IncomeExpense = {
+  __typename?: 'IncomeExpense';
+  expense: Scalars['Float']['output'];
+  income: Scalars['Float']['output'];
+};
+
 export type JwtResponse = {
   __typename?: 'JwtResponse';
   jwt: Scalars['String']['output'];
@@ -332,6 +338,7 @@ export type Query = {
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getCategoriesPage?: Maybe<CategoriesPage>;
   getCategory?: Maybe<Category>;
+  getIncomeExpense?: Maybe<IncomeExpense>;
   getPlannedIncome?: Maybe<PlannedIncomeDto>;
   getTransaction?: Maybe<Transaction>;
   getTransactionsPage?: Maybe<TransactionsPage>;
@@ -362,7 +369,7 @@ export type QueryGetAmountByCategoryArgs = {
 
 
 export type QueryGetBudgetsArgs = {
-  date?: InputMaybe<Scalars['String']['input']>;
+  date: Scalars['String']['input'];
 };
 
 
@@ -382,8 +389,13 @@ export type QueryGetCategoryArgs = {
 };
 
 
+export type QueryGetIncomeExpenseArgs = {
+  date: Scalars['String']['input'];
+};
+
+
 export type QueryGetPlannedIncomeArgs = {
-  date?: InputMaybe<Scalars['String']['input']>;
+  date: Scalars['String']['input'];
 };
 
 
@@ -673,6 +685,13 @@ export type DeletePlannedIncomeMutationVariables = Exact<{
 
 
 export type DeletePlannedIncomeMutation = { __typename?: 'Mutation', deletePlannedIncome?: boolean | null };
+
+export type GetIncomeExpenseQueryVariables = Exact<{
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetIncomeExpenseQuery = { __typename?: 'Query', getIncomeExpense?: { __typename?: 'IncomeExpense', income: number, expense: number } | null };
 
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
@@ -1306,6 +1325,25 @@ export const DeletePlannedIncomeDocument = gql`
   })
   export class DeletePlannedIncomeGQL extends Apollo.Mutation<DeletePlannedIncomeMutation, DeletePlannedIncomeMutationVariables> {
     override document = DeletePlannedIncomeDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetIncomeExpenseDocument = gql`
+    query getIncomeExpense($date: String!) {
+  getIncomeExpense(date: $date) {
+    income
+    expense
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetIncomeExpenseGQL extends Apollo.Query<GetIncomeExpenseQuery, GetIncomeExpenseQueryVariables> {
+    override document = GetIncomeExpenseDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

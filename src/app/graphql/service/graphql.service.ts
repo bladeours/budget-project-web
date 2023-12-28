@@ -1,4 +1,10 @@
-import { GetPlannedIncomeGQL, AddPlannedIncomeGQL, PlannedIncomeInput, DeletePlannedIncomeGQL } from './../__generated__';
+import {
+  GetPlannedIncomeGQL,
+  AddPlannedIncomeGQL,
+  PlannedIncomeInput,
+  DeletePlannedIncomeGQL,
+  GetIncomeExpenseGQL,
+} from './../__generated__';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -62,7 +68,8 @@ export class GraphqlService {
     private addPlannedIncomeGQL: AddPlannedIncomeGQL,
     private deletePlannedIncomeGQL: DeletePlannedIncomeGQL,
     private updatePlannedIncomeGQL: UpdatePlannedIncomeGQL,
-    private getPlannedIncomeGQL: GetPlannedIncomeGQL
+    private getPlannedIncomeGQL: GetPlannedIncomeGQL,
+    private getIncomeExpenseGQL: GetIncomeExpenseGQL,
   ) {}
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
@@ -153,19 +160,22 @@ export class GraphqlService {
   }
 
   getPlannedIncome(date: string) {
-    return this.getPlannedIncomeGQL.fetch({date});
+    return this.getPlannedIncomeGQL.fetch({ date });
   }
 
   addPlannedIncome(plannedIncomeInput: PlannedIncomeInput) {
-    return this.addPlannedIncomeGQL.mutate({plannedIncomeInput});
+    return this.addPlannedIncomeGQL.mutate({ plannedIncomeInput });
   }
- 
+
   updatePlannedIncome(hash: string, amount: number) {
-    return this.updatePlannedIncomeGQL.mutate({hash, amount});
+    return this.updatePlannedIncomeGQL.mutate({ hash, amount });
   }
 
   deletePlannedIncome(hash: string) {
-    return this.deletePlannedIncomeGQL.mutate({hash});
+    return this.deletePlannedIncomeGQL.mutate({ hash });
+  }
+
+  getIncomeExpense(date: string) {
+    return this.getIncomeExpenseGQL.fetch({ date });
   }
 }
-
