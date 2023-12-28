@@ -74,6 +74,9 @@ import { BudgetDialogComponent } from './features/budget/dialog/budget-dialog/bu
 import { PlannedIncomeCardComponent } from './features/budget/components/planned-income-card/planned-income-card.component';
 import { PlannedIncomeDialogComponent } from './features/budget/dialog/planned-income-dialog/planned-income-dialog.component';
 import { IncomeExpenseCardComponent } from './features/dashboard/pages/dashboard/cards/income-expense-card/income-expense-card.component';
+import { TransactionPerDayOfTheWeekCard } from './features/dashboard/pages/dashboard/cards/transaction-per-day-of-the-week-card/transaction-per-day-of-the-week.component';
+import { TopAccountsCardComponent } from './features/dashboard/pages/dashboard/cards/top-accounts-card/top-accounts-card.component';
+import { ExpensesPerMonthCardComponent } from './features/dashboard/pages/dashboard/cards/expenses-per-month-card/expenses-per-month-card.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -112,6 +115,9 @@ import { IncomeExpenseCardComponent } from './features/dashboard/pages/dashboard
     PlannedIncomeCardComponent,
     PlannedIncomeDialogComponent,
     IncomeExpenseCardComponent,
+    TransactionPerDayOfTheWeekCard,
+    TopAccountsCardComponent,
+    ExpensesPerMonthCardComponent,
   ],
   imports: [
     MatTableModule,

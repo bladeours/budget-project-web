@@ -281,3 +281,18 @@ query getIncomeExpense($date: String!) {
     expense
   }
 }
+
+query getExpensesPerDayOfTheWeek($date: String!) {
+  getExpensesPerDayOfTheWeek(date: $date)
+}
+
+query getTopAccounts {
+  getTopAccounts {
+    name
+    balance
+  }
+}
+
+query getExpensesPerMonth($date: String!){
+  getExpensesPerMonth(date: $date)
+}

@@ -4,6 +4,9 @@ import {
   PlannedIncomeInput,
   DeletePlannedIncomeGQL,
   GetIncomeExpenseGQL,
+  GetExpensesPerDayOfTheWeekGQL,
+  GetTopAccountsGQL,
+  GetExpensesPerMonthGQL,
 } from './../__generated__';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -70,6 +73,9 @@ export class GraphqlService {
     private updatePlannedIncomeGQL: UpdatePlannedIncomeGQL,
     private getPlannedIncomeGQL: GetPlannedIncomeGQL,
     private getIncomeExpenseGQL: GetIncomeExpenseGQL,
+    private getExpensesPerDayOfTheWeekGQL: GetExpensesPerDayOfTheWeekGQL,
+    private getTopAccountsGQL: GetTopAccountsGQL,
+    private getExpensePerMonthGQL: GetExpensesPerMonthGQL,
   ) {}
 
   getTransactionsPage(page: Page, filter: Filter): Observable<any> {
@@ -177,5 +183,17 @@ export class GraphqlService {
 
   getIncomeExpense(date: string) {
     return this.getIncomeExpenseGQL.fetch({ date });
+  }
+
+  getExpensesPerDayOfTheWeek(date: string) {
+    return this.getExpensesPerDayOfTheWeekGQL.fetch({ date });
+  }
+
+  getTopAccounts() {
+    return this.getTopAccountsGQL.fetch();
+  }
+
+  getExpensesPerMonth(date: string) {
+    return this.getExpensePerMonthGQL.fetch({ date });
   }
 }

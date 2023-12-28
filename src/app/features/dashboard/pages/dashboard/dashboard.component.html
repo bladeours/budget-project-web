@@ -1,69 +1,23 @@
 <div class="gridWrapper">
   <mat-grid-list [cols]="gridCols" rowHeight="fit">
+    <mat-grid-tile>
+      <app-income-expense-card class="cards"></app-income-expense-card>
+    </mat-grid-tile>
+    <mat-grid-tile class="transactions">
+      <app-top-accounts-card class="cards"></app-top-accounts-card>
+    </mat-grid-tile>
     <mat-grid-tile class="transactions">
       <app-transactions-card class="cards"></app-transactions-card>
     </mat-grid-tile>
+    <mat-grid-tile class="transactions" >
+      <app-transactions-card class="cards" [income]="true"></app-transactions-card>
+    </mat-grid-tile>
+    <mat-grid-tile class="transactions">
+      <app-category-per-month-card class="cards"></app-category-per-month-card>
+    </mat-grid-tile>
 
-    <mat-grid-tile class="">
-      <!-- <mat-card class="cards"> -->
-        <app-income-expense-card class="cards"></app-income-expense-card>
-      <!-- </mat-card> -->
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="cards">
-        <!-- <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>Small</mat-card-subtitle>
-            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          esssssssssssssssssss
-        </mat-card-content> -->
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="cards">
-        <!-- <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>Small</mat-card-subtitle>
-            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          esssssssssssssssssss
-        </mat-card-content> -->
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="cards">
-        <!-- <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>Small</mat-card-subtitle>
-            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          esssssssssssssssssss
-        </mat-card-content> -->
-      </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="cards">
-        <!-- <mat-card-header>
-          <mat-card-title-group>
-            <mat-card-title>Shiba Inu</mat-card-title>
-            <mat-card-subtitle>Small</mat-card-subtitle>
-            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          esssssssssssssssssss
-        </mat-card-content> -->
-      </mat-card>
+    <mat-grid-tile class="transactions">
+      <app-expenses-per-month-card class="cards" ></app-expenses-per-month-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -31,6 +31,12 @@ export type Account = {
   subAccounts?: Maybe<Array<Maybe<Account>>>;
 };
 
+export type AccountDto = {
+  __typename?: 'AccountDto';
+  balance: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type AccountInput = {
   accountType: AccountType;
   archived: Scalars['Boolean']['input'];
@@ -164,6 +170,7 @@ export type Filter = {
   logicOperator?: InputMaybe<LogicOperator>;
   stringFilters?: InputMaybe<Array<InputMaybe<StringExpression>>>;
   subFilters?: InputMaybe<Array<InputMaybe<Filter>>>;
+  transactionTypeFilters?: InputMaybe<Array<InputMaybe<TransactionTypeExpression>>>;
 };
 
 export type IncomeExpense = {
@@ -338,8 +345,11 @@ export type Query = {
   getCategories?: Maybe<Array<Maybe<Category>>>;
   getCategoriesPage?: Maybe<CategoriesPage>;
   getCategory?: Maybe<Category>;
+  getExpensesPerDayOfTheWeek?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  getExpensesPerMonth: Array<Scalars['Float']['output']>;
   getIncomeExpense?: Maybe<IncomeExpense>;
   getPlannedIncome?: Maybe<PlannedIncomeDto>;
+  getTopAccounts: Array<AccountDto>;
   getTransaction?: Maybe<Transaction>;
   getTransactionsPage?: Maybe<TransactionsPage>;
 };
@@ -386,6 +396,16 @@ export type QueryGetCategoriesPageArgs = {
 
 export type QueryGetCategoryArgs = {
   hash: Scalars['String']['input'];
+};
+
+
+export type QueryGetExpensesPerDayOfTheWeekArgs = {
+  date: Scalars['String']['input'];
+};
+
+
+export type QueryGetExpensesPerMonthArgs = {
+  date: Scalars['String']['input'];
 };
 
 
@@ -467,6 +487,11 @@ export enum TransactionType {
   Income = 'INCOME',
   Transfer = 'TRANSFER'
 }
+
+export type TransactionTypeExpression = {
+  field: Scalars['String']['input'];
+  value: TransactionType;
+};
 
 export type TransactionsPage = {
   __typename?: 'TransactionsPage';
@@ -692,6 +717,25 @@ export type GetIncomeExpenseQueryVariables = Exact<{
 
 
 export type GetIncomeExpenseQuery = { __typename?: 'Query', getIncomeExpense?: { __typename?: 'IncomeExpense', income: number, expense: number } | null };
+
+export type GetExpensesPerDayOfTheWeekQueryVariables = Exact<{
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetExpensesPerDayOfTheWeekQuery = { __typename?: 'Query', getExpensesPerDayOfTheWeek?: Array<number | null> | null };
+
+export type GetTopAccountsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTopAccountsQuery = { __typename?: 'Query', getTopAccounts: Array<{ __typename?: 'AccountDto', name: string, balance: number }> };
+
+export type GetExpensesPerMonthQueryVariables = Exact<{
+  date: Scalars['String']['input'];
+}>;
+
+
+export type GetExpensesPerMonthQuery = { __typename?: 'Query', getExpensesPerMonth: Array<number> };
 
 export const GetAccountDocument = gql`
     query getAccount($hash: String!) {
@@ -1344,6 +1388,57 @@ export const GetIncomeExpenseDocument = gql`
   })
   export class GetIncomeExpenseGQL extends Apollo.Query<GetIncomeExpenseQuery, GetIncomeExpenseQueryVariables> {
     override document = GetIncomeExpenseDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetExpensesPerDayOfTheWeekDocument = gql`
+    query getExpensesPerDayOfTheWeek($date: String!) {
+  getExpensesPerDayOfTheWeek(date: $date)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetExpensesPerDayOfTheWeekGQL extends Apollo.Query<GetExpensesPerDayOfTheWeekQuery, GetExpensesPerDayOfTheWeekQueryVariables> {
+    override document = GetExpensesPerDayOfTheWeekDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetTopAccountsDocument = gql`
+    query getTopAccounts {
+  getTopAccounts {
+    name
+    balance
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetTopAccountsGQL extends Apollo.Query<GetTopAccountsQuery, GetTopAccountsQueryVariables> {
+    override document = GetTopAccountsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetExpensesPerMonthDocument = gql`
+    query getExpensesPerMonth($date: String!) {
+  getExpensesPerMonth(date: $date)
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetExpensesPerMonthGQL extends Apollo.Query<GetExpensesPerMonthQuery, GetExpensesPerMonthQueryVariables> {
+    override document = GetExpensesPerMonthDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

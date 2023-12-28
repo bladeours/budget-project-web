@@ -1,0 +1,10 @@
+<mat-card class="mainCard">
+  <mat-card-header>
+    <mat-card-title>
+      Expenses Per Day Of The Week
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="wrapper">
+    <div [merge]="mergeOptions" [options]="options" [theme]="'dark'" class="chart" echarts></div>
+  </mat-card-content>
+</mat-card>
