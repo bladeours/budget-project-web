@@ -73,6 +73,7 @@ import { BudgetCardComponent } from './features/budget/components/budget-card/bu
 import { BudgetDialogComponent } from './features/budget/dialog/budget-dialog/budget-dialog.component';
 import { PlannedIncomeCardComponent } from './features/budget/components/planned-income-card/planned-income-card.component';
 import { PlannedIncomeDialogComponent } from './features/budget/dialog/planned-income-dialog/planned-income-dialog.component';
+import { IncomeExpenseCardComponent } from './features/dashboard/pages/dashboard/cards/income-expense-card/income-expense-card.component';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -110,6 +111,7 @@ import { PlannedIncomeDialogComponent } from './features/budget/dialog/planned-i
     BudgetDialogComponent,
     PlannedIncomeCardComponent,
     PlannedIncomeDialogComponent,
+    IncomeExpenseCardComponent,
   ],
   imports: [
     MatTableModule,

@@ -1,0 +1,27 @@
+.incomeExpenseCard{
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+.incomeCard {
+  width: 80%;
+  margin-bottom: 40px;
+}
+
+.expenseCard {
+  width: 80%;
+}
+
+.amount {
+  text-align: center;
+  font-size: x-large;
+}
