@@ -5,6 +5,7 @@ import { AuthComponent } from './features/authorization/pages/auth/auth/auth.com
 import { authGuard } from './core/guard/authGuard';
 import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
 import { NavParentComponent } from './core/components/navigation/nav-parent/nav-parent.component';
+import { ImportComponent } from './features/import/components/import/import.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'budget',
         component: NavParentComponent,
+      },
+      {
+        path: 'import',
+        component: ImportComponent,
       },
     ],
   },

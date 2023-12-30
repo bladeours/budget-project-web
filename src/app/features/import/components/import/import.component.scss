@@ -1,0 +1,32 @@
+.file-input {
+  display: none;
+}
+
+.uploadTitle {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.inputDiv {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.spinDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons{
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-around;
+
+}

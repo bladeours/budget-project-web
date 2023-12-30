@@ -21,6 +21,7 @@ import { AccountDialogComponent } from '../../../../features/account/dialog/acco
 import { CategoryDialogComponent } from '../../../../features/category/dialog/category-dialog/category-dialog.component';
 import { StatisticsComponent } from '../../../../features/statistics/pages/statistics.component';
 import { BudgetComponent } from 'src/app/features/budget/components/budget/budget.component';
+import { ImportComponent } from '../../../../features/import/components/import/import.component';
 
 @Component({
   selector: 'app-nav',
@@ -199,5 +200,13 @@ export class NavbarComponent {
     }
     this.selectedPortal = new ComponentPortal(BudgetComponent);
     this.router.navigate(['budget']);
+  }
+
+  goToImport() {
+    if (this.isSmall) {
+      this.sidenav.close();
+    }
+    this.selectedPortal = new ComponentPortal(ImportComponent);
+    this.router.navigate(['import']);
   }
 }

@@ -77,6 +77,8 @@ import { IncomeExpenseCardComponent } from './features/dashboard/pages/dashboard
 import { TransactionPerDayOfTheWeekCard } from './features/dashboard/pages/dashboard/cards/transaction-per-day-of-the-week-card/transaction-per-day-of-the-week.component';
 import { TopAccountsCardComponent } from './features/dashboard/pages/dashboard/cards/top-accounts-card/top-accounts-card.component';
 import { ExpensesPerMonthCardComponent } from './features/dashboard/pages/dashboard/cards/expenses-per-month-card/expenses-per-month-card.component';
+import { ImportComponent } from './features/import/components/import/import.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   exports: [NavbarComponent, TransactionCardComponent, AccountFormComponent],
@@ -118,6 +120,7 @@ import { ExpensesPerMonthCardComponent } from './features/dashboard/pages/dashbo
     TransactionPerDayOfTheWeekCard,
     TopAccountsCardComponent,
     ExpensesPerMonthCardComponent,
+    ImportComponent,
   ],
   imports: [
     MatTableModule,
@@ -157,6 +160,7 @@ import { ExpensesPerMonthCardComponent } from './features/dashboard/pages/dashbo
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

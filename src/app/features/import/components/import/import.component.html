@@ -1,0 +1,21 @@
+<div class="wrapper">
+  <h2 class="uploadTitle">Upload CSV File</h2>
+  <div class="inputDiv">
+    <input type="file" class="file-input"
+           (change)="onFileSelected($event)" #fileUpload>
+    <div class="file-upload">
+      {{fileName || "No file uploaded yet."}}
+      <button mat-mini-fab color="primary" class="upload-btn"
+              (click)="fileUpload.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="buttons" *ngIf="!inprogress">
+    <button mat-raised-button #normalButton disabled (click)="normalImport()">Normal Import</button>
+    <button mat-raised-button #oneMoneyButton disabled (click)="oneMoneyImport()">OneMoney</button>
+  </div>
+  <div class="spinDiv" *ngIf="inprogress">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
