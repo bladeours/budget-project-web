@@ -15,7 +15,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { firstDayOfTheMonth } from '../../../environments/environment';
+import { firstDayOfTheMonth } from '../../../environments/environment.template';
 
 const moment = _rollupMoment || _moment;
 

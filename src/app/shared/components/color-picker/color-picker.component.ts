@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { colors } from 'src/app/environments/environment';
+import { colors } from 'src/app/environments/environment.template';
 
 @Component({
   selector: 'app-color-picker',
@@ -13,7 +13,7 @@ export class ColorPickerComponent {
   colors: string[] = colors;
   @Output()
   colorPicked = new EventEmitter<string>();
-  
+
   constructor(private dialogRef: MatDialogRef<ColorPickerComponent>){}
 
   close() {

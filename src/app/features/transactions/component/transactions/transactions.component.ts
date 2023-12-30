@@ -22,7 +22,7 @@ import {
 } from 'src/app/graphql/__generated__';
 import { GraphqlService } from 'src/app/graphql/service/graphql.service';
 import { Utils } from 'src/app/shared/utils/Utils';
-import { myGreen, myRed } from '../../../../environments/environment';
+import { myGreen, myRed } from '../../../../environments/environment.template';
 import { TransactionCard } from '../../../../shared/models/TransactionCard';
 import { TransactionCardService } from '../../service/transaction-card.service';
 import { CalendarHeaderComponent } from '../../../../shared/components/calendar/calendar-header/calendar-header.component';

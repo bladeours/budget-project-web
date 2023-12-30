@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { myGreen, myRed } from 'src/app/environments/environment';
+import { myGreen, myRed } from 'src/app/environments/environment.template';
 import { GraphqlService } from '../../../../../../graphql/service/graphql.service';
 import { Utils } from '../../../../../../shared/utils/Utils';
 

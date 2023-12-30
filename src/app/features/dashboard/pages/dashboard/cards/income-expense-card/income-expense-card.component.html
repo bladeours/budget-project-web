@@ -5,7 +5,7 @@
         <mat-card-title>Income</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p class="amount" [ngStyle]="{'color': myGreen}">{{ income }}zł</p>
+        <p class="amount" [ngStyle]="{'color': myGreen}">{{ income.toFixed(2) }}zł</p>
       </mat-card-content>
     </mat-card>
     <mat-card class="expenseCard">
@@ -13,7 +13,7 @@
         <mat-card-title>Expense</mat-card-title>
       </mat-card-header>
       <mat-card-content >
-        <p class="amount" [ngStyle]="{'color': myRed}">{{ expense }}zł</p>
+        <p class="amount" [ngStyle]="{'color': myRed}">{{ expense.toFixed(2) }}zł</p>
       </mat-card-content>
     </mat-card>
   </mat-card-content>

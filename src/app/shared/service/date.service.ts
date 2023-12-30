@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
-import { firstDayOfTheMonth } from '../../environments/environment';
+import { firstDayOfTheMonth } from '../../environments/environment.template';
 
 @Injectable({
   providedIn: 'root',

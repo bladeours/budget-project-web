@@ -13,7 +13,7 @@ import { MatChipGrid, MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ColorPickerComponent } from 'src/app/shared/components/color-picker/color-picker.component';
-import { colors } from '../../../../environments/environment';
+import { colors } from '../../../../environments/environment.template';
 import {
   Category,
   SubCategory,
@@ -80,7 +80,7 @@ export class CategoryFormComponent implements OnInit {
         this.colorButton.nativeElement.style.backgroundColor = this.currentColor
       } , 2);
     }
-      
+
     this.observer.observe(['(max-width: 800px)']).subscribe((res) => {
       if (res.matches && this.isCreate) {
         this.nameCol = 2;
@@ -118,7 +118,7 @@ export class CategoryFormComponent implements OnInit {
         );
       }
     }
-    
+
   }
 
   addSubCategory(event: MatChipInputEvent): void {

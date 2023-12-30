@@ -9,7 +9,7 @@ import {
 } from '../../../graphql/__generated__';
 import { TransactionCard } from '../../../shared/models/TransactionCard';
 import { DatePipe } from '@angular/common';
-import { myGreen, myGrey, myRed } from '../../../environments/environment';
+import { myGreen, myGrey, myRed } from '../../../environments/environment.template';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +48,7 @@ export class TransactionCardService {
         transaction.transactionType as TransactionType,
       ),
     };
-    
+
     transactionCard.icon = 'money_off';
     transactionCard.category = this.chooseCategory(transaction);
     transactionCard.subCategory = transaction.subCategory as SubCategory;

@@ -18,7 +18,7 @@ import { Account, AccountType } from '../../../../graphql/__generated__';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { AccountService } from '../../service/account.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { colors } from '../../../../environments/environment';
+import { colors } from '../../../../environments/environment.template';
 import { ColorPickerComponent } from 'src/app/shared/components/color-picker/color-picker.component';
 import { MatDialog } from '@angular/material/dialog';
 

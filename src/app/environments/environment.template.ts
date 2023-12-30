@@ -1,7 +1,4 @@
-export const baseUrl = '';
-export const environment = {
-  baseUrl : ''
-};
+export const baseUrl = '${ENV_BACKEND_URI}';
 export const myGreen: string = '#77DD77';
 export const myRed: string = '#FF6961';
 export const myGrey: string = '#BFBFBF';
